@@ -76,13 +76,4 @@ function CraftsListItem:SetHighlight(enable)
     else
         self._button:UnlockHighlight()
     end
-
-    -- TODO show highlight
-    --button:SetScript("OnClick", function()
-    --    local highlight = self:_GetHighlightFrame()
-    --    highlight:ClearAllPoints()
-    --    highlight:SetParent(buttonsGroup.frame)
-    --    highlight:SetPoint("TOPLEFT", button, "TOPLEFT", 0, 0)
-    --    highlight:Show() -- TODO when to hide?
-    --end)
 end

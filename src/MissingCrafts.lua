@@ -23,6 +23,7 @@ local LibCrafts = --[[---@type LibCrafts]] LibStub("LibCrafts-1.0")
 ---@field window Window|nil
 ---@field craftsList CraftsList|nil
 ---@field filtersPanel FiltersPanel|nil
+---@field currentProfessionLocalizedName string|nil
 
 ---@type MissingCrafts
 local addon = --[[---@type MissingCrafts]] AceAddon:NewAddon("MissingCrafts")
@@ -49,6 +50,11 @@ function addon:OnEnable()
             end
             self.database:SaveCurrentPlayerProfessions(playerProfessionNames)
         end
+
+        if profession.localized_name == self.currentProfessionLocalizedName then
+            local player, _ = UnitName("player")
+            self:PopulateInterface(player, profession.localized_name)
+        end
     end)
 
     LibCraftingProfessions:RegisterEvent("LCP_FRAME_SHOW", function(profession, frame)
@@ -58,7 +64,7 @@ function addon:OnEnable()
 
         if self:GetWindow():IsAttachedTo(frame) then
             local player, _ = UnitName("player")
-            self:PopulateInterface(player, profession)
+            self:PopulateInterface(player, profession.localized_name)
         end
 
         self:GetWindow():UpdatePosition()
@@ -75,12 +81,11 @@ function addon:OnEnable()
     end)
 end
 
--- TODO test that
 function addon:OnDisable()
     self:ReleaseInterface()
     self:GetVanillaFramePool():Destroy()
-    -- TODO destroy database and repositories
     self.vanillaFramePool = nil
+    self.currentProfessionLocalizedName = nil
 end
 
 ---@param professionFrame Frame
@@ -89,13 +94,13 @@ function addon:CreateInterface(professionFrame)
         self:ReleaseInterface()
     end
 
-    local filtersPanel = FiltersPanel:Create(self.characterRepository, AceGUI)
+    local filtersPanel = FiltersPanel:Create(self.characterRepository, self.professionRepository, AceGUI)
     local craftsList = CraftsList:Create(AceGUI, self:GetVanillaFramePool())
     local window = Window:Create(ADDON_NAME, ADDON_VERSION, filtersPanel, craftsList, professionFrame, AceGUI)
 
-    -- TODO prevent double populate on first addon:PopulateInterface
     filtersPanel:OnChange(function(filters)
         self:GetCraftsList():PopulateInterface(self:GetCrafts(filters))
+        self.currentProfessionLocalizedName = filters.localizedProfessionName
     end)
 
     self.filtersPanel = filtersPanel
@@ -117,22 +122,19 @@ function addon:ReleaseInterface()
 end
 
 ---@param player string
----@param profession LcpKnownProfession
-function addon:PopulateInterface(player, profession)
+---@param localizedProfessionName string
+function addon:PopulateInterface(player, localizedProfessionName)
     if not self.interfaceCreated then
         return
     end
 
-    self:GetFiltersPanel():PopulateInterface(profession.localized_name, player)
-
-    -- TODO is this call and public GetFilters() REALLY necessary? It's already called in the OnChange callback
-    self:GetCraftsList():PopulateInterface(self:GetCrafts(self:GetFiltersPanel():GetFilters()))
+    self:GetFiltersPanel():PopulateInterface(localizedProfessionName, player)
 end
 
 ---@param filters Filters
 ---@return Craft[]
 function addon:GetCrafts(filters)
-    return {} -- TODO
+    return self.craftRepository:FindMissing(filters.character, filters.localizedProfessionName)
 end
 
 function addon:GetVanillaFramePool()

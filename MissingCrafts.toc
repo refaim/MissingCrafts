@@ -2,11 +2,13 @@
 ## Title: MissingCrafts
 ## Author: Refaim
 ## Version: 1.0
+## SavedVariables: MissingCraftsDatabase
 
 lib\LibStub\LibStub.lua
 
 lib\AceCore-3.0\AceCore-3.0.xml
 lib\AceAddon-3.0\AceAddon-3.0.xml
+lib\AceDB-3.0\AceDB-3.0.xml
 lib\AceGUI-3.0\AceGUI-3.0.xml
 
 lib\LibCraftingProfessions-1.0\LibCraftingProfessions-1.0.xml
@@ -20,7 +22,6 @@ src\db\ProfessionRepository.lua
 src\db\CraftRepository.lua
 
 src\ui\VanillaFramePool.lua
-src\ui\CraftsListItemHighlight.lua
 src\ui\CraftsListItem.lua
 src\ui\CraftsList.lua
 src\ui\FiltersPanel.lua

@@ -101,6 +101,9 @@ function FiltersPanel:PopulateInterface(selectedProfessionLocalizedName, selecte
     self:_PopulateDropdown(self:_GetCharacterDropdown(), characterNames, selectedCharacterName)
 
     self._populated = true
+    if self._onChange ~= nil then
+        self._onChange()
+    end
 end
 
 ---@param strings string[]

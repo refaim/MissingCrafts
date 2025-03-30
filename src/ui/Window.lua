@@ -44,8 +44,6 @@ function Window:Create(addonName, addonVersion, filtersPanel, craftsList, profes
     craftsListVanillaFrame:ClearAllPoints()
     craftsListVanillaFrame:SetPoint("TOPLEFT", filtersPanelVanillaFrame, "BOTTOMLEFT", 5, -5)
 
-    -- TODO add close button
-
     self._frame = frame
     self._frameStatus = frameStatus
     self._professionFrame = professionFrame

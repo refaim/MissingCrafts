@@ -4,7 +4,7 @@
 ---@field _libCrafts LibCrafts
 CraftRepository = {}
 
----@class Craft
+---@shape Craft
 ---@field localizedName string
 ---@field skillLevel number
 ---@field isAvailable boolean
@@ -34,13 +34,14 @@ function CraftRepository:FindMissing(characterName, localizedProfessionName)
         characterSkillSet[skillName] = true
     end
 
+    ---@type Craft[]
     local crafts = {}
     for _, craft in ipairs(self._libCrafts:GetCraftsByProfession(localizedProfessionName)) do
         if characterSkillSet[craft.localized_spell_name] == nil then
             tinsert(crafts, {
-                localized_name = craft.localized_profession_name,
-                skill_level = craft.skill_level,
-                is_available = craft.skill_level <= characterProfessionRank
+                localizedName = craft.localized_spell_name,
+                skillLevel = craft.skill_level,
+                isAvailable = craft.skill_level <= characterProfessionRank
             })
         end
     end

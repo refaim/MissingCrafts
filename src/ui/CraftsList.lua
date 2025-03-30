@@ -78,6 +78,7 @@ function CraftsList:PopulateInterface(crafts)
             item = CraftsListItem:Create(293, 16, self:_GetFramePool())
             tinsert(self._items, item)
         end
+        item:SetHighlight(false)
         item:OnClick(highlightItem)
         item:Attach(buttonsGroup.frame, anchor, "TOPLEFT", i == 1 and "TOPLEFT" or "BOTTOMLEFT", 0, 0)
         item:PopulateInterface(craft)
