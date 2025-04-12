@@ -24,6 +24,7 @@ src\db\CraftRepository.lua
 src\ui\VanillaFramePool.lua
 src\ui\CraftsListItem.lua
 src\ui\CraftsList.lua
+src\ui\Dropdown.lua
 src\ui\FiltersPanel.lua
 src\ui\Window.lua
 src\MissingCrafts.lua
