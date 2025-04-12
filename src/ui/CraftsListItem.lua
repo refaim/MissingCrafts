@@ -62,7 +62,7 @@ end
 
 ---@param craft Craft
 function CraftsListItem:PopulateInterface(craft)
-    local color = craft.isAvailable and { r = 0.25, g = 0.75, b = 0.25} or { r = 0.9, g = 0.0, b = 0.0}
+    local color = craft.isAvailable and {r = 0.25, g = 0.75, b = 0.25} or {r = 0.9, g = 0.0, b = 0.0}
     local text = format("[%d] %s", craft.skillLevel, craft.localizedName)
     self._button:SetText(text)
     self._button:SetTextColor(color.r, color.g, color.b)
