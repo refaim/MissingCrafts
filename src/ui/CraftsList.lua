@@ -10,7 +10,7 @@ CraftsList = {}
 ---@param AceGUI LibAceGUI
 ---@param vanillaFramePool VanillaFramePool
 ---@return CraftsList
-function CraftsList:Create(AceGUI, vanillaFramePool)
+function CraftsList:Acquire(AceGUI, vanillaFramePool)
     local buttonsGroup = AceGUI:Create("SimpleGroup")
     buttonsGroup:SetLayout("Fill")
     buttonsGroup:SetFullWidth(true)

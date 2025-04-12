@@ -13,7 +13,7 @@ Window = {}
 ---@param professionFrame Frame
 ---@param AceGUI LibAceGUI
 ---@return self
-function Window:Create(addonName, addonVersion, filtersPanel, craftsList, professionFrame, AceGUI)
+function Window:Acquire(addonName, addonVersion, filtersPanel, craftsList, professionFrame, AceGUI)
     local frameStatus = {width = 384, height = 430}
 
     local frame = AceGUI:Create("Frame")
