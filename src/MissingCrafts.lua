@@ -94,9 +94,13 @@ function addon:CreateInterface(professionFrame)
         self:ReleaseInterface()
     end
 
+    local function close()
+        addon:ReleaseInterface()
+    end
+
     local filtersPanel = FiltersPanel:Acquire(self.characterRepository, self.professionRepository, AceGUI)
     local craftsList = CraftsList:Acquire(AceGUI, self:GetVanillaFramePool())
-    local window = Window:Acquire(ADDON_NAME, ADDON_VERSION, filtersPanel, craftsList, professionFrame, AceGUI)
+    local window = Window:Acquire(ADDON_NAME, ADDON_VERSION, filtersPanel, craftsList, professionFrame, close, AceGUI)
 
     filtersPanel:OnChange(function(filters)
         self:GetCraftsList():PopulateInterface(self:GetCrafts(filters))

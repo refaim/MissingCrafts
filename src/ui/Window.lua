@@ -4,6 +4,7 @@ setfenv(1, MissingCrafts)
 ---@field _frame AceGUIFrame|nil
 ---@field _frameStatus AceGUIStatusTable|nil
 ---@field _professionFrame Frame|nil
+---@field _closeButton Button|nil
 Window = {}
 
 ---@param addonName string
@@ -11,9 +12,10 @@ Window = {}
 ---@param filtersPanel FiltersPanel
 ---@param craftsList CraftsList
 ---@param professionFrame Frame
+---@param close fun():void
 ---@param AceGUI LibAceGUI
 ---@return self
-function Window:Acquire(addonName, addonVersion, filtersPanel, craftsList, professionFrame, AceGUI)
+function Window:Acquire(addonName, addonVersion, filtersPanel, craftsList, professionFrame, close, AceGUI)
     local frameStatus = {width = 384, height = 430}
 
     local frame = AceGUI:Create("Frame")
@@ -29,6 +31,12 @@ function Window:Acquire(addonName, addonVersion, filtersPanel, craftsList, profe
             child:Hide()
         end
     end
+
+    local closeButton = CreateFrame("Button", nil, frame.frame, "UIPanelCloseButton")
+    closeButton:SetPoint("TOPRIGHT", frame.frame, "TOPRIGHT", -5, -5)
+    closeButton:SetScript("OnClick", function()
+        close()
+    end)
 
     local filtersPanelAceWidget = filtersPanel:GetAceWidget()
     filtersPanelAceWidget:SetFullWidth(true)
@@ -47,14 +55,22 @@ function Window:Acquire(addonName, addonVersion, filtersPanel, craftsList, profe
     self._frame = frame
     self._frameStatus = frameStatus
     self._professionFrame = professionFrame
+    self._closeButton = closeButton
 
     return self
 end
 
 function Window:Release()
-    if (self._frame ~= nil) then
+    if self._frame ~= nil then
         self:_GetFrame():Release()
         self._frame = nil
+    end
+    if self._closeButton ~= nil then
+        local btn = --[[---@not nil]] self._closeButton
+        btn:UnregisterAllEvents()
+        btn:ClearAllPoints()
+        btn:Hide()
+        btn:SetParent(nil)
     end
     self._frameStatus = nil
     self._professionFrame = nil
