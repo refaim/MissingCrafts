@@ -60,10 +60,7 @@ function VanillaFramePool:Release(frame)
         self:Release(child)
     end
 
-    frame:UnregisterAllEvents()
-    frame:ClearAllPoints()
-    frame:Hide()
-    frame:SetParent(nil)
+    ClearFrame(frame)
 
     frameAsTable[RELEASED_FIELD] = true
     tinsert(pool, frame)

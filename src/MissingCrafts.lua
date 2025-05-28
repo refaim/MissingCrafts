@@ -1,6 +1,13 @@
 setfenv(1, MissingCrafts)
 
-local ADDON_NAME, ADDON_VERSION = "MissingCrafts", "1.0"
+---@shape AddonInfo
+---@field name string
+---@field version string
+
+local addonInfo = {
+    name = "MissingCrafts",
+    version = "1.0"
+}
 
 ---@type LibStubDef
 local LibStub = getglobal("LibStub")
@@ -18,11 +25,11 @@ local LibCrafts = --[[---@type LibCrafts]] LibStub("LibCrafts-1.0")
 ---@field characterRepository CharacterRepository
 ---@field professionRepository ProfessionRepository
 ---@field craftRepository CraftRepository
----@field vanillaFramePool VanillaFramePool|nil
----@field interfaceCreated boolean
----@field window Window|nil
----@field craftsList CraftsList|nil
----@field filtersPanel FiltersPanel|nil
+---@field vanillaFramePool VanillaFramePool
+---@field window Window
+---@field craftsList CraftsList
+---@field filtersPanel FiltersPanel
+---@field openButtonsByFrameId table<string, OpenButton>
 ---@field currentProfessionLocalizedName string|nil
 
 ---@type MissingCrafts
@@ -34,6 +41,7 @@ function addon:OnEnable()
     self.professionRepository = ProfessionRepository:Create(LibCraftingProfessions)
     self.craftRepository = CraftRepository:Create(self.database, self.characterRepository, LibCrafts)
     self.vanillaFramePool = VanillaFramePool:Create()
+    self.openButtonsByFrameId = {}
 
     LibCraftingProfessions:RegisterEvent("LCP_SKILLS_UPDATE", function(profession, skills)
         local skillNames = {}
@@ -58,105 +66,110 @@ function addon:OnEnable()
     end)
 
     LibCraftingProfessions:RegisterEvent("LCP_FRAME_SHOW", function(profession, frame)
-        if not self.interfaceCreated then
-            self:CreateInterface(frame)
-        end
+        self:CreateOpenButton(profession, frame)
 
-        if self:GetWindow():IsAttachedTo(frame) then
+        if self:IsWindowAttachedTo(frame) then
             local player, _ = UnitName("player")
             self:PopulateInterface(player, profession.localized_name)
         end
-
-        self:GetWindow():UpdatePosition()
     end)
 
     LibCraftingProfessions:RegisterEvent("LCP_FRAME_CLOSE", function(frame)
-        if self.interfaceCreated then
-            if self:GetWindow():IsAttachedTo(frame) then
-                self:ReleaseInterface()
+        self:DestroyOpenButton(frame)
+        if self.window ~= nil then
+            if self:IsWindowAttachedTo(frame) then
+                self:DestroyMainWindow()
             else
-                self:GetWindow():UpdatePosition()
+                self.window:UpdatePosition()
             end
         end
     end)
 end
 
-function addon:OnDisable()
-    self:ReleaseInterface()
-    self:GetVanillaFramePool():Destroy()
-    self.vanillaFramePool = nil
-    self.currentProfessionLocalizedName = nil
+---@param profession LcpProfession
+---@param professionFrame Frame
+function addon:CreateOpenButton(profession, professionFrame)
+    local onClick = function()
+        if self:IsWindowAttachedTo(professionFrame) then
+            self:DestroyMainWindow()
+        else
+            local player, _ = UnitName("player")
+            self:CreateMainWindow(professionFrame)
+            self:PopulateInterface(player, profession.localized_name)
+            self.window:UpdatePosition()
+        end
+    end
+
+    local frameId = GetFrameId(professionFrame)
+    self:DestroyOpenButton(professionFrame)
+    self.openButtonsByFrameId[frameId] = OpenButton:Create(onClick, professionFrame, PlacementPolicy)
 end
 
 ---@param professionFrame Frame
-function addon:CreateInterface(professionFrame)
-    if self.window ~= nil then
-        self:ReleaseInterface()
+function addon:DestroyOpenButton(professionFrame)
+    local frameId = GetFrameId(professionFrame)
+    local button = self.openButtonsByFrameId[frameId]
+    if button ~= nil then
+        button:Destroy()
+        self.openButtonsByFrameId[frameId] = nil
     end
+end
+
+---@param professionFrame Frame
+function addon:CreateMainWindow(professionFrame)
+    if self:IsWindowAttachedTo(professionFrame) then
+        return
+    end
+    self:DestroyMainWindow()
 
     local function close()
-        addon:ReleaseInterface()
+        addon:DestroyMainWindow()
     end
 
     local filtersPanel = FiltersPanel:Acquire(self.characterRepository, self.professionRepository, AceGUI)
-    local craftsList = CraftsList:Acquire(AceGUI, self:GetVanillaFramePool())
-    local window = Window:Acquire(ADDON_NAME, ADDON_VERSION, filtersPanel, craftsList, professionFrame, close, AceGUI)
+    local craftsList = CraftsList:Acquire(AceGUI, self.vanillaFramePool)
+    local window = Window:Acquire(addonInfo, close, filtersPanel, craftsList, professionFrame, PlacementPolicy, AceGUI)
 
     filtersPanel:OnChange(function(filters)
-        self:GetCraftsList():PopulateInterface(self:GetCrafts(filters))
+        self.craftsList:PopulateInterface(self:GetCrafts(filters))
         self.currentProfessionLocalizedName = filters.localizedProfessionName
     end)
 
     self.filtersPanel = filtersPanel
     self.craftsList = craftsList
     self.window = window
-    self.interfaceCreated = true
 end
 
-function addon:ReleaseInterface()
-    if not self.interfaceCreated then
+function addon:DestroyMainWindow()
+    if self.window == nil then
         return
     end
 
+    self.window:Release()
+
     self.filtersPanel = nil
     self.craftsList = nil
-    self:GetWindow():Release()
     self.window = nil
-    self.interfaceCreated = false
+end
+
+---@param professionFrame Frame
+---@return boolean
+function addon:IsWindowAttachedTo(professionFrame)
+    return self.window ~= nil and self.window:IsAttachedTo(professionFrame)
 end
 
 ---@param player string
 ---@param localizedProfessionName string
 function addon:PopulateInterface(player, localizedProfessionName)
-    if not self.interfaceCreated then
+    if self.window == nil then
         return
     end
 
-    self:GetFiltersPanel():PopulateInterface(localizedProfessionName, player)
+    self.filtersPanel:PopulateInterface(localizedProfessionName, player)
 end
 
 ---@param filters Filters
 ---@return Craft[]
 function addon:GetCrafts(filters)
     return self.craftRepository:FindMissing(filters.character, filters.localizedProfessionName)
-end
-
-function addon:GetVanillaFramePool()
-    assert(self.vanillaFramePool ~= nil)
-    return --[[---@not nil]] self.vanillaFramePool
-end
-
-function addon:GetWindow()
-    assert(self.interfaceCreated)
-    return --[[---@not nil]] self.window
-end
-
-function addon:GetCraftsList()
-    assert(self.interfaceCreated)
-    return --[[---@not nil]] self.craftsList
-end
-
-function addon:GetFiltersPanel()
-    assert(self.interfaceCreated)
-    return --[[---@not nil]] self.filtersPanel
 end

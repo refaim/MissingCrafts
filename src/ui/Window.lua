@@ -1,25 +1,26 @@
 setfenv(1, MissingCrafts)
 
 ---@class Window
----@field _frame AceGUIFrame|nil
----@field _frameStatus AceGUIStatusTable|nil
----@field _professionFrame Frame|nil
----@field _closeButton Button|nil
+---@field _frame AceGUIFrame
+---@field _frameStatus AceGUIStatusTable
+---@field _professionFrame Frame
+---@field _closeButton Button
+---@field _placementPolicy PlacementPolicy
 Window = {}
 
----@param addonName string
----@param addonVersion string
+---@param addonInfo AddonInfo
+---@param close fun():void
 ---@param filtersPanel FiltersPanel
 ---@param craftsList CraftsList
 ---@param professionFrame Frame
----@param close fun():void
+---@param placementPolicy PlacementPolicy
 ---@param AceGUI LibAceGUI
 ---@return self
-function Window:Acquire(addonName, addonVersion, filtersPanel, craftsList, professionFrame, close, AceGUI)
+function Window:Acquire(addonInfo, close, filtersPanel, craftsList, professionFrame, placementPolicy, AceGUI)
     local frameStatus = {width = 384, height = 430}
 
     local frame = AceGUI:Create("Frame")
-    frame:SetTitle(format('%s v%s', addonName, addonVersion))
+    frame:SetTitle(format('%s v%s', addonInfo.name, addonInfo.version))
     frame:SetStatusTable(frameStatus)
     frame:EnableResize(false)
     frame:SetLayout("List")
@@ -56,24 +57,23 @@ function Window:Acquire(addonName, addonVersion, filtersPanel, craftsList, profe
     self._frameStatus = frameStatus
     self._professionFrame = professionFrame
     self._closeButton = closeButton
+    self._placementPolicy = placementPolicy
 
     return self
 end
 
 function Window:Release()
     if self._frame ~= nil then
-        self:_GetFrame():Release()
+        self._frame:Release()
         self._frame = nil
     end
     if self._closeButton ~= nil then
-        local btn = --[[---@not nil]] self._closeButton
-        btn:UnregisterAllEvents()
-        btn:ClearAllPoints()
-        btn:Hide()
-        btn:SetParent(nil)
+        ClearFrame(self._closeButton)
+        self._closeButton = nil
     end
     self._frameStatus = nil
     self._professionFrame = nil
+    self._placementPolicy = nil
 end
 
 ---@param professionFrame Frame
@@ -83,20 +83,10 @@ function Window:IsAttachedTo(professionFrame)
 end
 
 function Window:UpdatePosition()
-    local professionFrame = --[[---@not nil]] self._professionFrame
     local frameStatus = --[[---@not nil]] self._frameStatus
-
-    local xDiff = (IS_PLAYING_ON_TURTLE_WOW and self._professionFrame == TradeSkillFrame) and 87 or 40
-    frameStatus["left"] = professionFrame:GetRight() - xDiff
-    frameStatus["top"] = professionFrame:GetTop() - 10
-
-    local frame = self:_GetFrame()
-    frame:ApplyStatus()
-    frame:Show()
-end
-
----@return AceGUIFrame
-function Window:_GetFrame()
-    assert(self._frame ~= nil)
-    return --[[---@not nil]] self._frame
+    local topLeft = self._placementPolicy:GetMainWindowTopLeft(self._professionFrame)
+    frameStatus["left"] = topLeft.x
+    frameStatus["top"] = topLeft.y
+    self._frame:ApplyStatus()
+    self._frame:Show()
 end

@@ -1,9 +1,9 @@
 setfenv(1, MissingCrafts)
 
 ---@class CraftsList
----@field _framePool VanillaFramePool|nil
----@field _scrollFrame AceGUIScrollFrame|nil
----@field _buttonsGroup AceGUISimpleGroup|nil
+---@field _framePool VanillaFramePool
+---@field _scrollFrame AceGUIScrollFrame
+---@field _buttonsGroup AceGUISimpleGroup
 ---@field _items CraftsListItem[]
 CraftsList = {}
 
@@ -40,12 +40,12 @@ end
 
 ---@return AceGUIWidget
 function CraftsList:GetAceWidget()
-    return self:_GetScrollFrame()
+    return self._scrollFrame
 end
 
 ---@return Frame
 function CraftsList:GetVanillaFrame()
-    return self:_GetScrollFrame().scrollframe
+    return self._scrollFrame.scrollframe
 end
 
 ---@param a Craft
@@ -75,7 +75,7 @@ function CraftsList:PopulateInterface(crafts)
     for i, craft in ipairs(crafts) do
         local item = self._items[i]
         if item == nil then
-            item = CraftsListItem:Create(293, 16, self:_GetFramePool())
+            item = CraftsListItem:Create(293, 16, self._framePool)
             tinsert(self._items, item)
         end
         item:SetHighlight(false)
@@ -92,19 +92,9 @@ function CraftsList:PopulateInterface(crafts)
 
     local height = 0
     if next(self._items) ~= nil then
-        height = self._items[1]:GetFrame():GetHeight() * getn(crafts) - 32
+        height = self._items[1]:GetFrame():GetHeight() * getn(crafts)
     end
     buttonsGroup:SetHeight(height)
 
-    self:_GetScrollFrame():DoLayout()
-end
-
-function CraftsList:_GetFramePool()
-    assert(self._framePool ~= nil)
-    return --[[---@not nil]] self._framePool
-end
-
-function CraftsList:_GetScrollFrame()
-    assert(self._scrollFrame ~= nil)
-    return --[[---@not nil]] self._scrollFrame
+    self._scrollFrame:DoLayout()
 end
