@@ -18,7 +18,6 @@ local _G = getfenv(0)
 MissingCrafts = setmetatable({_G = _G}, {__index = _G})
 
 setfenv(1, MissingCrafts)
-IS_PLAYING_ON_TURTLE_WOW = getglobal("LFT") ~= nil
 
 ---@param t table
 function erase(t)

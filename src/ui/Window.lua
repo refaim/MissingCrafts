@@ -2,8 +2,8 @@ setfenv(1, MissingCrafts)
 
 ---@class Window
 ---@field _frame AceGUIFrame
----@field _frameStatus AceGUIStatusTable
 ---@field _professionFrame Frame
+---@field _professionFrameType LcpProfessionFrameType
 ---@field _closeButton Button
 ---@field _placementPolicy PlacementPolicy
 Window = {}
@@ -13,11 +13,12 @@ Window = {}
 ---@param filtersPanel FiltersPanel
 ---@param craftsList CraftsList
 ---@param professionFrame Frame
+---@param professionFrameType LcpProfessionFrameType
 ---@param placementPolicy PlacementPolicy
 ---@param AceGUI LibAceGUI
 ---@return self
-function Window:Acquire(addonInfo, close, filtersPanel, craftsList, professionFrame, placementPolicy, AceGUI)
-    local frameStatus = {width = 384, height = 430}
+function Window:Acquire(addonInfo, close, filtersPanel, craftsList, professionFrame, professionFrameType, placementPolicy, AceGUI)
+    local frameStatus = placementPolicy:GetMainWindowGeometry(professionFrame, professionFrameType)
 
     local frame = AceGUI:Create("Frame")
     frame:SetTitle(format('%s v%s', addonInfo.name, addonInfo.version))
@@ -54,10 +55,12 @@ function Window:Acquire(addonInfo, close, filtersPanel, craftsList, professionFr
     craftsListVanillaFrame:SetPoint("TOPLEFT", filtersPanelVanillaFrame, "BOTTOMLEFT", 5, -5)
 
     self._frame = frame
-    self._frameStatus = frameStatus
     self._professionFrame = professionFrame
+    self._professionFrameType = professionFrameType
     self._closeButton = closeButton
     self._placementPolicy = placementPolicy
+
+    self:UpdateGeometry()
 
     return self
 end
@@ -68,11 +71,12 @@ function Window:Release()
         self._frame = nil
     end
     if self._closeButton ~= nil then
-        ClearFrame(self._closeButton)
+        clearFrame(self._closeButton)
         self._closeButton = nil
     end
     self._frameStatus = nil
     self._professionFrame = nil
+    self._professionFrameType = nil
     self._placementPolicy = nil
 end
 
@@ -82,11 +86,9 @@ function Window:IsAttachedTo(professionFrame)
     return self._professionFrame == professionFrame
 end
 
-function Window:UpdatePosition()
-    local frameStatus = --[[---@not nil]] self._frameStatus
-    local topLeft = self._placementPolicy:GetMainWindowTopLeft(self._professionFrame)
-    frameStatus["left"] = topLeft.x
-    frameStatus["top"] = topLeft.y
+function Window:UpdateGeometry()
+    local frameStatus = self._placementPolicy:GetMainWindowGeometry(self._professionFrame, self._professionFrameType)
+    self._frame:SetStatusTable(frameStatus)
     self._frame:ApplyStatus()
     self._frame:Show()
 end

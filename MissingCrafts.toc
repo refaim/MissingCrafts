@@ -3,6 +3,7 @@
 ## Author: Refaim
 ## Version: 1.0
 ## SavedVariables: MissingCraftsDatabase
+## OptionalDeps: AdvancedTradeSkillWindow, AdvancedTradeSkillWindow2, Artisan
 
 lib\LibStub\LibStub.lua
 

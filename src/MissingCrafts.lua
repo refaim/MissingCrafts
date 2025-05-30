@@ -29,6 +29,7 @@ local LibCrafts = --[[---@type LibCrafts]] LibStub("LibCrafts-1.0")
 ---@field window Window
 ---@field craftsList CraftsList
 ---@field filtersPanel FiltersPanel
+---@field placementPolicy PlacementPolicy
 ---@field openButtonsByFrameId table<string, OpenButton>
 ---@field currentProfessionLocalizedName string|nil
 
@@ -41,6 +42,7 @@ function addon:OnEnable()
     self.professionRepository = ProfessionRepository:Create(LibCraftingProfessions)
     self.craftRepository = CraftRepository:Create(self.database, self.characterRepository, LibCrafts)
     self.vanillaFramePool = VanillaFramePool:Create()
+    self.placementPolicy = PlacementPolicy
     self.openButtonsByFrameId = {}
 
     LibCraftingProfessions:RegisterEvent("LCP_SKILLS_UPDATE", function(profession, skills)
@@ -65,8 +67,16 @@ function addon:OnEnable()
         end
     end)
 
-    LibCraftingProfessions:RegisterEvent("LCP_FRAME_SHOW", function(profession, frame)
-        self:CreateOpenButton(profession, frame)
+    LibCraftingProfessions:RegisterEvent("LCP_FRAME_SHOW", function(profession, frame, frameType)
+        ---@type 0|1
+        local delayInFrames = 0
+        if frameType == LibCraftingProfessionsConstants.FrameType.AdvancedTradeSkillWindow2 then
+            delayInFrames = 1 -- Work around ATSW2 window initialization behavior
+        end
+
+        callDelayed(delayInFrames, function()
+            self:CreateOpenButton(profession, frame, frameType)
+        end)
 
         if self:IsWindowAttachedTo(frame) then
             local player, _ = UnitName("player")
@@ -74,13 +84,13 @@ function addon:OnEnable()
         end
     end)
 
-    LibCraftingProfessions:RegisterEvent("LCP_FRAME_CLOSE", function(frame)
+    LibCraftingProfessions:RegisterEvent("LCP_FRAME_CLOSE", function(frame, frameType)
         self:DestroyOpenButton(frame)
         if self.window ~= nil then
             if self:IsWindowAttachedTo(frame) then
                 self:DestroyMainWindow()
             else
-                self.window:UpdatePosition()
+                self.window:UpdateGeometry()
             end
         end
     end)
@@ -88,26 +98,26 @@ end
 
 ---@param profession LcpProfession
 ---@param professionFrame Frame
-function addon:CreateOpenButton(profession, professionFrame)
+function addon:CreateOpenButton(profession, professionFrame, frameType)
     local onClick = function()
         if self:IsWindowAttachedTo(professionFrame) then
             self:DestroyMainWindow()
         else
             local player, _ = UnitName("player")
-            self:CreateMainWindow(professionFrame)
+            self:CreateMainWindow(professionFrame, frameType)
             self:PopulateInterface(player, profession.localized_name)
-            self.window:UpdatePosition()
+            self.window:UpdateGeometry()
         end
     end
 
-    local frameId = GetFrameId(professionFrame)
-    self:DestroyOpenButton(professionFrame)
-    self.openButtonsByFrameId[frameId] = OpenButton:Create(onClick, professionFrame, PlacementPolicy)
+    local frameId = getFrameId(professionFrame)
+    self:DestroyOpenButton(professionFrame) -- Always destroy to rebind the frame and profession
+    self.openButtonsByFrameId[frameId] = OpenButton:Create(onClick, professionFrame, frameType, self.placementPolicy)
 end
 
 ---@param professionFrame Frame
 function addon:DestroyOpenButton(professionFrame)
-    local frameId = GetFrameId(professionFrame)
+    local frameId = getFrameId(professionFrame)
     local button = self.openButtonsByFrameId[frameId]
     if button ~= nil then
         button:Destroy()
@@ -116,7 +126,8 @@ function addon:DestroyOpenButton(professionFrame)
 end
 
 ---@param professionFrame Frame
-function addon:CreateMainWindow(professionFrame)
+---@param professionFrameType LcpProfessionFrameType
+function addon:CreateMainWindow(professionFrame, professionFrameType)
     if self:IsWindowAttachedTo(professionFrame) then
         return
     end
@@ -128,7 +139,7 @@ function addon:CreateMainWindow(professionFrame)
 
     local filtersPanel = FiltersPanel:Acquire(self.characterRepository, self.professionRepository, AceGUI)
     local craftsList = CraftsList:Acquire(AceGUI, self.vanillaFramePool)
-    local window = Window:Acquire(addonInfo, close, filtersPanel, craftsList, professionFrame, PlacementPolicy, AceGUI)
+    local window = Window:Acquire(addonInfo, close, filtersPanel, craftsList, professionFrame, professionFrameType, self.placementPolicy, AceGUI)
 
     filtersPanel:OnChange(function(filters)
         self.craftsList:PopulateInterface(self:GetCrafts(filters))

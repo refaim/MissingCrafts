@@ -60,7 +60,7 @@ function VanillaFramePool:Release(frame)
         self:Release(child)
     end
 
-    ClearFrame(frame)
+    clearFrame(frame)
 
     frameAsTable[RELEASED_FIELD] = true
     tinsert(pool, frame)

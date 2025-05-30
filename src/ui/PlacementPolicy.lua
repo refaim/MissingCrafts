@@ -1,33 +1,76 @@
 setfenv(1, MissingCrafts)
 
----@shape Point
+---@shape Coords
 ---@field x number
 ---@field y number
+
+---@shape Anchor
+---@field framePoint WidgetAnchorPoint
+---@field selfPoint WidgetAnchorPoint
+---@field selfCoords Coords
+
+---@shape Geometry
+---@field width number
+---@field height number
+---@field top number
+---@field left number
 
 ---@class PlacementPolicy
 PlacementPolicy = {}
 
----@param professionFrame Frame
----@return Point
-function PlacementPolicy:GetOpenButtonTopRight(professionFrame)
-    if professionFrame == TradeSkillFrame then
-        if IS_PLAYING_ON_TURTLE_WOW then
-            return {x = -96, y = -61}
-        end
+local FrameType = LibCraftingProfessionsConstants.FrameType
 
-        return {x = -38, y = 20}
+---@param frameType LcpProfessionFrameType
+---@return Anchor
+function PlacementPolicy:GetOpenButtonAnchor(frameType)
+    ---@type Anchor
+    local anchor = {
+        framePoint = "TOPRIGHT",
+        selfPoint = "TOPRIGHT",
+        selfCoords = {x = 0, y = 0},
+    }
+
+    if frameType == FrameType.AdvancedTradeSkillWindow then
+        anchor.selfCoords = {x = -54, y = -91}
+    elseif frameType == FrameType.AdvancedTradeSkillWindow2 then
+        anchor.selfCoords = {x = -48, y = -77}
+    elseif frameType == FrameType.Artisan then
+        anchor.selfCoords = {x = -44, y = -60}
+    elseif frameType == FrameType.TurtleTradeSkillFrame then
+        anchor.selfCoords = {x = -96, y = -61}
+    elseif frameType == FrameType.VanillaTradeSkillFrame then
+        if getglobal("MTSLUI_TOGGLE_BUTTON") ~= nil then
+            -- Don't interfere with MissingTradeSkillsList button
+            anchor.selfCoords = {x = -93, y = 20}
+        else
+            anchor.selfCoords = {x = -38, y = 20}
+        end
+    elseif frameType == FrameType.VanillaCraftFrame then
+        anchor.selfCoords = {x = -44, y = -60}
     end
 
-    return {x = -44, y = -60}
+    return anchor
 end
 
 ---@param professionFrame Frame
-function PlacementPolicy:GetMainWindowTopLeft(professionFrame)
+---@param frameType LcpProfessionFrameType
+---@return Geometry
+function PlacementPolicy:GetMainWindowGeometry(professionFrame, frameType)
     local topRight = {x = professionFrame:GetRight(), y = professionFrame:GetTop()}
 
-    if IS_PLAYING_ON_TURTLE_WOW and professionFrame == TradeSkillFrame then
-        return {x = topRight.x - 87, y = topRight.y - 10}
+    ---@type Geometry
+    local status = {width = 0, height = 0, top = 0, left = 0}
+    if frameType == FrameType.AdvancedTradeSkillWindow then
+        status = {width = 384, height = 430, top = topRight.y - 10, left = topRight.x - 40}
+    elseif frameType == FrameType.AdvancedTradeSkillWindow2 then
+        status = {width = 384, height = 494, top = topRight.y - 10, left = topRight.x - 5}
+    elseif frameType == FrameType.Artisan then
+        status = {width = 384, height = 469, top = topRight.y - 10, left = topRight.x - 5}
+    elseif frameType == FrameType.TurtleTradeSkillFrame then
+        status = {width = 384, height = 430, top = topRight.y - 10, left = topRight.x - 87}
+    else
+        status = {width = 384, height = 430, top = topRight.y - 10, left = topRight.x - 40}
     end
 
-    return {x = topRight.x - 40, y = topRight.y - 10}
+    return status
 end
