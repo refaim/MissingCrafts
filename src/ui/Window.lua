@@ -25,6 +25,7 @@ function Window:Acquire(addonInfo, close, filtersPanel, craftsList, professionFr
     frame:SetStatusTable(frameStatus)
     frame:EnableResize(false)
     frame:SetLayout("List")
+    frame.frame:SetFrameStrata(professionFrame:GetFrameStrata())
 
     -- Hide statusbar and default close button
     frame.statustext:Hide()
