@@ -93,6 +93,9 @@ function CraftsList:PopulateInterface(crafts)
     local height = 0
     if next(self._items) ~= nil then
         height = self._items[1]:GetFrame():GetHeight() * getn(crafts)
+        if height >= 32 then
+            height = height - 32
+        end
     end
     buttonsGroup:SetHeight(height)
 
