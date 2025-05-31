@@ -1,10 +1,8 @@
+setfenv(1, MissingCrafts)
+
 ---@class CharacterRepository
 ---@field _db Database
 CharacterRepository = {}
-
----@shape CharacterDTO
----@field name string
----@field professionLocalizedNameToRank table<string, number>
 
 ---@param database Database
 ---@return self
@@ -13,30 +11,25 @@ function CharacterRepository:Create(database)
     return self
 end
 
----@return CharacterDTO[]
-function CharacterRepository:FindAll()
-    ---@type CharacterDTO[]
+---@param exceptName ?string|nil
+---@return Character[]
+function CharacterRepository:FindAll(exceptName)
+    ---@type Character[]
     local characters = {}
-    for _, character in ipairs(self._db:GetCharacters()) do
-        ---@type table<string, number>
-        local nameToRank = {}
-        for professionName, profession in pairs(character.professionsByLocalizedName) do
-            nameToRank[professionName] = profession.rank
+    for _, dbCharacter in ipairs(self._db:GetCharacters()) do
+        if dbCharacter.name ~= exceptName then
+            tinsert(characters, Character:Create(dbCharacter))
         end
-        tinsert(characters, {
-            name = character.name,
-            professionLocalizedNameToRank = nameToRank,
-        })
     end
     return characters
 end
 
 ---@param name string
----@return CharacterDTO|nil
+---@return Character|nil
 function CharacterRepository:Find(name)
-    for _, character in ipairs(self:FindAll()) do
-        if character.name == name then
-            return character
+    for _, dbCharacter in ipairs(self._db:GetCharacters()) do
+        if dbCharacter.name == name then
+            return Character:Create(dbCharacter)
         end
     end
     return nil

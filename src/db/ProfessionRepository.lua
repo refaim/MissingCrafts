@@ -1,3 +1,5 @@
+setfenv(1, MissingCrafts)
+
 ---@class ProfessionRepository
 ---@field _libCraftingProfessions LibCraftingProfessions
 ProfessionRepository = {}

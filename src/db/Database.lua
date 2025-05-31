@@ -9,24 +9,30 @@ Database = {}
 ---@field knownLocalizedSkillNames string[]
 
 ---@shape DatabaseCharacter
+---@field realm string
+---@field english_faction string
+---@field localized_faction string
 ---@field name string
----@field faction string
 ---@field professionsByLocalizedName table<string, DatabaseProfession>
 
 ---@shape DatabaseSavedVariable
----@field realm {nameToCharacter: table<string, DatabaseCharacter>}
+---@field global {realmToNameToCharacter: table<string, table<string, DatabaseCharacter>>}
 
 ---@param AceDB LibAceDBDef
 ---@return self
 function Database:Create(AceDB)
     ---@type DatabaseSavedVariable
     local defaults = {
-        realm = {
-            nameToCharacter = {
+        global = {
+            realmToNameToCharacter = {
                 ["*"] = {
-                    ["name"] = "",
-                    ["faction"] = "",
-                    ["professionsByLocalizedName"] = {}
+                    ["*"] = {
+                        ["realm"] = "",
+                        ["english_faction"] = "",
+                        ["localized_faction"] = "",
+                        ["name"] = "",
+                        ["professionsByLocalizedName"] = {}
+                    }
                 },
             },
         },
@@ -43,8 +49,10 @@ function Database:GetCharacters()
 
     ---@type DatabaseCharacter[]
     local characters = {}
-    for _, character in pairs(self._db.realm.nameToCharacter) do
-        tinsert(characters, character)
+    for _, nameToCharacter in pairs(self._db.global.realmToNameToCharacter) do
+        for _, character in pairs(nameToCharacter) do
+            tinsert(characters, character)
+        end
     end
     return characters
 end
@@ -53,7 +61,13 @@ end
 ---@param localizedProfessionName string
 ---@return string[]
 function Database:GetLocalizedSkillNames(characterName, localizedProfessionName)
-    local profession = self._db.realm.nameToCharacter[characterName].professionsByLocalizedName[localizedProfessionName]
+    ---@type DatabaseProfession
+    local profession
+    for _, nameToCharacter in pairs(self._db.global.realmToNameToCharacter) do
+        if nameToCharacter[characterName] ~= nil then
+            profession = nameToCharacter[characterName].professionsByLocalizedName[localizedProfessionName]
+        end
+    end
     return (profession or {}).knownLocalizedSkillNames or {}
 end
 
@@ -86,11 +100,14 @@ end
 
 ---@return DatabaseCharacter
 function Database:GetOrCreatePlayer()
+    local realm = GetRealmName()
     local name, _ = UnitName("player")
-    local faction, _ = UnitFactionGroup("player")
+    local english_faction, localized_faction = UnitFactionGroup("player")
 
-    local player = self._db.realm.nameToCharacter[name]
+    local player = self._db.global.realmToNameToCharacter[realm][name]
+    player.realm = realm
+    player.english_faction = english_faction
+    player.localized_faction = localized_faction
     player.name = name
-    player.faction = faction
     return player
 end

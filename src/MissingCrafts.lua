@@ -5,8 +5,8 @@ setfenv(1, MissingCrafts)
 ---@field version string
 
 local addonInfo = {
-    name = "MissingCrafts",
-    version = "1.0"
+    name = ADDON_NAME,
+    version = ADDON_VERSION
 }
 
 ---@type LibStubDef
@@ -17,8 +17,13 @@ local AceAddon, _ = LibStub("AceAddon-3.0")
 local AceDB, _ = LibStub("AceDB-3.0")
 local AceGUI, _ = LibStub("AceGUI-3.0")
 
+local AceLocale, _ = LibStub("AceLocale-3.0")
+local L = --[[---@type MissingCraftsLocale]] AceLocale:GetLocale(ADDON_NAME, false)
+
+
 local LibCraftingProfessions = --[[---@type LibCraftingProfessions]] LibStub("LibCraftingProfessions-1.0")
 local LibCrafts = --[[---@type LibCrafts]] LibStub("LibCrafts-1.0")
+local LibItemTooltip = --[[---@type LibItemTooltip]] LibStub("LibItemTooltip-1.0")
 
 ---@class MissingCrafts: AceAddonDef
 ---@field database Database
@@ -30,6 +35,7 @@ local LibCrafts = --[[---@type LibCrafts]] LibStub("LibCrafts-1.0")
 ---@field craftsList CraftsList
 ---@field filtersPanel FiltersPanel
 ---@field placementPolicy PlacementPolicy
+---@field tooltipEnhancer TooltipEnhancer
 ---@field openButtonsByFrameId table<string, OpenButton>
 ---@field currentProfessionLocalizedName string|nil
 
@@ -43,6 +49,7 @@ function addon:OnEnable()
     self.craftRepository = CraftRepository:Create(self.database, self.characterRepository, LibCrafts)
     self.vanillaFramePool = VanillaFramePool:Create()
     self.placementPolicy = PlacementPolicy
+    self.tooltipEnhancer = TooltipEnhancer:Create(self.craftRepository, self.characterRepository, L, LibItemTooltip)
     self.openButtonsByFrameId = {}
 
     LibCraftingProfessions:RegisterEvent("LCP_SKILLS_UPDATE", function(profession, skills)
