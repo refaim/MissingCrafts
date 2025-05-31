@@ -1,0 +1,22 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+    <Script file="deDE-Professions.lua" />
+    <Script file="deDE-Spells.lua" />
+    <Script file="enUS-Professions.lua" />
+    <Script file="enUS-Spells.lua" />
+    <Script file="esES-Professions.lua" />
+    <Script file="esES-Spells.lua" />
+    <Script file="esMX-Professions.lua" />
+    <Script file="esMX-Spells.lua" />
+    <Script file="frFR-Professions.lua" />
+    <Script file="frFR-Spells.lua" />
+    <Script file="koKR-Professions.lua" />
+    <Script file="koKR-Spells.lua" />
+    <Script file="ptBR-Professions.lua" />
+    <Script file="ptBR-Spells.lua" />
+    <Script file="ruRU-Professions.lua" />
+    <Script file="ruRU-Spells.lua" />
+    <Script file="zhCN-Professions.lua" />
+    <Script file="zhCN-Spells.lua" />
+    <Script file="zhTW-Professions.lua" />
+    <Script file="zhTW-Spells.lua" />
+</Ui>
