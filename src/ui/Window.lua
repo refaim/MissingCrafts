@@ -87,7 +87,7 @@ end
 ---@param professionFrame Frame|nil
 ---@return boolean
 function Window:IsAttachedTo(professionFrame)
-    return self._professionFrame == professionFrame
+    return self._frame ~= nil and self._professionFrame == professionFrame
 end
 
 function Window:UpdateGeometry()

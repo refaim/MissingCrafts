@@ -107,18 +107,27 @@ end
 ---@param profession LcpProfession
 ---@param professionFrame Frame
 function addon:CreateOpenButton(profession, professionFrame, frameType)
+    local frameId = getFrameId(professionFrame)
+
     local onClick = function()
         if self:IsWindowAttachedTo(professionFrame) then
             self:DestroyMainWindow()
-        else
-            local player, _ = UnitName("player")
-            self:CreateMainWindow(professionFrame, frameType)
-            self:PopulateInterface(player, profession.localized_name)
-            self.window:UpdateGeometry()
+            for _, button in pairs(self.openButtonsByFrameId) do
+                button:SetChecked(false)
+            end
+            return
+        end
+
+        local player, _ = UnitName("player")
+        self:CreateMainWindow(professionFrame, frameType)
+        self:PopulateInterface(player, profession.localized_name)
+        self.window:UpdateGeometry()
+
+        for buttonFrameId, button in pairs(self.openButtonsByFrameId) do
+            button:SetChecked(buttonFrameId == frameId)
         end
     end
 
-    local frameId = getFrameId(professionFrame)
     self:DestroyOpenButton(professionFrame) -- Always destroy to rebind the frame and profession
     self.openButtonsByFrameId[frameId] = OpenButton:Create(onClick, professionFrame, frameType, self.placementPolicy)
 end

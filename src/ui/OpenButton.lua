@@ -3,7 +3,7 @@ setfenv(1, MissingCrafts)
 ---@class OpenButton
 ---@field _onClick fun():void
 ---@field _professionFrame Frame
----@field _button Button
+---@field _button CheckButton
 ---@field _placementPolicy PlacementPolicy
 OpenButton = {}
 
@@ -15,28 +15,26 @@ function OpenButton:Create(onClick, professionFrame, professionFrameType, placem
     local object = --[[---@type self]] {}
     setmetatable(object, {__index = OpenButton})
 
-    local button = CreateFrame("Button", nil, nil, "UIPanelButtonTemplate")
+    local button = CreateFrame("CheckButton")
     button:SetWidth(32)
     button:SetHeight(32)
 
-    local texturePath = [[Interface\Icons\INV_Scroll_05]]
-
     local normalTexture = button:CreateTexture()
-    normalTexture:SetTexture(texturePath)
+    normalTexture:SetTexture([[Interface\Icons\INV_Scroll_05]])
     normalTexture:SetAllPoints(button)
     button:SetNormalTexture(normalTexture)
     
-    local pushedTexture = button:CreateTexture()
-    pushedTexture:SetTexture(texturePath)
-    pushedTexture:SetPoint("TOPLEFT", button, "TOPLEFT", 1, -1)
-    pushedTexture:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 1, -1)
-    button:SetPushedTexture(pushedTexture)
-    
     local highlightTexture = button:CreateTexture()
-    highlightTexture:SetTexture(texturePath)
+    highlightTexture:SetTexture([[Interface\Buttons\ButtonHilight-Square]])
     highlightTexture:SetAllPoints(button)
-    highlightTexture:SetVertexColor(0.8, 0.8, 1.0, 0.5)
+    highlightTexture:SetBlendMode("ADD")
     button:SetHighlightTexture(highlightTexture)
+    
+    local checkedTexture = button:CreateTexture()
+    checkedTexture:SetTexture([[Interface\Buttons\CheckButtonHilight]])
+    checkedTexture:SetAllPoints(button)
+    checkedTexture:SetBlendMode("ADD")
+    button:SetCheckedTexture(checkedTexture)
 
     local anchor = placementPolicy:GetOpenButtonAnchor(professionFrameType)
     button:SetParent(professionFrame)
@@ -45,7 +43,7 @@ function OpenButton:Create(onClick, professionFrame, professionFrameType, placem
     button:SetScript("OnClick", function()
         onClick()
     end)
-    
+
     button:Show()
 
     object._onClick = onClick
@@ -64,8 +62,7 @@ function OpenButton:Destroy()
     erase(self)
 end
 
----@param professionFrame Frame
----@return boolean
-function OpenButton:IsAttachedTo(professionFrame)
-    return self._professionFrame == professionFrame
+---@param checked boolean
+function OpenButton:SetChecked(checked)
+    self._button:SetChecked(checked)
 end
