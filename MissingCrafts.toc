@@ -8,6 +8,7 @@
 lib\LibStub\LibStub.lua
 
 lib\AceCore-3.0\AceCore-3.0.xml
+lib\AceHook-3.0\AceHook-3.0.xml
 lib\AceLocale-3.0\AceLocale-3.0.xml
 lib\AceAddon-3.0\AceAddon-3.0.xml
 lib\AceDB-3.0\AceDB-3.0.xml

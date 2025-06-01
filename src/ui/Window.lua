@@ -6,6 +6,7 @@ setfenv(1, MissingCrafts)
 ---@field _professionFrameType LcpProfessionFrameType
 ---@field _closeButton Button
 ---@field _placementPolicy PlacementPolicy
+---@field _uiPanelsHooked boolean
 Window = {}
 
 ---@param addonInfo AddonInfo
@@ -16,8 +17,9 @@ Window = {}
 ---@param professionFrameType LcpProfessionFrameType
 ---@param placementPolicy PlacementPolicy
 ---@param AceGUI LibAceGUI
+---@param AceHook LibAceHookDef
 ---@return self
-function Window:Acquire(addonInfo, close, filtersPanel, craftsList, professionFrame, professionFrameType, placementPolicy, AceGUI)
+function Window:Acquire(addonInfo, close, filtersPanel, craftsList, professionFrame, professionFrameType, placementPolicy, AceGUI, AceHook)
     local frameStatus = placementPolicy:GetMainWindowGeometry(professionFrame, professionFrameType)
 
     local frame = AceGUI:Create("Frame")
@@ -62,6 +64,7 @@ function Window:Acquire(addonInfo, close, filtersPanel, craftsList, professionFr
     self._placementPolicy = placementPolicy
 
     self:UpdateGeometry()
+    self:HookUIPanels(AceHook)
 
     return self
 end
@@ -81,7 +84,7 @@ function Window:Release()
     self._placementPolicy = nil
 end
 
----@param professionFrame Frame
+---@param professionFrame Frame|nil
 ---@return boolean
 function Window:IsAttachedTo(professionFrame)
     return self._professionFrame == professionFrame
@@ -92,4 +95,22 @@ function Window:UpdateGeometry()
     self._frame:SetStatusTable(frameStatus)
     self._frame:ApplyStatus()
     self._frame:Show()
+end
+
+---@param AceHook LibAceHookDef
+function Window:HookUIPanels(AceHook)
+    if self._uiPanelsHooked then
+        return
+    end
+
+    local function MoveWindow()
+        if self:IsAttachedTo(GetLeftFrame()) or self:IsAttachedTo(GetCenterFrame()) then
+            self:UpdateGeometry()
+        end
+    end
+
+    AceHook:SecureHook("MovePanelToLeft", MoveWindow)
+    AceHook:SecureHook("MovePanelToCenter", MoveWindow)
+
+    self._uiPanelsHooked = true
 end

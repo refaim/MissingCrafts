@@ -16,6 +16,7 @@ assert(LibStub ~= nil, "LibStub is required to run this addon")
 local AceAddon, _ = LibStub("AceAddon-3.0")
 local AceDB, _ = LibStub("AceDB-3.0")
 local AceGUI, _ = LibStub("AceGUI-3.0")
+local AceHook, _ = LibStub("AceHook-3.0")
 
 local AceLocale, _ = LibStub("AceLocale-3.0")
 local L = --[[---@type MissingCraftsLocale]] AceLocale:GetLocale(ADDON_NAME, false)
@@ -146,7 +147,7 @@ function addon:CreateMainWindow(professionFrame, professionFrameType)
 
     local filtersPanel = FiltersPanel:Acquire(self.characterRepository, self.professionRepository, AceGUI)
     local craftsList = CraftsList:Acquire(AceGUI, self.vanillaFramePool)
-    local window = Window:Acquire(addonInfo, close, filtersPanel, craftsList, professionFrame, professionFrameType, self.placementPolicy, AceGUI)
+    local window = Window:Acquire(addonInfo, close, filtersPanel, craftsList, professionFrame, professionFrameType, self.placementPolicy, AceGUI, AceHook)
 
     filtersPanel:OnChange(function(filters)
         self.craftsList:PopulateInterface(self:GetCrafts(filters))
