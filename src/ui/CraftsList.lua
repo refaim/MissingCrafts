@@ -5,12 +5,14 @@ setfenv(1, MissingCrafts)
 ---@field _scrollFrame AceGUIScrollFrame
 ---@field _buttonsGroup AceGUISimpleGroup
 ---@field _items CraftsListItem[]
+---@field _tooltipEnhancer TooltipEnhancer
 CraftsList = {}
 
 ---@param AceGUI LibAceGUI
 ---@param vanillaFramePool VanillaFramePool
+---@param tooltipEnhancer TooltipEnhancer
 ---@return CraftsList
-function CraftsList:Acquire(AceGUI, vanillaFramePool)
+function CraftsList:Acquire(AceGUI, vanillaFramePool, tooltipEnhancer)
     local buttonsGroup = AceGUI:Create("SimpleGroup")
     buttonsGroup:SetLayout("Fill")
     buttonsGroup:SetFullWidth(true)
@@ -20,12 +22,14 @@ function CraftsList:Acquire(AceGUI, vanillaFramePool)
     scrollFrame:AddChild(buttonsGroup)
 
     self._framePool = vanillaFramePool
+    self._tooltipEnhancer = tooltipEnhancer
     self._scrollFrame = scrollFrame
     self._buttonsGroup = buttonsGroup
     self._items = {}
 
     scrollFrame:SetCallback("OnRelease", function()
         self._framePool = nil
+        self._tooltipEnhancer = nil
         self._scrollFrame = nil
         self._buttonsGroup = nil
         for _, item in ipairs(self._items) do
@@ -62,24 +66,15 @@ end
 function CraftsList:PopulateInterface(crafts)
     table.sort(crafts, compareCrafts)
 
-    ---@param clickedItem CraftsListItem
-    local highlightItem = function(clickedItem)
-        for _, otherItem in ipairs(self._items) do
-            otherItem:SetHighlight(otherItem == clickedItem)
-        end
-    end
-
     local buttonsGroup = --[[---@not nil]] self._buttonsGroup
     ---@type Frame
     local anchor = buttonsGroup.frame
     for i, craft in ipairs(crafts) do
         local item = self._items[i]
         if item == nil then
-            item = CraftsListItem:Create(293, 16, self._framePool)
+            item = CraftsListItem:Create(293, 16, self._framePool, self._tooltipEnhancer)
             tinsert(self._items, item)
         end
-        item:SetHighlight(false)
-        item:OnClick(highlightItem)
         item:Attach(buttonsGroup.frame, anchor, "TOPLEFT", i == 1 and "TOPLEFT" or "BOTTOMLEFT", 0, 0)
         item:PopulateInterface(craft)
         anchor = item:GetFrame()

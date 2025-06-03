@@ -155,7 +155,7 @@ function addon:CreateMainWindow(professionFrame, professionFrameType)
     end
 
     local filtersPanel = FiltersPanel:Acquire(self.characterRepository, self.professionRepository, AceGUI)
-    local craftsList = CraftsList:Acquire(AceGUI, self.vanillaFramePool)
+    local craftsList = CraftsList:Acquire(AceGUI, self.vanillaFramePool, self.tooltipEnhancer)
     local window = Window:Acquire(addonInfo, close, filtersPanel, craftsList, professionFrame, professionFrameType, self.placementPolicy, AceGUI, AceHook)
 
     filtersPanel:OnChange(function(filters)

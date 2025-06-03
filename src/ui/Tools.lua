@@ -1,7 +1,59 @@
 setfenv(1, MissingCrafts)
 
+---@type ScriptType[]
+local SCRIPT_TYPES = {
+    "OnAnimFinished",
+    "OnChar",
+    "OnClick",
+    "OnColorSelect",
+    "OnCursorChanged",
+    "OnDoubleClick",
+    "OnDragStart",
+    "OnDragStop",
+    "OnEditFocusGained",
+    "OnEditFocusLost",
+    "OnEnter",
+    "OnEnterPressed",
+    "OnEscapePressed",
+    "OnEvent",
+    "OnHide",
+    "OnHorizontalScroll",
+    "OnHyperlinkClick",
+    "OnHyperlinkEnter",
+    "OnHyperlinkLeave",
+    "OnInputLanguageChanged",
+    "OnKeyDown",
+    "OnKeyUp",
+    "OnLeave",
+    "OnLoad",
+    "OnMessageScrollChanged",
+    "OnMouseDown",
+    "OnMouseUp",
+    "OnMouseWheel",
+    "OnReceiveDrag",
+    "OnScrollRangeChanged",
+    "OnShow",
+    "OnSizeChanged",
+    "OnSpacePressed",
+    "OnTabPressed",
+    "OnTextChanged",
+    "OnTextSet",
+    "OnTooltipAddMoney",
+    "OnTooltipCleared",
+    "OnTooltipSetDefaultAnchor",
+    "OnUpdate",
+    "OnUpdateModel",
+    "OnValueChanged",
+    "OnVerticalScroll",
+}
+
 ---@param frame Frame
 function clearFrame(frame)
+    for _, scriptType in ipairs(SCRIPT_TYPES) do
+        if frame:HasScript(scriptType) then
+            frame:SetScript(scriptType, nil)
+        end
+    end
     frame:UnregisterAllEvents()
     frame:ClearAllPoints()
     frame:Hide()

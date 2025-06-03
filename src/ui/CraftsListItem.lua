@@ -4,13 +4,15 @@ setfenv(1, MissingCrafts)
 ---@field _framePool VanillaFramePool
 ---@field _button Button
 ---@field _fontString FontString
+---@field _tooltipEnhancer TooltipEnhancer
 CraftsListItem = {}
 
 ---@param width number
 ---@param height number
 ---@param framePool VanillaFramePool
+---@param tooltipEnhancer TooltipEnhancer
 ---@return self
-function CraftsListItem:Create(width, height, framePool)
+function CraftsListItem:Create(width, height, framePool, tooltipEnhancer)
     local button = framePool:Acquire("Button")
     button:SetWidth(width)
     button:SetHeight(height)
@@ -29,17 +31,16 @@ function CraftsListItem:Create(width, height, framePool)
     result._framePool = framePool
     result._button = button
     result._fontString = fontString
+    result._tooltipEnhancer = tooltipEnhancer
     return result
 end
 
 function CraftsListItem:Destroy()
+    if self._button ~= nil and GameTooltip:IsOwned(self._button) then
+        GameTooltip:Hide()
+    end
     self._framePool:Release(self._button)
     erase(self)
-end
-
----@param callback fun(item: CraftsListItem)
-function CraftsListItem:OnClick(callback)
-    self._button:SetScript("OnClick", function() callback(self) end)
 end
 
 ---@return Frame
@@ -67,13 +68,49 @@ function CraftsListItem:PopulateInterface(craft)
     self._button:SetText(text)
     self._button:SetTextColor(color.r, color.g, color.b)
     self._fontString:SetText(text)
+    self:SetupInteraction(craft.recipeId, craft.resultId)
 end
 
----@param enable boolean
-function CraftsListItem:SetHighlight(enable)
-    if enable then
-        self._button:LockHighlight()
-    else
-        self._button:UnlockHighlight()
-    end
+---@param recipeId number|nil
+---@param resultId number|nil
+function CraftsListItem:SetupInteraction(recipeId, resultId)
+    self._button:SetScript("OnEnter", function()
+        local itemId = recipeId
+        if itemId == nil or IsAltKeyDown() or IsControlKeyDown() then
+            itemId = resultId
+        end
+        if itemId ~= nil then
+            GameTooltip:SetOwner(self._button, "ANCHOR_RIGHT")
+            if GetItemInfo(--[[---@not nil]] itemId) ~= nil then
+                GameTooltip:SetHyperlink("item:" .. itemId)
+            else
+                self._tooltipEnhancer:EnhanceTooltip(GameTooltip, --[[---@not nil]] itemId)
+            end
+            GameTooltip:Show()
+        end
+    end)
+
+    self._button:SetScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
+
+    self._button:SetScript("OnClick", function()
+        if IsControlKeyDown() then
+            if resultId ~= nil then
+                DressUpItem(--[[---@not nil]] resultId)
+            end
+        elseif IsShiftKeyDown() then
+            local itemId = recipeId
+            if IsAltKeyDown() then
+                itemId = resultId
+            end
+            if itemId ~= nil and ChatFrameEditBox:IsVisible() then
+                local name, link, quality, _, _, _, _, _, _ = GetItemInfo(--[[---@not nil]] itemId)
+                if name ~= nil then
+                    local _, _, _, hex = GetItemQualityColor(quality)
+                    ChatFrameEditBox:Insert(hex .. "|H" .. link .. "|h[" .. name .. "]|h|r")
+                end
+            end
+        end
+    end)
 end

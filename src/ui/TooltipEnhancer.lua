@@ -45,19 +45,19 @@ end
 ---@param itemId number
 ---@return boolean
 function TooltipEnhancer:EnhanceTooltip(tooltip, itemId)
-    local items = self:CreateItems(itemId)
-    items = self:FilterItems(items)
+    local items = self:_CreateItems(itemId)
+    items = self:_FilterItems(items)
     if getn(items) == 0 then
         return false
     end
-    self:SortItems(items)
-    self:DrawItems(tooltip, items)
+    self:_SortItems(items)
+    self:_DrawItems(tooltip, items)
     return true
 end
 
 ---@param itemId number
 ---@return TooltipItem[]
-function TooltipEnhancer:CreateItems(itemId)
+function TooltipEnhancer:_CreateItems(itemId)
     local crafts = self._craftRepository:FindByRecipeId(itemId)
     if getn(crafts) == 0 then
         return {}
@@ -82,7 +82,7 @@ end
 
 ---@param items TooltipItem[]
 ---@return TooltipItem[]
-function TooltipEnhancer:FilterItems(items)
+function TooltipEnhancer:_FilterItems(items)
     local new_items = {}
     for _, item in ipairs(items) do
         if item.characterProfessionRank > 0 and item.status ~= RecipeStatus.CannotLearn then
@@ -93,7 +93,7 @@ function TooltipEnhancer:FilterItems(items)
 end
 
 ---@param items TooltipItem[]
-function TooltipEnhancer:SortItems(items)
+function TooltipEnhancer:_SortItems(items)
     table.sort(items, function(a, b)
         return a.characterName < b.characterName
     end)
@@ -101,7 +101,7 @@ end
 
 ---@param tooltip GameTooltip
 ---@param items TooltipItem[]
-function TooltipEnhancer:DrawItems(tooltip, items)
+function TooltipEnhancer:_DrawItems(tooltip, items)
     ---@type table<RecipeStatus, string>
     local statusToColor = {
         [RecipeStatus.IsLearned] = "|cff808080",
