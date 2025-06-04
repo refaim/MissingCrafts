@@ -39,14 +39,14 @@ src\locale\zhCN.lua
 src\locale\zhTW.lua
 
 src\ui\Tools.lua
-src\ui\PlacementPolicy.lua
 src\ui\VanillaFramePool.lua
-src\ui\CraftsListItem.lua
-src\ui\CraftsList.lua
-src\ui\Dropdown.lua
-src\ui\FiltersPanel.lua
-src\ui\Window.lua
-src\ui\OpenButton.lua
+src\ui\list\CraftsListItem.lua
+src\ui\list\CraftsList.lua
+src\ui\filters\Dropdown.lua
+src\ui\filters\FiltersPanel.lua
+src\ui\window\PlacementPolicy.lua
+src\ui\window\OpenButton.lua
+src\ui\window\Window.lua
 src\ui\TooltipEnhancer.lua
 
 src\MissingCrafts.lua
