@@ -11,7 +11,7 @@
 local LibStub = getglobal("LibStub")
 assert(LibStub ~= nil)
 
-local untyped_lib, _ = LibStub:NewLibrary("LibCrafts-1.0", 6)
+local untyped_lib, _ = LibStub:NewLibrary("LibCrafts-1.0", 7)
 if not untyped_lib then return end
 
 ---@class LibCrafts
@@ -58,6 +58,7 @@ end
 lib.env = {
     is_debug = false,
     is_turtle_wow = getglobal("LFT") ~= nil,
+    is_super_wow_loaded = getglobal("SpellInfo") ~= nil,
 }
 
 lib.constants = {
@@ -90,6 +91,7 @@ lib.constants = {
 ---@shape LcEnvironment
 ---@field is_debug boolean
 ---@field is_turtle_wow boolean
+---@field is_super_wow_loaded boolean
 
 ---@shape LcConstants
 ---@field qualities LcItemQualities
@@ -143,6 +145,7 @@ lib.constants = {
 ---@field sources LcSpellSource[]
 ---@field recipes LcRecipe[]
 ---@field reagent_id_to_count table<number, number>
+---@field was_enriched boolean
 local Craft = {}
 
 ---@param value string
@@ -164,6 +167,22 @@ local function translate_from_en_to_game_locale(value, locale_module_name)
     return --[[---@type string]] localized_value
 end
 
+---@param craft LcCraft
+---@return LcCraft
+local function enrich(craft)
+    if not lib.env.is_super_wow_loaded or craft.was_enriched then
+        return craft
+    end
+
+    local spell_name, _, _, _, _ = SpellInfo(craft.spell_id)
+    if spell_name ~= nil then
+        craft.localized_spell_name = spell_name
+        craft.was_enriched = true
+    end
+
+    return craft
+end
+
 ---
 --- Returns a list of crafts by reagent item id.
 ---
@@ -172,7 +191,7 @@ end
 function lib:GetCraftsByReagentId(item_id)
     local crafts = {}
     for spell_id, _ in pairs(self.reagent_id_to_spell_ids_set[item_id] or {}) do
-        tinsert(crafts, self.spell_id_to_craft[spell_id])
+        tinsert(crafts, enrich(self.spell_id_to_craft[spell_id]))
     end
     return crafts
 end
@@ -185,7 +204,7 @@ end
 function lib:GetCraftsByRecipeId(item_id)
     local crafts = {}
     for spell_id, _ in pairs(self.recipe_id_to_spell_ids_set[item_id] or {}) do
-        tinsert(crafts, self.spell_id_to_craft[spell_id])
+        tinsert(crafts, enrich(self.spell_id_to_craft[spell_id]))
     end
     return crafts
 end
@@ -200,7 +219,7 @@ function lib:GetCraftsByProfession(profession)
     local spell_ids_set = d[profession] or d[translate_from_en_to_game_locale(profession, "Locales-Professions")] or {}
     local crafts = {}
     for spell_id, _ in pairs(spell_ids_set) do
-        tinsert(crafts, self.spell_id_to_craft[spell_id])
+        tinsert(crafts, enrich(self.spell_id_to_craft[spell_id]))
     end
     return crafts
 end
@@ -410,6 +429,11 @@ function Craft:Save()
     if lib.env.is_debug then
         assert(next(self.sources) ~= nil or next(self.recipes) ~= nil)
         assert(next(self.reagent_id_to_count) ~= nil)
+    end
+
+    self.was_enriched = false
+    if lib.env.is_super_wow_loaded then
+        enrich(self)
     end
 
     local old_craft = lib.spell_id_to_craft[self.spell_id]
