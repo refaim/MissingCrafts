@@ -30,7 +30,6 @@ src\locale\Tools.lua
 src\locale\deDE.lua
 src\locale\enUS.lua
 src\locale\esES.lua
-src\locale\esMX.lua
 src\locale\frFR.lua
 src\locale\koKR.lua
 src\locale\ptBR.lua

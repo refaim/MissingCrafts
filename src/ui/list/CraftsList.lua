@@ -1,6 +1,7 @@
 setfenv(1, MissingCrafts)
 
 ---@class CraftsList
+---@field _locale MissingCraftsLocale
 ---@field _framePool VanillaFramePool
 ---@field _scrollFrame AceGUIScrollFrame
 ---@field _buttonsGroup AceGUISimpleGroup
@@ -8,9 +9,10 @@ setfenv(1, MissingCrafts)
 CraftsList = {}
 
 ---@param AceGUI LibAceGUI
+---@param locale MissingCraftsLocale
 ---@param vanillaFramePool VanillaFramePool
 ---@return CraftsList
-function CraftsList:Acquire(AceGUI, vanillaFramePool)
+function CraftsList:Acquire(AceGUI, locale, vanillaFramePool)
     local buttonsGroup = AceGUI:Create("SimpleGroup")
     buttonsGroup:SetLayout("Fill")
     buttonsGroup:SetFullWidth(true)
@@ -19,12 +21,14 @@ function CraftsList:Acquire(AceGUI, vanillaFramePool)
     scrollFrame:SetLayout("List")
     scrollFrame:AddChild(buttonsGroup)
 
+    self._locale = locale
     self._framePool = vanillaFramePool
     self._scrollFrame = scrollFrame
     self._buttonsGroup = buttonsGroup
     self._items = {}
 
     scrollFrame:SetCallback("OnRelease", function()
+        self._locale = nil
         self._framePool = nil
         self._scrollFrame = nil
         self._buttonsGroup = nil
@@ -75,7 +79,7 @@ function CraftsList:PopulateInterface(crafts)
     for i, craft in ipairs(crafts) do
         local item = self._items[i]
         if item == nil then
-            item = CraftsListItem:Create(293, 16, self._framePool)
+            item = CraftsListItem:Create(293, 16, self._locale, self._framePool)
             tinsert(self._items, item)
         end
         item:SetHighlight(false)

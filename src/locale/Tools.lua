@@ -1,9 +1,21 @@
 setfenv(1, MissingCrafts)
 
 ---@shape MissingCraftsLocale
----@field tooltip_already_known string
----@field tooltip_can_learn_now string
----@field tooltip_can_learn_later string
+---@field recipe_tooltip_already_known string
+---@field recipe_tooltip_can_learn_now string
+---@field recipe_tooltip_can_learn_later string
+---@field craft_tooltip_source string
+---@field craft_source_chest string
+---@field craft_source_craft string
+---@field craft_source_drop string
+---@field craft_source_fishing string
+---@field craft_source_gift string
+---@field craft_source_pickpocketing string
+---@field craft_source_quest string
+---@field craft_source_trainer string
+---@field craft_source_unknown string
+---@field craft_source_vendor string
+---@field craft_source_world_object string
 
 ---@param code LocaleCode
 ---@param is_default boolean

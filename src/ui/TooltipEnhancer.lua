@@ -19,18 +19,18 @@ local RecipeStatus = {
 ---@class TooltipEnhancer
 ---@field _craftRepository CraftRepository
 ---@field _characterRepository CharacterRepository
----@field _L MissingCraftsLocale
+---@field _locale MissingCraftsLocale
 TooltipEnhancer = {}
 
 ---@param craftRepository CraftRepository
 ---@param characterRepository CharacterRepository
----@param L MissingCraftsLocale
+---@param locale MissingCraftsLocale
 ---@param LibItemTooltip LibItemTooltip
 ---@return self
-function TooltipEnhancer:Create(craftRepository, characterRepository, L, LibItemTooltip)
+function TooltipEnhancer:Create(craftRepository, characterRepository, locale, LibItemTooltip)
     self._craftRepository = craftRepository
     self._characterRepository = characterRepository
-    self._L = L
+    self._locale = locale
 
     LibItemTooltip:RegisterEvent("OnShow", function(tooltip, itemLink, itemId)
         if self:EnhanceTooltip(tooltip, itemId) then
@@ -111,9 +111,9 @@ function TooltipEnhancer:DrawItems(tooltip, items)
 
     ---@type table<RecipeStatus, string>
     local statusToText = {
-        [RecipeStatus.IsLearned] = self._L.tooltip_already_known,
-        [RecipeStatus.CanLearnNow] = self._L.tooltip_can_learn_now,
-        [RecipeStatus.CanLearnLater] = self._L.tooltip_can_learn_later,
+        [RecipeStatus.IsLearned] = self._locale.recipe_tooltip_already_known,
+        [RecipeStatus.CanLearnNow] = self._locale.recipe_tooltip_can_learn_now,
+        [RecipeStatus.CanLearnLater] = self._locale.recipe_tooltip_can_learn_later,
     }
 
     tooltip:AddLine(" ")
