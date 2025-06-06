@@ -11,7 +11,7 @@
 local LibStub = getglobal("LibStub")
 assert(LibStub ~= nil)
 
-local untyped_lib, _ = LibStub:NewLibrary("LibCraftingProfessions-1.0", 10)
+local untyped_lib, _ = LibStub:NewLibrary("LibCraftingProfessions-1.0", 12)
 if not untyped_lib then
     return
 end
@@ -27,22 +27,26 @@ end
 
 local IS_TURTLE_WOW = getglobal("LFT") ~= nil
 
----@type table<string, boolean>
-local ALL_EXISTING_CRAFTING_PROFESSIONS_SET = {
-    ["Alchemy"] = true,
-    ["Blacksmithing"] = true,
-    ["Cooking"] = true,
-    ["Enchanting"] = true,
-    ["Engineering"] = true,
-    ["First Aid"] = true,
-    ["Leatherworking"] = true,
-    ["Mining"] = true,
-    ["Poisons"] = true,
-    ["Tailoring"] = true,
-}
+---@shape LcpProfessionProps
+---@field icon string
+
+---@type table<string, LcpProfessionProps>
+local P = {}
+P["Alchemy"] = {icon = [[Interface\Icons\trade_alchemy]]}
+P["Blacksmithing"] = {icon = [[Interface\Icons\trade_blacksmithing]]}
+P["Cooking"] = {icon = [[Interface\Icons\inv_misc_food_15]]}
+P["Enchanting"] = {icon = [[Interface\Icons\trade_engraving]]}
+P["Engineering"] = {icon = [[Interface\Icons\trade_engineering]]}
+P["First Aid"] = {icon = [[Interface\Icons\spell_holy_sealofsacrifice]]}
+P["Leatherworking"] = {icon = [[Interface\Icons\inv_misc_armorkit_17]]}
+P["Mining"] = {icon = [[Interface\Icons\spell_fire_flameblades]]}
+P["Poisons"] = {icon = [[Interface\Icons\trade_brewpoison]]}
+P["Tailoring"] = {icon = [[Interface\Icons\trade_tailoring]]}
 if IS_TURTLE_WOW then
-    ALL_EXISTING_CRAFTING_PROFESSIONS_SET["Jewelcrafting"] = true
+    P["Jewelcrafting"] = {icon = [[Interface\Icons\inv_helmet_44]]}
 end
+local PROFESSION_TO_PROPS = P
+P = {}
 
 ---@type table<string, string>
 local ENGLISH_TO_LOCALIZED = {}
@@ -52,6 +56,7 @@ local LOCALIZED_TO_ENGLISH = {}
 ---@shape LcpProfession
 ---@field english_name string
 ---@field localized_name string
+---@field icon_texture_path string
 
 ---@shape LcpKnownProfession: LcpProfession
 ---@field cur_rank number
@@ -106,8 +111,12 @@ end
 function lib:GetSupportedProfessions()
     ---@type LcpProfession[]
     local professions = {}
-    for english_name, _ in pairs(ALL_EXISTING_CRAFTING_PROFESSIONS_SET) do
-        tinsert(professions, {english_name = english_name, localized_name = ENGLISH_TO_LOCALIZED[english_name]})
+    for english_name, props in pairs(PROFESSION_TO_PROPS) do
+        tinsert(professions, {
+            english_name = english_name,
+            localized_name = ENGLISH_TO_LOCALIZED[english_name],
+            icon_texture_path = props.icon,
+        })
     end
     return professions
 end
@@ -134,12 +143,17 @@ function lib:GetPlayerProfessions()
             end
 
             local english_name = LOCALIZED_TO_ENGLISH[localized_name]
-            local is_crafting_profession = ALL_EXISTING_CRAFTING_PROFESSIONS_SET[english_name] ~= nil
-            if is_crafting_profession then
+            local crafting_props = PROFESSION_TO_PROPS[english_name]
+            if crafting_props ~= nil then
                 if not ready(rank) then
                     return nil
                 end
-                tinsert(professions, {english_name = english_name, localized_name = localized_name, cur_rank = rank})
+                tinsert(professions, {
+                    english_name = english_name,
+                    localized_name = localized_name,
+                    icon_texture_path = crafting_props.icon,
+                    cur_rank = rank,
+                })
             end
         end
     end
@@ -374,7 +388,11 @@ local function send_frame_close_event(frame)
     end
 end
 
+local craft_scan_in_progress = false
+
 local function scan_craft_frame()
+    craft_scan_in_progress = true
+
     ---@type _LcpProfessionAdapter
     local adapter = {
         GetProfessionInfo = function()
@@ -397,11 +415,13 @@ local function scan_craft_frame()
 
     local localized_name, cur_rank, _ = adapter.GetProfessionInfo()
     if not ready(localized_name) or not ready(cur_rank) then
+        craft_scan_in_progress = false
         return
     end
 
     local english_name = LOCALIZED_TO_ENGLISH[--[[---@not nil]] localized_name]
     if english_name == nil or english_name == "Beast Training" then
+        craft_scan_in_progress = false
         return
     end
 
@@ -409,10 +429,12 @@ local function scan_craft_frame()
 
     local skills = scan_skills(adapter)
     if not ready(skills) then
+        craft_scan_in_progress = false
         return
     end
 
     save_skills(english_name, --[[---@not nil]] skills)
+    craft_scan_in_progress = false
 end
 
 ---@shape _LcpSkillFilterAdapter
@@ -441,7 +463,12 @@ local function disable_trade_skill_filters(adapter)
     return selected_options
 end
 
+local trade_skill_scan_in_progress = false
+
+---@return boolean
 local function scan_trade_skill_frame()
+    trade_skill_scan_in_progress = true
+
     ---@type _LcpSkillFilterAdapter
     local inv_slot_filter_adapter = {
         GetType = function() return "inv_slot" end,
@@ -475,22 +502,28 @@ local function scan_trade_skill_frame()
 
     local localized_name, cur_rank, _ = profession_adapter.GetProfessionInfo()
     if not ready(localized_name) or not ready(cur_rank) then
-        return
+        trade_skill_scan_in_progress = false
+        return false
     end
 
     local english_name = LOCALIZED_TO_ENGLISH[--[[---@not nil]] localized_name]
     if english_name == nil then
-        return
+        trade_skill_scan_in_progress = false
+        return false
     end
 
     send_frame_show_event(english_name, --[[---@not nil]] localized_name, --[[---@not nil]] cur_rank, TradeSkillFrame)
 
     local skills = scan_skills(profession_adapter)
     if not ready(skills) then
-        return
+        trade_skill_scan_in_progress = false
+        return false
     end
 
     save_skills(english_name, --[[---@not nil]] skills)
+
+    trade_skill_scan_in_progress = false
+    return true
 end
 
 local L = ENGLISH_TO_LOCALIZED
@@ -685,10 +718,29 @@ end
 
 if lib.event_frame ~= nil then
     lib.event_frame:UnregisterAllEvents()
+    lib.event_frame:SetScript("OnUpdate", nil)
     lib.event_frame:SetScript("OnEvent", nil)
 end
+
+local render_pseudo_time = 0
+local craft_frame_successfully_scanned_at = 0
+local trade_skill_frame_successfully_scanned_at = 0
+
 lib.event_frame = CreateFrame("Frame")
+
+lib.event_frame:SetScript("OnUpdate", function ()
+    -- Third-party addons can trigger multiple UPDATE events
+    -- so we count rendered frames to not scan skills more than once per frame
+    render_pseudo_time = render_pseudo_time + 1
+    if render_pseudo_time >= 100 then
+        render_pseudo_time = 1
+    end
+end)
+
 lib.event_frame:SetScript("OnEvent", function()
+    local do_craft_scan = false
+    local do_trade_skill_scan = false
+
     if event == "ADDON_LOADED" then
         for _, addon in ipairs(SUPPORTED_THIRD_PARTY_ADDONS) do
             if addon.name == arg1 and addon.opens_and_closes_vanilla_profession_frames then
@@ -696,24 +748,57 @@ lib.event_frame:SetScript("OnEvent", function()
             end
         end
     elseif event == "CRAFT_SHOW" then
-        scan_craft_frame()
+        do_craft_scan = true
+    elseif event == "CRAFT_UPDATE" then
+        if not craft_scan_in_progress then
+            -- Learned new skill AND craft frame is opened
+            do_craft_scan = true
+        end
     elseif event == "CRAFT_CLOSE" then
         if not was_third_party_on_hide_hooked then
             send_frame_close_event(CraftFrame)
         end
     elseif event == "TRADE_SKILL_SHOW" then
-        scan_trade_skill_frame()
+        do_trade_skill_scan = true
+    elseif event == "TRADE_SKILL_UPDATE" then
+        if not trade_skill_scan_in_progress then
+            -- Learned new skill AND trade skill frame is opened
+            do_trade_skill_scan = true
+        end
     elseif event == "TRADE_SKILL_CLOSE" then
         if not was_third_party_on_hide_hooked then
             send_frame_close_event(TradeSkillFrame)
+        end
+    elseif event == "CHARACTER_POINTS_CHANGED" then
+        -- Learned or unlearned profession/specialization
+        forget_obsolete_professions(lib:GetPlayerProfessions())
+    elseif event == "SKILL_LINES_CHANGED" then
+        -- Raised the profession skill level OR learned/unlearned profession/specialization
+        do_craft_scan = true
+        do_trade_skill_scan = true
+    end
+
+    if do_craft_scan and craft_frame_successfully_scanned_at ~= render_pseudo_time then
+        if scan_craft_frame() then
+            craft_frame_successfully_scanned_at = render_pseudo_time
+        end
+    end
+
+    if do_trade_skill_scan and trade_skill_frame_successfully_scanned_at ~= render_pseudo_time then
+        if scan_trade_skill_frame() then
+            trade_skill_frame_successfully_scanned_at = render_pseudo_time
         end
     end
 end)
 lib.event_frame:RegisterEvent("ADDON_LOADED")
 lib.event_frame:RegisterEvent("CRAFT_SHOW")
+lib.event_frame:RegisterEvent("CRAFT_UPDATE")
 lib.event_frame:RegisterEvent("CRAFT_CLOSE")
 lib.event_frame:RegisterEvent("TRADE_SKILL_SHOW")
+lib.event_frame:RegisterEvent("TRADE_SKILL_UPDATE")
 lib.event_frame:RegisterEvent("TRADE_SKILL_CLOSE")
+lib.event_frame:RegisterEvent("CHARACTER_POINTS_CHANGED")
+lib.event_frame:RegisterEvent("SKILL_LINES_CHANGED")
 
 for _, addon in ipairs(SUPPORTED_THIRD_PARTY_ADDONS) do
     if is_third_party_loaded(addon) and addon.opens_and_closes_vanilla_profession_frames then
