@@ -11,7 +11,7 @@
 local LibStub = getglobal("LibStub")
 assert(LibStub ~= nil)
 
-local untyped_lib, _ = LibStub:NewLibrary("LibCrafts-1.0", 7)
+local untyped_lib, _ = LibStub:NewLibrary("LibCrafts-1.0", 8)
 if not untyped_lib then return end
 
 ---@class LibCrafts
@@ -175,7 +175,7 @@ local function enrich(craft)
     end
 
     local spell_name, _, _, _, _ = SpellInfo(craft.spell_id)
-    if spell_name ~= nil then
+    if type(spell_name) == "string" then
         craft.localized_spell_name = spell_name
         craft.was_enriched = true
     end
