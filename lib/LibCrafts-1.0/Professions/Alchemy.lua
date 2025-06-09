@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Alchemy", 2
+local name, version = "Professions-Alchemy", 3
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Alchemy")
 if not module then return end
 
@@ -892,5 +892,17 @@ if lib.env.is_turtle_wow then
         :AddReagent(8925, 1) -- Crystal Vial
         :AddReagent(11176, 1) -- Dream Dust
         :AddReagent(61198, 1) -- Small Dream Shard
+        :Save()
+
+    module:NewCraft(57555, "Transmute: Elemental Earth", 300, {})
+        :SetResult(7067)
+        :AddRecipe(91796, Quality.Common, {RecipeSource.Vendor})
+        :AddReagent(7075, 1) -- Core of Earth
+        :Save()
+
+    module:NewCraft(57557, "Transmute: Elemental Water", 300, {})
+        :SetResult(7070)
+        :AddRecipe(91797, Quality.Common, {RecipeSource.Vendor})
+        :AddReagent(7079, 1) -- Globe of Water
         :Save()
 end

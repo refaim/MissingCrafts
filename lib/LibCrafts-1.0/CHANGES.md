@@ -1,3 +1,9 @@
+### Revision 9 (2025/06/10)
+- Vanilla: Fix a bunch of localization mistakes
+- Turtle: Fully support esES, ptBR and zhCN locales
+- Turtle: Add several missing crafts
+- Turtle: Fix and rework Jewelcrafting
+
 ### Revision 8 (2025/06/07)
 - Attempt to work around a supposed bug in SpellInfo SuperWoW function
 

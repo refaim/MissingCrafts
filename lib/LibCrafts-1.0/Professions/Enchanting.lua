@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Enchanting", 2
+local name, version = "Professions-Enchanting", 3
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Enchanting")
 if not module then return end
 
@@ -911,6 +911,14 @@ if lib.env.is_turtle_wow then
         :AddReagent(16203, 2) -- Greater Eternal Essence
         :AddReagent(16204, 2) -- Illusion Dust
         :AddReagent(17967, 1) -- Refined Scale of Onyxia
+        :Save()
+
+    module:NewCraft(41758, "Enchanted Gemstone Oil", 275, {})
+        :SetResult(55248)
+        :AddRecipe(70198, Quality.Common, {RecipeSource.Vendor})
+        :AddReagent(11175, 1) -- Greater Nether Essence
+        :AddReagent(16203, 1) -- Greater Eternal Essence
+        :AddReagent(55247, 1) -- Gemstone Oil
         :Save()
 
     module:NewCraft(45071, "Enchant 2H Weapon - Minor Intellect", 75, {})

@@ -594,13 +594,13 @@ if lib.env.is_turtle_wow then
         :Save()
 
     module:NewCraft(49551, "Empowering Herbal Salad", 300, {})
-          :SetResult(83309)
-          :AddRecipe(92045, Quality.Rare, {RecipeSource.Quest})
-          :AddReagent(6370, 1) -- Blackmouth Oil
-          :AddReagent(8838, 1) -- Sungrass
-          :AddReagent(22529, 1) -- Savage Frond
-          :AddReagent(51714, 3) -- Sweet Mountain Berry
-          :Save()
+        :SetResult(83309)
+        :AddRecipe(92045, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(6370, 1) -- Blackmouth Oil
+        :AddReagent(8838, 1) -- Sungrass
+        :AddReagent(22529, 1) -- Savage Frond
+        :AddReagent(51714, 3) -- Sweet Mountain Berry
+        :Save()
 
     module:NewCraft(57047, "Danonzo's Tel'Abim Surprise", 300, {})
         :SetResult(60976)

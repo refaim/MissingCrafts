@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Engineering", 2
+local name, version = "Professions-Engineering", 3
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Engineering")
 if not module then return end
 
@@ -1290,6 +1290,36 @@ if lib.env.is_turtle_wow then
         :AddReagent(10561, 1) -- Mithril Casing
         :Save()
 
+    module:NewCraft(41073, "Jewelry Lens", 125, {})
+        :SetResult(41326)
+        :AddRecipe(40082, Quality.Common, {RecipeSource.Vendor})
+        :AddReagent(1705, 1) -- Lesser Moonstone
+        :AddReagent(2319, 1) -- Medium Leather
+        :AddReagent(2841, 2) -- Bronze Bar
+        :AddReagent(4371, 2) -- Bronze Tube
+        :AddReagent(4404, 1) -- Silver Contact
+        :Save()
+
+    module:NewCraft(41075, "Jewelry Scope", 225, {})
+        :SetResult(41327)
+        :AddRecipe(40083, Quality.Uncommon, {RecipeSource.Drop, RecipeSource.Vendor})
+        :AddReagent(3864, 1) -- Citrine
+        :AddReagent(4389, 1) -- Gyrochronatom
+        :AddReagent(7191, 1) -- Fused Wiring
+        :AddReagent(10559, 2) -- Mithril Tube
+        :AddReagent(10561, 4) -- Mithril Casing
+        :Save()
+
+    module:NewCraft(41077, "Precision Jewelry Kit", 175, {})
+        :SetResult(41328)
+        :AddRecipe(40084, Quality.Uncommon, {RecipeSource.Drop, RecipeSource.Vendor})
+        :AddReagent(4375, 3) -- Whirring Bronze Gizmo
+        :AddReagent(4382, 3) -- Bronze Framework
+        :AddReagent(4387, 1) -- Iron Strut
+        :AddReagent(4389, 1) -- Gyrochronatom
+        :AddReagent(55155, 1) -- Jewelers Kit
+        :Save()
+
     module:NewCraft(45057, "Unstable Mining Dynamite", 75, {})
         :SetResult(51268)
         :AddRecipe(51269, Quality.Uncommon, {RecipeSource.Drop})
@@ -1311,22 +1341,22 @@ if lib.env.is_turtle_wow then
 
     module:NewCraft(46608, "Hypertech Battery Pack", 250, {})
         :SetResult(60098)
-        :AddRecipe(51801, Quality.Rare, {RecipeSource.Drop})
-        :AddReagent(4404, 4) -- Silver Contact
-        :AddReagent(10558, 2) -- Gold Power Core
+        :AddRecipe(51809, Quality.Rare, {RecipeSource.Drop})
+        :AddReagent(4404, 1) -- Silver Contact
+        :AddReagent(10558, 1) -- Gold Power Core
         :AddReagent(10561, 1) -- Mithril Casing
         :Save()
 
     module:NewCraft(46610, "Battery-Powered Crowd Pummeler", 250, {})
         :SetResult(60099)
-        :AddRecipe(51809, Quality.Epic, {RecipeSource.Drop})
+        :AddRecipe(51809, Quality.Rare, {RecipeSource.Drop})
         :AddReagent(814, 2) -- Flask of Oil
         :AddReagent(3829, 1) -- Frost Oil
         :AddReagent(4375, 6) -- Whirring Bronze Gizmo
-        :AddReagent(7191, 4) -- Fused Wiring
+        :AddReagent(7191, 1) -- Fused Wiring
         :AddReagent(9449, 1) -- Manual Crowd Pummeler
         :AddReagent(18631, 1) -- Truesilver Transformer
-        :AddReagent(60098, 5) -- Hypertech Battery Pack
+        :AddReagent(60098, 1) -- Hypertech Battery Pack
         :Save()
 
     module:NewCraft(47027, "Portable Wormhole Generator - Stormwind", 125, {})

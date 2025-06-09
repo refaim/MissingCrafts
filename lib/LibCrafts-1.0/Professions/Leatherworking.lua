@@ -1111,6 +1111,7 @@ module:NewCraft(19067, "Stormshroud Pants", 275, {})
 module:NewCraft(19068, "Warbear Harness", 275, {})
     :SetResult(15064)
     :AddRecipe(15742, Quality.Common, {RecipeSource.Drop})
+    :AddRecipe(20253, Quality.Common, {RecipeSource.Vendor})
     :AddReagent(8170, 28) -- Rugged Leather
     :AddReagent(14341, 1) -- Rune Thread
     :AddReagent(15419, 12) -- Warbear Leather
@@ -1203,6 +1204,7 @@ module:NewCraft(19079, "Stormshroud Armor", 285, {})
 
 module:NewCraft(19080, "Warbear Woolies", 285, {})
     :SetResult(15065)
+    :AddRecipe(15754, Quality.Common, {RecipeSource.Drop})
     :AddRecipe(20254, Quality.Common, {RecipeSource.Vendor})
     :AddReagent(8170, 24) -- Rugged Leather
     :AddReagent(14341, 1) -- Rune Thread

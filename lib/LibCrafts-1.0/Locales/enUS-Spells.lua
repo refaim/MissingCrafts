@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, locale, version = "Locales-Spells", "enUS", 4
+local name, locale, version = "Locales-Spells", "enUS", 5
 local module = --[[---@type LcLocaleModule]] lib:RegisterLocaleModule(name, locale, version)
 if not module then return end
 
@@ -1316,8 +1316,8 @@ if lib.env.is_turtle_wow then
     L["Copper Knuckles"] = true
     L["Copper Staff"] = true
     L["Corehound Gloves"] = true
-    L["Corrosive Poison II"] = true
     L["Corrosive Poison"] = true
+    L["Corrosive Poison II"] = true
     L["Crown of Elegance"] = true
     L["Crown of Molten Ascension"] = true
     L["Crown of the Illustrious Queen"] = true
@@ -1350,22 +1350,22 @@ if lib.env.is_turtle_wow then
     L["Draenethyst Baton"] = true
     L["Dragonscale Leggings"] = true
     L["Dream's Herald"] = true
+    L["Dreamhide"] = true
     L["Dreamhide Belt"] = true
     L["Dreamhide Bracers"] = true
     L["Dreamhide Leggings"] = true
     L["Dreamhide Mantle"] = true
-    L["Dreamhide"] = true
     L["Dreamshard Elixir"] = true
     L["Dreamsteel Belt Buckle"] = true
     L["Dreamsteel Boots"] = true
     L["Dreamsteel Bracers"] = true
     L["Dreamsteel Leggings"] = true
     L["Dreamsteel Mantle"] = true
+    L["Dreamthread"] = true
     L["Dreamthread Bracers"] = true
     L["Dreamthread Gloves"] = true
     L["Dreamthread Kilt"] = true
     L["Dreamthread Mantle"] = true
-    L["Dreamthread"] = true
     L["Dreary Opal Gemstone"] = true
     L["Dustguider Sash"] = true
     L["Earthguard Tunic"] = true
@@ -1396,6 +1396,7 @@ if lib.env.is_turtle_wow then
     L["Enchanted Armor Kit"] = true
     L["Enchanted Bracelets"] = true
     L["Enchanted Emerald Gemstone"] = true
+    L["Enchanted Gemstone Oil"] = true
     L["Encrusted Bronze Staff"] = true
     L["Encrusted Copper Bangle"] = true
     L["Encrusted Gemstone Ring"] = true
@@ -1473,6 +1474,8 @@ if lib.env.is_turtle_wow then
     L["Ironforge Gauntlets"] = true
     L["Ironsun Citrine Ring"] = true
     L["Jade Harmony Circlet"] = true
+    L["Jewelry Lens"] = true
+    L["Jewelry Scope"] = true
     L["Lavish Gemmed Necklace"] = true
     L["Le Fishe Au Chocolat"] = true
     L["Lesser Fortification Ring"] = true
@@ -1530,6 +1533,7 @@ if lib.env.is_turtle_wow then
     L["Potion of Quickness"] = true
     L["Powerful Citrine Pendant"] = true
     L["Powerful Smelling Salts"] = true
+    L["Precision Jewelry Kit"] = true
     L["Primalist's Boots"] = true
     L["Primalist's Gloves"] = true
     L["Primalist's Headdress"] = true
@@ -1598,6 +1602,7 @@ if lib.env.is_turtle_wow then
     L["Shining Sapphire Gemstone"] = true
     L["Silver Medallion"] = true
     L["Simple Wooden Planter"] = true
+    L["Skyfire Jewel"] = true
     L["Small Pearl Ring"] = true
     L["Small Pearlstone Staff"] = true
     L["Smelt Dreamsteel"] = true
@@ -1650,6 +1655,8 @@ if lib.env.is_turtle_wow then
     L["Towerforge Crown"] = true
     L["Towerforge Demolisher"] = true
     L["Towerforge Pauldrons"] = true
+    L["Transmute: Elemental Earth"] = true
+    L["Transmute: Elemental Water"] = true
     L["Traveler's Tent"] = true
     L["Twilight Opal Cascade"] = true
     L["Unstable Arcane Gemstone"] = true
