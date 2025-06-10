@@ -679,7 +679,7 @@ module:NewCraft(8793, "Crimson Silk Shoulders", 190, {})
 
 module:NewCraft(8795, "Azure Shoulders", 190, {})
     :SetResult(7060)
-    :AddRecipe(7085, Quality.Uncommon, {RecipeSource.Chest, RecipeSource.Drop})
+    :AddRecipe(7085, Quality.Uncommon, {RecipeSource.Chest, RecipeSource.Drop, RecipeSource.Fishing})
     :AddReagent(4291, 2) -- Silken Thread
     :AddReagent(4305, 6) -- Bolt of Silk Cloth
     :AddReagent(6260, 2) -- Blue Dye
@@ -954,7 +954,7 @@ module:NewCraft(12082, "Shadoweave Boots", 240, {SpellSource.Trainer})
 
 module:NewCraft(12084, "Red Mageweave Headband", 240, {})
     :SetResult(10033)
-    :AddRecipe(10320, Quality.Uncommon, {RecipeSource.Chest, RecipeSource.Drop})
+    :AddRecipe(10320, Quality.Uncommon, {RecipeSource.Chest, RecipeSource.Drop, RecipeSource.Fishing})
     :AddReagent(2604, 2) -- Red Dye
     :AddReagent(4339, 4) -- Bolt of Mageweave
     :AddReagent(8343, 2) -- Heavy Silken Thread
@@ -1289,7 +1289,7 @@ module:NewCraft(18445, "Mooncloth Bag", 300, {})
     :AddRecipe(14499, Quality.Uncommon, {RecipeSource.Chest, RecipeSource.Drop})
     :AddReagent(14048, 4) -- Bolt of Runecloth
     :AddReagent(14341, 1) -- Rune Thread
-    :AddReagent(14342, 2) -- Mooncloth
+    :AddReagent(14342, 1) -- Mooncloth
     :Save()
 
 module:NewCraft(18446, "Wizardweave Robe", 300, {})
@@ -1380,8 +1380,9 @@ module:NewCraft(18455, "Bottomless Bag", 300, {})
     :AddRecipe(14510, Quality.Rare, {RecipeSource.Drop})
     :AddReagent(14048, 8) -- Bolt of Runecloth
     :AddReagent(14341, 2) -- Rune Thread
-    :AddReagent(14342, 4) -- Mooncloth
+    :AddReagent(14342, 12) -- Mooncloth
     :AddReagent(14344, 2) -- Large Brilliant Shard
+    :AddReagent(17012, 2) -- Core Leather
     :Save()
 
 module:NewCraft(18456, "Truefaith Vestments", 300, {})
@@ -1567,7 +1568,6 @@ module:NewCraft(23665, "Argent Shoulders", 300, {})
     :SetResult(19059)
     :AddRecipe(19217, Quality.Common, {RecipeSource.Vendor})
     :AddReagent(12809, 2) -- Guardian Stone
-    :AddReagent(12811, 1) -- Righteous Orb
     :AddReagent(14227, 2) -- Ironweb Spider Silk
     :AddReagent(14342, 5) -- Mooncloth
     :Save()
@@ -1807,6 +1807,14 @@ module:NewCraft(28482, "Sylvan Shoulders", 300, {})
     :Save()
 
 if lib.env.is_turtle_wow then
+    module:NewCraft(3872, "Rich Purple Silk Shirt", 185, {})
+        :SetResult(4335)
+        :AddRecipe(4354, Quality.Rare, {RecipeSource.Chest, RecipeSource.Drop})
+        :AddReagent(4291, 1) -- Silken Thread
+        :AddReagent(4305, 4) -- Bolt of Silk Cloth
+        :AddReagent(4342, 1) -- Purple Dye
+        :Save()
+
     module:NewCraft(7636, "Green Woolen Robe", 90, {})
         :SetResult(6243)
         :AddRecipe(6273, Quality.Common, {RecipeSource.Vendor})
@@ -1856,6 +1864,14 @@ if lib.env.is_turtle_wow then
         :AddReagent(8343, 2) -- Heavy Silken Thread
         :Save()
 
+    module:NewCraft(12086, "Shadoweave Mask", 245, {SpellSource.Trainer})
+        :SetResult(10025)
+        :AddRecipe(10463, Quality.Uncommon, {RecipeSource.Quest})
+        :AddReagent(4339, 2) -- Bolt of Mageweave
+        :AddReagent(8343, 2) -- Heavy Silken Thread
+        :AddReagent(10285, 8) -- Shadow Silk
+        :Save()
+
     module:NewCraft(12087, "Stormcloth Shoulders", 245, {})
         :SetResult(10038)
         :AddRecipe(10322, Quality.Uncommon, {RecipeSource.Drop})
@@ -1871,6 +1887,44 @@ if lib.env.is_turtle_wow then
         :AddReagent(4339, 6) -- Bolt of Mageweave
         :AddReagent(7079, 6) -- Globe of Water
         :AddReagent(8343, 3) -- Heavy Silken Thread
+        :Save()
+
+    module:NewCraft(20848, "Flarecore Mantle", 300, {})
+        :SetResult(16980)
+        :AddRecipe(17017, Quality.Common, {RecipeSource.Vendor})
+        :AddReagent(12810, 6) -- Enchanted Leather
+        :AddReagent(14341, 2) -- Rune Thread
+        :AddReagent(14342, 6) -- Mooncloth
+        :AddReagent(17010, 4) -- Fiery Core
+        :AddReagent(17011, 4) -- Lava Core
+        :Save()
+
+    module:NewCraft(20849, "Flarecore Gloves", 300, {})
+        :SetResult(16979)
+        :AddRecipe(17018, Quality.Common, {RecipeSource.Vendor})
+        :AddReagent(7078, 4) -- Essence of Fire
+        :AddReagent(12810, 2) -- Enchanted Leather
+        :AddReagent(14341, 2) -- Rune Thread
+        :AddReagent(14342, 4) -- Mooncloth
+        :AddReagent(17010, 6) -- Fiery Core
+        :Save()
+
+    module:NewCraft(26403, "Festive Red Dress", 250, {})
+        :SetResult(21154)
+        :AddRecipe(21722, Quality.Uncommon, {RecipeSource.Quest, RecipeSource.Vendor})
+        :AddReagent(2604, 2) -- Red Dye
+        :AddReagent(4625, 2) -- Firebloom
+        :AddReagent(14048, 4) -- Bolt of Runecloth
+        :AddReagent(14341, 1) -- Rune Thread
+        :Save()
+
+    module:NewCraft(26407, "Festive Red Pant Suit", 250, {})
+        :SetResult(21542)
+        :AddRecipe(21723, Quality.Uncommon, {RecipeSource.Quest, RecipeSource.Vendor})
+        :AddReagent(2604, 2) -- Red Dye
+        :AddReagent(4625, 2) -- Firebloom
+        :AddReagent(14048, 4) -- Bolt of Runecloth
+        :AddReagent(14341, 1) -- Rune Thread
         :Save()
 
     module:NewCraft(45066, "Gloves of Manathirst", 75, {})

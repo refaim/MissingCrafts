@@ -558,6 +558,20 @@ module:NewCraft(25954, "Sagefish Delight", 175, {})
     :Save()
 
 if lib.env.is_turtle_wow then
+    module:NewCraft(4094, "Barbecued Buzzard Wing", 175, {})
+        :SetResult(4457)
+        :AddRecipe(4609, Quality.Common, {RecipeSource.Quest, RecipeSource.Vendor})
+        :AddReagent(2692, 1) -- Hot Spices
+        :AddReagent(3404, 1) -- Buzzard Wing
+        :Save()
+
+    module:NewCraft(9513, "Thistle Tea", 60, {})
+        :SetResult(7676)
+        :AddRecipe(18160, Quality.Uncommon, {RecipeSource.Quest, RecipeSource.Vendor})
+        :AddReagent(159, 1) -- Refreshing Spring Water
+        :AddReagent(2452, 1) -- Swiftthistle
+        :Save()
+
     module:NewCraft(45054, "Maritime Gumbo", 35, {})
         :SetResult(30818)
         :AddRecipe(30819, Quality.Common, {RecipeSource.Quest})

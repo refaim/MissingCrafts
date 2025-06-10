@@ -1,3 +1,6 @@
+### Revision 13 (2025/06/10)
+- Fix localized profession names
+
 ### Revision 12 (2025/06/06)
 - Send profession skills update event when levelling up profession and learning new skill
 

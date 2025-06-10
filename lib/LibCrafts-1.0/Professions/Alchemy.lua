@@ -37,7 +37,7 @@ module:NewCraft(2332, "Minor Rejuvenation Potion", 40, {SpellSource.Trainer})
 
 module:NewCraft(2333, "Elixir of Lesser Agility", 140, {})
     :SetResult(3390)
-    :AddRecipe(3396, Quality.Common, {RecipeSource.Chest, RecipeSource.Drop})
+    :AddRecipe(3396, Quality.Common, {RecipeSource.Chest, RecipeSource.Drop, RecipeSource.Fishing})
     :AddReagent(2452, 1) -- Swiftthistle
     :AddReagent(3355, 1) -- Wild Steelbloom
     :AddReagent(3372, 1) -- Leaded Vial
@@ -133,7 +133,7 @@ module:NewCraft(3188, "Elixir of Ogre's Strength", 150, {})
 
 module:NewCraft(3230, "Elixir of Minor Agility", 50, {})
     :SetResult(2457)
-    :AddRecipe(2553, Quality.Common, {RecipeSource.Chest, RecipeSource.Drop, RecipeSource.Fishing})
+    :AddRecipe(2553, Quality.Common, {RecipeSource.Chest, RecipeSource.Drop, RecipeSource.Fishing, RecipeSource.Pickpocket})
     :AddReagent(765, 1) -- Silverleaf
     :AddReagent(2452, 1) -- Swiftthistle
     :AddReagent(3371, 1) -- Empty Vial
@@ -834,12 +834,60 @@ module:NewCraft(26277, "Elixir of Greater Firepower", 250, {})
     :Save()
 
 if lib.env.is_turtle_wow then
+    module:NewCraft(3449, "Shadow Oil", 165, {})
+        :SetResult(3824)
+        :AddRecipe(6068, Quality.Common, {RecipeSource.Vendor})
+        :AddReagent(3369, 2) -- Grave Moss
+        :AddReagent(3372, 1) -- Leaded Vial
+        :AddReagent(3818, 4) -- Fadeleaf
+        :Save()
+
+    module:NewCraft(3454, "Frost Oil", 200, {})
+        :SetResult(3829)
+        :AddRecipe(14634, Quality.Uncommon, {RecipeSource.Drop, RecipeSource.Vendor})
+        :AddReagent(3358, 4) -- Khadgar's Whisker
+        :AddReagent(3372, 1) -- Leaded Vial
+        :AddReagent(3819, 2) -- Wintersbite
+        :Save()
+
+    module:NewCraft(17574, "Greater Fire Protection Potion", 290, {})
+        :SetResult(13457)
+        :AddRecipe(13494, Quality.Uncommon, {RecipeSource.Drop})
+        :AddReagent(4625, 1) -- Firebloom
+        :AddReagent(7068, 1) -- Elemental Fire
+        :AddReagent(8925, 1) -- Crystal Vial
+        :Save()
+
+    module:NewCraft(17575, "Greater Frost Protection Potion", 290, {})
+        :SetResult(13456)
+        :AddRecipe(13495, Quality.Uncommon, {RecipeSource.Drop})
+        :AddReagent(7070, 1) -- Elemental Water
+        :AddReagent(8925, 1) -- Crystal Vial
+        :AddReagent(13467, 1) -- Icecap
+        :Save()
+
+    module:NewCraft(17578, "Greater Shadow Protection Potion", 290, {})
+        :SetResult(13459)
+        :AddRecipe(13499, Quality.Uncommon, {RecipeSource.Drop})
+        :AddReagent(3824, 1) -- Shadow Oil
+        :AddReagent(8836, 2) -- Arthas' Tears
+        :AddReagent(8925, 1) -- Crystal Vial
+        :Save()
+
     module:NewCraft(17579, "Greater Holy Protection Potion", 290, {})
         :SetResult(13460)
         :AddRecipe(13500, Quality.Uncommon, {RecipeSource.Vendor})
         :AddReagent(7069, 1) -- Elemental Air
         :AddReagent(8925, 1) -- Crystal Vial
         :AddReagent(13464, 1) -- Golden Sansam
+        :Save()
+
+    module:NewCraft(17580, "Major Mana Potion", 295, {})
+        :SetResult(13444)
+        :AddRecipe(13501, Quality.Uncommon, {RecipeSource.Drop, RecipeSource.Vendor})
+        :AddReagent(8925, 1) -- Crystal Vial
+        :AddReagent(13463, 2) -- Dreamfoil
+        :AddReagent(13467, 2) -- Icecap
         :Save()
 
     module:NewCraft(17632, "Alchemist's Stone", 300, {})
@@ -857,6 +905,15 @@ if lib.env.is_turtle_wow then
     module:NewCraft(22430, "Refined Scale of Onyxia", 300, {SpellSource.Quest})
         :SetResult(17967)
         :AddReagent(15410, 1) -- Scale of Onyxia
+        :Save()
+
+    module:NewCraft(22732, "Major Rejuvenation Potion", 300, {})
+        :SetResult(18253)
+        :AddRecipe(18257, Quality.Rare, {RecipeSource.Drop})
+        :AddReagent(10286, 1) -- Heart of the Wild
+        :AddReagent(13463, 3) -- Dreamfoil
+        :AddReagent(13464, 3) -- Golden Sansam
+        :AddReagent(18256, 1) -- Imbued Vial
         :Save()
 
     module:NewCraft(45989, "Elixir of Greater Nature Power", 300, {})

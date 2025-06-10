@@ -919,7 +919,7 @@ module:NewCraft(10632, "Helm of Fire", 250, {SpellSource.Trainer})
     :SetResult(8348)
     :AddReagent(4304, 40) -- Thick Leather
     :AddReagent(7075, 4) -- Core of Earth
-    :AddReagent(7077, 12) -- Heart of Fire
+    :AddReagent(7077, 8) -- Heart of Fire
     :AddReagent(8172, 2) -- Cured Thick Hide
     :AddReagent(8343, 4) -- Heavy Silken Thread
     :Save()
@@ -945,7 +945,7 @@ module:NewCraft(14930, "Quickdraw Quiver", 225, {SpellSource.Trainer})
     :SetResult(8217)
     :AddReagent(4291, 4) -- Silken Thread
     :AddReagent(4304, 12) -- Thick Leather
-    :AddReagent(8169, 1) -- Thick Hide
+    :AddReagent(8172, 1) -- Cured Thick Hide
     :AddReagent(8949, 1) -- Elixir of Agility
     :Save()
 
@@ -1319,9 +1319,9 @@ module:NewCraft(19092, "Wicked Leather Belt", 300, {})
 
 module:NewCraft(19093, "Onyxia Scale Cloak", 300, {SpellSource.Quest})
     :SetResult(15138)
-    :AddReagent(8170, 8) -- Rugged Leather
+    :AddReagent(14044, 1) -- Cindercloth Cloak
     :AddReagent(14341, 1) -- Rune Thread
-    :AddReagent(15410, 3) -- Onyxia Scale
+    :AddReagent(15410, 1) -- Scale of Onyxia
     :Save()
 
 module:NewCraft(19094, "Black Dragonscale Shoulders", 300, {})
@@ -1614,9 +1614,9 @@ module:NewCraft(23705, "Dawn Treaders", 290, {})
 module:NewCraft(23706, "Golden Mantle of the Dawn", 300, {})
     :SetResult(19058)
     :AddRecipe(19329, Quality.Common, {RecipeSource.Vendor})
+    :AddReagent(12803, 4) -- Living Essence
     :AddReagent(12809, 4) -- Guardian Stone
     :AddReagent(12810, 8) -- Enchanted Leather
-    :AddReagent(12811, 2) -- Righteous Orb
     :AddReagent(14341, 2) -- Rune Thread
     :AddReagent(15407, 2) -- Cured Rugged Hide
     :Save()
@@ -1728,7 +1728,7 @@ module:NewCraft(24703, "Dreamscale Breastplate", 300, {})
     :AddReagent(12810, 12) -- Enchanted Leather
     :AddReagent(14227, 6) -- Ironweb Spider Silk
     :AddReagent(15407, 4) -- Cured Rugged Hide
-    :AddReagent(20381, 12) -- Dreamscale
+    :AddReagent(20381, 6) -- Dreamscale
     :Save()
 
 module:NewCraft(24846, "Spitfire Bracers", 300, {})
@@ -1883,11 +1883,82 @@ module:NewCraft(28474, "Bramblewood Belt", 300, {})
     :Save()
 
 if lib.env.is_turtle_wow then
+    module:NewCraft(5244, "Kodo Hide Bag", 40, {})
+        :SetResult(5081)
+        :AddRecipe(5083, Quality.Uncommon, {RecipeSource.Quest, RecipeSource.Vendor})
+        :AddReagent(2318, 4) -- Light Leather
+        :AddReagent(2320, 1) -- Coarse Thread
+        :AddReagent(5082, 3) -- Thin Kodo Leather
+        :Save()
+
+    module:NewCraft(10490, "Comfortable Leather Hat", 200, {})
+        :SetResult(8174)
+        :AddRecipe(8384, Quality.Rare, {RecipeSource.Drop, RecipeSource.Vendor})
+        :AddReagent(4234, 12) -- Heavy Leather
+        :AddReagent(4236, 2) -- Cured Heavy Hide
+        :AddReagent(4291, 2) -- Silken Thread
+        :Save()
+
     module:NewCraft(10550, "Nightscape Cloak", 230, {})
         :SetResult(8195)
         :AddRecipe(8388, Quality.Uncommon, {RecipeSource.Vendor})
         :AddReagent(4291, 4) -- Silken Thread
         :AddReagent(4304, 12) -- Thick Leather
+        :Save()
+
+    module:NewCraft(19048, "Heavy Scorpid Bracers", 275, {})
+        :SetResult(15077)
+        :AddRecipe(15724, Quality.Common, {RecipeSource.Vendor})
+        :AddReagent(8170, 4) -- Rugged Leather
+        :AddReagent(14341, 1) -- Rune Thread
+        :AddReagent(15408, 4) -- Heavy Scorpid Scale
+        :Save()
+
+    module:NewCraft(19051, "Heavy Scorpid Vest", 290, {})
+        :SetResult(15076)
+        :AddRecipe(15727, Quality.Uncommon, {RecipeSource.Drop})
+        :AddReagent(8170, 6) -- Rugged Leather
+        :AddReagent(14341, 1) -- Rune Thread
+        :AddReagent(15408, 6) -- Heavy Scorpid Scale
+        :Save()
+
+    module:NewCraft(19064, "Heavy Scorpid Gauntlets", 300, {})
+        :SetResult(15078)
+        :AddRecipe(15738, Quality.Uncommon, {RecipeSource.Drop})
+        :AddReagent(8170, 6) -- Rugged Leather
+        :AddReagent(14341, 1) -- Rune Thread
+        :AddReagent(15408, 8) -- Heavy Scorpid Scale
+        :Save()
+
+    module:NewCraft(20853, "Corehound Boots", 300, {})
+        :SetResult(16982)
+        :AddRecipe(17022, Quality.Common, {RecipeSource.Vendor})
+        :AddReagent(14341, 2) -- Rune Thread
+        :AddReagent(17010, 6) -- Fiery Core
+        :AddReagent(17011, 2) -- Lava Core
+        :AddReagent(17012, 20) -- Core Leather
+        :Save()
+
+    module:NewCraft(22926, "Chromatic Cloak", 300, {})
+        :SetResult(18509)
+        :AddRecipe(18517, Quality.Epic, {RecipeSource.Chest, RecipeSource.Drop})
+        :AddReagent(8170, 30) -- Rugged Leather
+        :AddReagent(12607, 12) -- Brilliant Chromatic Scale
+        :AddReagent(14341, 8) -- Rune Thread
+        :AddReagent(15407, 5) -- Cured Rugged Hide
+        :AddReagent(15414, 30) -- Red Dragonscale
+        :AddReagent(15416, 30) -- Black Dragonscale
+        :Save()
+
+    module:NewCraft(22928, "Shifting Cloak", 300, {})
+        :SetResult(18511)
+        :AddRecipe(18519, Quality.Epic, {RecipeSource.Chest, RecipeSource.Drop})
+        :AddReagent(7082, 12) -- Essence of Air
+        :AddReagent(8170, 30) -- Rugged Leather
+        :AddReagent(12753, 4) -- Skin of Shadow
+        :AddReagent(12809, 8) -- Guardian Stone
+        :AddReagent(14341, 8) -- Rune Thread
+        :AddReagent(15407, 4) -- Cured Rugged Hide
         :Save()
 
     module:NewCraft(45069, "Lynxstep Boots", 75, {})

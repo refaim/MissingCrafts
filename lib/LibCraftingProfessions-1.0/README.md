@@ -1,6 +1,6 @@
 # LibCraftingProfessions
 
-LibCraftingProfessions is a small library designed to provide a universal interface for crafting professions in Vanilla WoW (version 1.12.1). The library encapsulates interactions with the game's user interface, allowing addon developers to easily retrieve information about character professions and skills.
+LibCraftingProfessions is a small library designed to provide a universal interface for crafting professions in Vanilla WoW (version 1.12.1) and Turtle WoW. The library encapsulates interactions with the game's user interface, allowing addon developers to easily retrieve information about character professions and skills.
 
 ## Key Features
 
@@ -9,6 +9,7 @@ LibCraftingProfessions is a small library designed to provide a universal interf
 - Get a list of known skills for each profession
 - Clean data from non-obvious peculiarities of the game interface
 - Cache data for using by multiple addons
+- Supports game clients in different languages
 - Supports all modern major 1.12 profession frame replacement addons ([AdvancedTradeSkillWindow](https://github.com/laytya/AdvancedTradeSkillWindow-vanilla), [AdvancedTradeSkillWindow2](https://github.com/Shellyoung/AdvancedTradeSkillWindow2), [Artisan](https://github.com/Otari98/Artisan))
 
 ## Usage examples

@@ -906,6 +906,13 @@ module:NewCraft(27837, "Enchant 2H Weapon - Agility", 290, {})
     :Save()
 
 if lib.env.is_turtle_wow then
+    module:NewCraft(13915, "Enchant Weapon - Demonslaying", 230, {})
+        :AddRecipe(11208, Quality.Uncommon, {RecipeSource.Chest, RecipeSource.Drop, RecipeSource.Fishing})
+        :AddReagent(9224, 1) -- Elixir of Demonslaying
+        :AddReagent(11176, 2) -- Dream Dust
+        :AddReagent(11177, 1) -- Small Radiant Shard
+        :Save()
+
     module:NewCraft(22434, "Charged Scale of Onyxia", 300, {SpellSource.Quest})
         :SetResult(17968)
         :AddReagent(16203, 2) -- Greater Eternal Essence

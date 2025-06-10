@@ -599,8 +599,9 @@ module:NewCraft(12621, "Mithril Gyro-Shot", 245, {SpellSource.Trainer})
 
 module:NewCraft(12622, "Green Lens", 245, {SpellSource.Trainer})
     :SetResult(10504)
-    :AddReagent(1529, 2) -- Jade
+    :AddReagent(1529, 3) -- Jade
     :AddReagent(4304, 8) -- Thick Leather
+    :AddReagent(7909, 3) -- Aquamarine
     :AddReagent(8153, 2) -- Wildvine
     :AddReagent(10286, 2) -- Heart of the Wild
     :Save()
@@ -1224,42 +1225,42 @@ module:NewCraft(26423, "Blue Rocket Cluster", 225, {})
     :SetResult(21571)
     :AddRecipe(21730, Quality.Uncommon, {RecipeSource.Quest})
     :AddReagent(4304, 1) -- Thick Leather
-    :AddReagent(15992, 1) -- Dense Blasting Powder
+    :AddReagent(10505, 1) -- Solid Blasting Powder
     :Save()
 
 module:NewCraft(26424, "Green Rocket Cluster", 225, {})
     :SetResult(21574)
     :AddRecipe(21731, Quality.Uncommon, {RecipeSource.Quest})
     :AddReagent(4304, 1) -- Thick Leather
-    :AddReagent(15992, 1) -- Dense Blasting Powder
+    :AddReagent(10505, 1) -- Solid Blasting Powder
     :Save()
 
 module:NewCraft(26425, "Red Rocket Cluster", 225, {})
     :SetResult(21576)
     :AddRecipe(21732, Quality.Uncommon, {RecipeSource.Quest})
     :AddReagent(4304, 1) -- Thick Leather
-    :AddReagent(15992, 1) -- Dense Blasting Powder
+    :AddReagent(10505, 1) -- Solid Blasting Powder
     :Save()
 
 module:NewCraft(26426, "Large Blue Rocket Cluster", 275, {})
     :SetResult(21714)
     :AddRecipe(21733, Quality.Uncommon, {RecipeSource.Quest})
     :AddReagent(8170, 1) -- Rugged Leather
-    :AddReagent(10505, 1) -- Solid Blasting Powder
+    :AddReagent(15992, 1) -- Dense Blasting Powder
     :Save()
 
 module:NewCraft(26427, "Large Green Rocket Cluster", 275, {})
     :SetResult(21716)
     :AddRecipe(21734, Quality.Uncommon, {RecipeSource.Quest})
     :AddReagent(8170, 1) -- Rugged Leather
-    :AddReagent(10505, 1) -- Solid Blasting Powder
+    :AddReagent(15992, 1) -- Dense Blasting Powder
     :Save()
 
 module:NewCraft(26428, "Large Red Rocket Cluster", 275, {})
     :SetResult(21718)
     :AddRecipe(21735, Quality.Uncommon, {RecipeSource.Quest})
     :AddReagent(8170, 1) -- Rugged Leather
-    :AddReagent(10505, 1) -- Solid Blasting Powder
+    :AddReagent(15992, 1) -- Dense Blasting Powder
     :Save()
 
 module:NewCraft(26442, "Firework Launcher", 225, {})
@@ -1288,6 +1289,55 @@ if lib.env.is_turtle_wow then
         :AddReagent(4389, 1) -- Gyrochronatom
         :AddReagent(10560, 1) -- Unstable Trigger
         :AddReagent(10561, 1) -- Mithril Casing
+        :Save()
+
+    module:NewCraft(19790, "Thorium Grenade", 260, {})
+        :SetResult(15993)
+        :AddRecipe(16041, Quality.Common, {RecipeSource.Vendor})
+        :AddReagent(12359, 3) -- Thorium Bar
+        :AddReagent(14047, 3) -- Runecloth
+        :AddReagent(15992, 3) -- Dense Blasting Powder
+        :AddReagent(15994, 1) -- Thorium Widget
+        :Save()
+
+    module:NewCraft(19791, "Thorium Widget", 260, {})
+        :SetResult(15994)
+        :AddRecipe(16042, Quality.Common, {RecipeSource.Vendor})
+        :AddReagent(12359, 3) -- Thorium Bar
+        :AddReagent(14047, 1) -- Runecloth
+        :Save()
+
+    module:NewCraft(22704, "Field Repair Bot 74A", 300, {SpellSource.WorldObject})
+        :SetResult(18232)
+        :AddReagent(7191, 2) -- Fused Wiring
+        :AddReagent(10558, 1) -- Gold Power Core
+        :AddReagent(12359, 12) -- Thorium Bar
+        :Save()
+
+    module:NewCraft(23071, "Truesilver Transformer", 260, {})
+        :SetResult(18631)
+        :AddRecipe(18651, Quality.Common, {RecipeSource.Vendor})
+        :AddReagent(6037, 2) -- Truesilver Bar
+        :AddReagent(7067, 2) -- Elemental Earth
+        :AddReagent(7069, 1) -- Elemental Air
+        :Save()
+
+    module:NewCraft(26442, "Firework Launcher", 225, {})
+        :SetResult(21569)
+        :AddRecipe(21738, Quality.Uncommon, {RecipeSource.Quest, RecipeSource.Vendor})
+        :AddReagent(9060, 1) -- Inlaid Mithril Cylinder
+        :AddReagent(9061, 1) -- Goblin Rocket Fuel
+        :AddReagent(10560, 1) -- Unstable Trigger
+        :AddReagent(10561, 1) -- Mithril Casing
+        :Save()
+
+    module:NewCraft(26443, "Firework Cluster Launcher", 275, {})
+        :SetResult(21570)
+        :AddRecipe(21737, Quality.Uncommon, {RecipeSource.Quest, RecipeSource.Vendor})
+        :AddReagent(9060, 4) -- Inlaid Mithril Cylinder
+        :AddReagent(9061, 4) -- Goblin Rocket Fuel
+        :AddReagent(10561, 1) -- Mithril Casing
+        :AddReagent(18631, 2) -- Truesilver Transformer
         :Save()
 
     module:NewCraft(41073, "Jewelry Lens", 125, {})
