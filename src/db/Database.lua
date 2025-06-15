@@ -45,7 +45,7 @@ end
 
 ---@return DatabaseCharacter[]
 function Database:GetCharacters()
-    self:GetOrCreatePlayer()
+    self:_SavePlayer()
 
     ---@type DatabaseCharacter[]
     local characters = {}
@@ -75,7 +75,7 @@ end
 ---@param professionRank number
 ---@param localizedSkillNames string[]
 function Database:SaveCurrentPlayerSkills(localizedProfessionName, professionRank, localizedSkillNames)
-    local player = self:GetOrCreatePlayer()
+    local player = self:_SavePlayer()
     player.professionsByLocalizedName[localizedProfessionName] = {
         rank = professionRank,
         knownLocalizedSkillNames = localizedSkillNames
@@ -90,7 +90,7 @@ function Database:SaveCurrentPlayerProfessions(localizedProfessionNames)
         set[localizedProfessionName] = true
     end
 
-    local player = self:GetOrCreatePlayer()
+    local player = self:_SavePlayer()
     for localizedProfessionName, _ in pairs(player.professionsByLocalizedName) do
         if set[localizedProfessionName] == nil then
             player.professionsByLocalizedName[localizedProfessionName] = nil
@@ -99,7 +99,7 @@ function Database:SaveCurrentPlayerProfessions(localizedProfessionNames)
 end
 
 ---@return DatabaseCharacter
-function Database:GetOrCreatePlayer()
+function Database:_SavePlayer()
     local realm = GetRealmName()
     local name, _ = UnitName("player")
     local english_faction, localized_faction = UnitFactionGroup("player")
