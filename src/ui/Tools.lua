@@ -63,7 +63,10 @@ end
 ---@param frame Frame
 ---@return string
 function getFrameId(frame)
-    return tostring(frame)
+    assert(type(frame) == "table")
+    local _, _, address = strfind(tostring(frame), "table: (%x+)")
+    assert(type(address) == "string")
+    return --[[---@type string]] address
 end
 
 ---@param delayInFrames 0|1

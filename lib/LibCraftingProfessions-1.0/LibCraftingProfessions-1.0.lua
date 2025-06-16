@@ -11,7 +11,7 @@
 local LibStub = getglobal("LibStub")
 assert(LibStub ~= nil)
 
-local untyped_lib, _ = LibStub:NewLibrary("LibCraftingProfessions-1.0", 13)
+local untyped_lib, _ = LibStub:NewLibrary("LibCraftingProfessions-1.0", 14)
 if not untyped_lib then
     return
 end
@@ -194,7 +194,7 @@ end
 ---@field type "inv_slot" | "subclass"
 
 ---@shape _LcpProfessionAdapter
----@field GetProfessionInfo fun():string|nil, number|nil, number|nil
+---@field GetProfessionInfo fun():string|nil, string|nil, number|nil, number|nil
 ---@field GetNumSkills fun():number|nil
 ---@field GetSkillInfo fun(index:number):string|nil, string|nil, number|nil, wowboolean
 ---@field GetSkillItemLink fun(index:number):string|nil
@@ -388,52 +388,60 @@ local function send_frame_close_event(frame)
     end
 end
 
+---@return CraftFrame
+local function get_craft_frame()
+    if CraftFrame == nil then
+        LoadAddOn("Blizzard_CraftUI")
+    end
+    return CraftFrame
+end
+
+---@type _LcpProfessionAdapter
+local craft_adapter = {
+    GetProfessionInfo = function()
+        local name, cur_rank, max_rank = GetCraftDisplaySkillLine()
+        if name == nil then -- GetCraftDisplaySkillLine() returns nil for the "Beast Training" frame
+            name = GetCraftName()
+        end
+        return name, LOCALIZED_TO_ENGLISH[--[[---@type string]] name], cur_rank, max_rank
+    end,
+    GetNumSkills = GetNumCrafts,
+    GetSkillInfo = function(i)
+        local name, _, type, num_available, is_expanded = GetCraftInfo(i)
+        return name, type, num_available, is_expanded
+    end,
+    GetSkillItemLink = GetCraftItemLink,
+    ExpandHeader = ExpandCraftSkillLine,
+    CollapseHeader = CollapseCraftSkillLine,
+    DisableFilters = function() end,
+}
+
+local function try_send_craft_frame_show_event()
+    local localized_name, english_name, cur_rank, _ = craft_adapter.GetProfessionInfo()
+    if not ready(localized_name) or not ready(english_name) or not ready(cur_rank) then
+        return
+    end
+    send_frame_show_event(--[[---@not nil]] english_name, --[[---@not nil]] localized_name, --[[---@not nil]] cur_rank, get_craft_frame())
+end
+
 local craft_scan_in_progress = false
 
 local function scan_craft_frame()
     craft_scan_in_progress = true
 
-    ---@type _LcpProfessionAdapter
-    local adapter = {
-        GetProfessionInfo = function()
-            local name, cur_rank, max_rank = GetCraftDisplaySkillLine()
-            if name == nil then -- GetCraftDisplaySkillLine() returns nil for the "Beast Training" frame
-                name = GetCraftName()
-            end
-            return name, cur_rank, max_rank
-        end,
-        GetNumSkills = GetNumCrafts,
-        GetSkillInfo = function(i)
-            local name, _, type, num_available, is_expanded = GetCraftInfo(i)
-            return name, type, num_available, is_expanded
-        end,
-        GetSkillItemLink = GetCraftItemLink,
-        ExpandHeader = ExpandCraftSkillLine,
-        CollapseHeader = CollapseCraftSkillLine,
-        DisableFilters = function() end,
-    }
-
-    local localized_name, cur_rank, _ = adapter.GetProfessionInfo()
-    if not ready(localized_name) or not ready(cur_rank) then
+    local localized_name, english_name, _, _ = craft_adapter.GetProfessionInfo()
+    if not ready(localized_name) or not ready(english_name) then
         craft_scan_in_progress = false
         return
     end
 
-    local english_name = LOCALIZED_TO_ENGLISH[--[[---@not nil]] localized_name]
-    if english_name == nil or english_name == "Beast Training" then
-        craft_scan_in_progress = false
-        return
-    end
-
-    send_frame_show_event(english_name, --[[---@not nil]] localized_name, --[[---@not nil]] cur_rank, CraftFrame)
-
-    local skills = scan_skills(adapter)
+    local skills = scan_skills(craft_adapter)
     if not ready(skills) then
         craft_scan_in_progress = false
         return
     end
 
-    save_skills(english_name, --[[---@not nil]] skills)
+    save_skills(--[[---@not nil]] english_name, --[[---@not nil]] skills)
     craft_scan_in_progress = false
 end
 
@@ -463,64 +471,74 @@ local function disable_trade_skill_filters(adapter)
     return selected_options
 end
 
+local function get_trade_skill_frame()
+    if TradeSkillFrame == nil then
+        LoadAddOn("Blizzard_TradeSkillUI")
+    end
+    return TradeSkillFrame
+end
+
+---@type _LcpSkillFilterAdapter
+local inv_slot_filter_adapter = {
+    GetType = function() return "inv_slot" end,
+    GetOptions = GetTradeSkillInvSlots,
+    GetOptionState = GetTradeSkillInvSlotFilter,
+    SetOptionState = SetTradeSkillInvSlotFilter,
+}
+
+---@type _LcpSkillFilterAdapter
+local subclass_filter_adapter = {
+    GetType = function() return "subclass" end,
+    GetOptions = GetTradeSkillSubClasses,
+    GetOptionState = GetTradeSkillSubClassFilter,
+    SetOptionState = SetTradeSkillSubClassFilter,
+}
+
+---@type _LcpProfessionAdapter
+local trade_skill_adapter = {
+    GetProfessionInfo = function()
+        local name, cur_rank, max_rank = GetTradeSkillLine()
+        return name, LOCALIZED_TO_ENGLISH[--[[---@type string]] name], cur_rank, max_rank
+    end,
+    GetNumSkills = GetNumTradeSkills,
+    GetSkillInfo = GetTradeSkillInfo,
+    GetSkillItemLink = GetTradeSkillItemLink,
+    ExpandHeader = ExpandTradeSkillSubClass,
+    CollapseHeader = CollapseTradeSkillSubClass,
+    DisableFilters = function()
+        for _, adapter in ipairs({inv_slot_filter_adapter, subclass_filter_adapter}) do
+            disable_trade_skill_filters(adapter)
+        end
+    end,
+}
+
+local function try_send_trade_skill_frame_show_event()
+    local localized_name, english_name, cur_rank, _ = trade_skill_adapter.GetProfessionInfo()
+    if not ready(localized_name) or not ready(english_name) or not ready(cur_rank) then
+        return false
+    end
+    send_frame_show_event(--[[---@not nil]] english_name, --[[---@not nil]] localized_name, --[[---@not nil]] cur_rank, get_trade_skill_frame())
+end
+
 local trade_skill_scan_in_progress = false
 
 ---@return boolean
 local function scan_trade_skill_frame()
     trade_skill_scan_in_progress = true
 
-    ---@type _LcpSkillFilterAdapter
-    local inv_slot_filter_adapter = {
-        GetType = function() return "inv_slot" end,
-        GetOptions = GetTradeSkillInvSlots,
-        GetOptionState = GetTradeSkillInvSlotFilter,
-        SetOptionState = SetTradeSkillInvSlotFilter,
-    }
-
-    ---@type _LcpSkillFilterAdapter
-    local subclass_filter_adapter = {
-        GetType = function() return "subclass" end,
-        GetOptions = GetTradeSkillSubClasses,
-        GetOptionState = GetTradeSkillSubClassFilter,
-        SetOptionState = SetTradeSkillSubClassFilter,
-    }
-
-    ---@type _LcpProfessionAdapter
-    local profession_adapter = {
-        GetProfessionInfo = GetTradeSkillLine,
-        GetNumSkills = GetNumTradeSkills,
-        GetSkillInfo = GetTradeSkillInfo,
-        GetSkillItemLink = GetTradeSkillItemLink,
-        ExpandHeader = ExpandTradeSkillSubClass,
-        CollapseHeader = CollapseTradeSkillSubClass,
-        DisableFilters = function()
-            for _, adapter in ipairs({inv_slot_filter_adapter, subclass_filter_adapter}) do
-                disable_trade_skill_filters(adapter)
-            end
-        end,
-    }
-
-    local localized_name, cur_rank, _ = profession_adapter.GetProfessionInfo()
-    if not ready(localized_name) or not ready(cur_rank) then
+    local localized_name, english_name, _, _ = trade_skill_adapter.GetProfessionInfo()
+    if not ready(localized_name) or not ready(english_name) then
         trade_skill_scan_in_progress = false
         return false
     end
 
-    local english_name = LOCALIZED_TO_ENGLISH[--[[---@not nil]] localized_name]
-    if english_name == nil then
-        trade_skill_scan_in_progress = false
-        return false
-    end
-
-    send_frame_show_event(english_name, --[[---@not nil]] localized_name, --[[---@not nil]] cur_rank, TradeSkillFrame)
-
-    local skills = scan_skills(profession_adapter)
+    local skills = scan_skills(trade_skill_adapter)
     if not ready(skills) then
         trade_skill_scan_in_progress = false
         return false
     end
 
-    save_skills(english_name, --[[---@not nil]] skills)
+    save_skills(--[[---@not nil]] english_name, --[[---@not nil]] skills)
 
     trade_skill_scan_in_progress = false
     return true
@@ -535,7 +553,6 @@ end
 
 if game_locale == "enUS" or game_locale == "enGB" then
     L["Alchemy"] = "Alchemy"
-    L["Beast Training"] = "Beast Training"
     L["Blacksmithing"] = "Blacksmithing"
     L["Cooking"] = "Cooking"
     L["Enchanting"] = "Enchanting"
@@ -550,7 +567,6 @@ if game_locale == "enUS" or game_locale == "enGB" then
     end
 elseif game_locale == "deDE" then
     L["Alchemy"] = "Alchimie"
-    L["Beast Training"] = "Wildtierausbildung"
     L["Blacksmithing"] = "Schmiedekunst"
     L["Cooking"] = "Kochkunst"
     L["Enchanting"] = "Verzauberkunst"
@@ -566,7 +582,6 @@ elseif game_locale == "deDE" then
 elseif game_locale == "esES" then
     if IS_TURTLE_WOW then
         L["Alchemy"] = "Alquimia"
-        L["Beast Training"] = "Treinamento de Feras"
         L["Blacksmithing"] = "Ferraria"
         L["Cooking"] = "Culinária"
         L["Enchanting"] = "Encantador"
@@ -579,7 +594,6 @@ elseif game_locale == "esES" then
         L["Tailoring"] = "Alfaiataria"
     else
         L["Alchemy"] = "Alquimia"
-        L["Beast Training"] = "Doma de bestias"
         L["Blacksmithing"] = "Herrería"
         L["Cooking"] = "Cocina"
         L["Enchanting"] = "Encantamiento"
@@ -592,7 +606,6 @@ elseif game_locale == "esES" then
     end
 elseif game_locale == "esMX" then
     L["Alchemy"] = "Alquimia"
-    L["Beast Training"] = "Entrenamiento de bestias"
     L["Blacksmithing"] = "Herrería"
     L["Cooking"] = "Cocina"
     L["Enchanting"] = "Encantamiento"
@@ -607,7 +620,6 @@ elseif game_locale == "esMX" then
     end
 elseif game_locale == "frFR" then
     L["Alchemy"] = "Alchimie"
-    L["Beast Training"] = "Dressage des bêtes"
     L["Blacksmithing"] = "Forge"
     L["Cooking"] = "Cuisine"
     L["Enchanting"] = "Enchantement"
@@ -622,7 +634,6 @@ elseif game_locale == "frFR" then
     end
 elseif game_locale == "koKR" then
     L["Alchemy"] = "연금술"
-    L["Beast Training"] = "야수 조련"
     L["Blacksmithing"] = "대장기술"
     L["Cooking"] = "요리"
     L["Enchanting"] = "마법부여"
@@ -638,7 +649,6 @@ elseif game_locale == "koKR" then
 elseif game_locale == "ptBR" then
     if IS_TURTLE_WOW then
         L["Alchemy"] = "Alquimia"
-        L["Beast Training"] = "Treinamento de Feras"
         L["Blacksmithing"] = "Ferraria"
         L["Cooking"] = "Culinária"
         L["Enchanting"] = "Encantador"
@@ -651,7 +661,6 @@ elseif game_locale == "ptBR" then
         L["Tailoring"] = "Alfaiataria"
     else
         L["Alchemy"] = "Alquimia"
-        L["Beast Training"] = "Treinamento de Feras"
         L["Blacksmithing"] = "Ferraria"
         L["Cooking"] = "Culinária"
         L["Enchanting"] = "Encantamento"
@@ -664,7 +673,6 @@ elseif game_locale == "ptBR" then
     end
 elseif game_locale == "ruRU" then
     L["Alchemy"] = "Алхимия"
-    L["Beast Training"] = "Дрессировка"
     L["Blacksmithing"] = "Кузнечное дело"
     L["Cooking"] = "Кулинария"
     L["Enchanting"] = "Наложение чар"
@@ -680,7 +688,6 @@ elseif game_locale == "ruRU" then
 elseif game_locale == "zhCN" then
     if IS_TURTLE_WOW then
         L["Alchemy"] = "炼金术"
-        L["Beast Training"] = "训练野兽"
         L["Blacksmithing"] = "锻造"
         L["Cooking"] = "烹饪"
         L["Enchanting"] = "附魔"
@@ -693,7 +700,6 @@ elseif game_locale == "zhCN" then
         L["Tailoring"] = "裁缝"
     else
         L["Alchemy"] = "炼金术"
-        L["Beast Training"] = "训练野兽"
         L["Blacksmithing"] = "锻造"
         L["Cooking"] = "烹饪"
         L["Enchanting"] = "附魔"
@@ -706,7 +712,6 @@ elseif game_locale == "zhCN" then
     end
 elseif game_locale == "zhTW" then
     L["Alchemy"] = "煉金術"
-    L["Beast Training"] = "訓練野獸"
     L["Blacksmithing"] = "鍛造"
     L["Cooking"] = "烹飪"
     L["Enchanting"] = "附魔"
@@ -741,7 +746,11 @@ local function hook_third_party_on_hide(addon)
 
     ---@type Frame
     local frame = getglobal(addon.frame_name)
-    if frame == nil or as_table(frame).is_hooked_by_lcp == true then
+    if frame == nil then
+        return
+    end
+    if as_table(frame).is_hooked_by_lcp == true then
+        was_third_party_on_hide_hooked = true
         return
     end
 
@@ -789,6 +798,7 @@ lib.event_frame:SetScript("OnEvent", function()
             end
         end
     elseif event == "CRAFT_SHOW" then
+        try_send_craft_frame_show_event()
         do_craft_scan = true
     elseif event == "CRAFT_UPDATE" then
         if not craft_scan_in_progress then
@@ -797,9 +807,10 @@ lib.event_frame:SetScript("OnEvent", function()
         end
     elseif event == "CRAFT_CLOSE" then
         if not was_third_party_on_hide_hooked then
-            send_frame_close_event(CraftFrame)
+            send_frame_close_event(get_craft_frame())
         end
     elseif event == "TRADE_SKILL_SHOW" then
+        try_send_trade_skill_frame_show_event()
         do_trade_skill_scan = true
     elseif event == "TRADE_SKILL_UPDATE" then
         if not trade_skill_scan_in_progress then
@@ -808,7 +819,7 @@ lib.event_frame:SetScript("OnEvent", function()
         end
     elseif event == "TRADE_SKILL_CLOSE" then
         if not was_third_party_on_hide_hooked then
-            send_frame_close_event(TradeSkillFrame)
+            send_frame_close_event(get_trade_skill_frame())
         end
     elseif event == "CHARACTER_POINTS_CHANGED" then
         -- Learned or unlearned profession/specialization

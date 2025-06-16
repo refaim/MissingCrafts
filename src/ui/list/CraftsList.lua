@@ -8,11 +8,14 @@ setfenv(1, MissingCrafts)
 ---@field _items CraftsListItem[]
 CraftsList = {}
 
----@param AceGUI LibAceGUI
 ---@param locale MissingCraftsLocale
+---@param AceGUI LibAceGUI
 ---@param vanillaFramePool VanillaFramePool
 ---@return CraftsList
-function CraftsList:Acquire(AceGUI, locale, vanillaFramePool)
+function CraftsList:Create(locale, vanillaFramePool, AceGUI)
+    local list = --[[---@type self]] {}
+    setmetatable(list, {__index = CraftsList})
+
     local buttonsGroup = AceGUI:Create("SimpleGroup")
     buttonsGroup:SetLayout("Fill")
     buttonsGroup:SetFullWidth(true)
@@ -21,25 +24,25 @@ function CraftsList:Acquire(AceGUI, locale, vanillaFramePool)
     scrollFrame:SetLayout("List")
     scrollFrame:AddChild(buttonsGroup)
 
-    self._locale = locale
-    self._framePool = vanillaFramePool
-    self._scrollFrame = scrollFrame
-    self._buttonsGroup = buttonsGroup
-    self._items = {}
+    list._locale = locale
+    list._framePool = vanillaFramePool
+    list._scrollFrame = scrollFrame
+    list._buttonsGroup = buttonsGroup
+    list._items = {}
 
     scrollFrame:SetCallback("OnRelease", function()
-        self._locale = nil
-        self._framePool = nil
-        self._scrollFrame = nil
-        self._buttonsGroup = nil
-        for _, item in ipairs(self._items) do
+        list._locale =  --[[---@not nil]] nil
+        list._framePool =  --[[---@not nil]] nil
+        list._scrollFrame =  --[[---@not nil]] nil
+        list._buttonsGroup =  --[[---@not nil]] nil
+        for _, item in ipairs(list._items) do
             item:Destroy()
         end
-        erase(self._items)
-        self._items = nil
+        erase(list._items)
+        list._items =  --[[---@not nil]] nil
     end)
 
-    return self
+    return list
 end
 
 ---@return AceGUIWidget

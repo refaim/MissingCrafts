@@ -30,3 +30,14 @@ function erase(t)
     end
     table.setn(t, 0)
 end
+
+---@generic K
+---@generic T
+---@param t table<K, T>
+---@param key K
+---@return T|nil
+function tpop(t, key)
+    local value = t[key]
+    t[key] = nil
+    return value
+end

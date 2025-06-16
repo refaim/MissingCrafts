@@ -14,16 +14,21 @@ FiltersPanel = {}
 ---@field localizedProfessionName string
 ---@field character string
 
+---@param characterRepository CharacterRepository
+---@param professionRepository ProfessionRepository
 ---@param AceGUI LibAceGUI
 ---@return self
-function FiltersPanel:Acquire(characterRepository, professionRepository, AceGUI)
-    self._characterRepository = characterRepository
-    self._professionRepository = professionRepository
-    self._populated = false
+function FiltersPanel:Create(characterRepository, professionRepository, AceGUI)
+    local panel = --[[---@type self]] {}
+    setmetatable(panel, {__index = FiltersPanel})
+
+    panel._characterRepository = characterRepository
+    panel._professionRepository = professionRepository
+    panel._populated = false
 
     local onChange = function()
-        if self._populated and self._onChange ~= nil then
-            self._onChange()
+        if panel._populated and panel._onChange ~= nil then
+            panel._onChange()
         end
     end
 
@@ -34,30 +39,30 @@ function FiltersPanel:Acquire(characterRepository, professionRepository, AceGUI)
     group:SetLayout("Flow")
     group:AddChildren(professionDropdown:GetAceWidget(), characterDropdown:GetAceWidget())
 
-    self._professionDropdown = professionDropdown
-    self._characterDropdown = characterDropdown
-    self._group = group
+    panel._professionDropdown = professionDropdown
+    panel._characterDropdown = characterDropdown
+    panel._group = group
 
     group:SetCallback("OnRelease", function()
-        if self._professionDropdown ~= nil then
-            self._professionDropdown:Destroy()
-            self._professionDropdown = nil
+        if panel._professionDropdown ~= nil then
+            panel._professionDropdown:Destroy()
+            panel._professionDropdown =  --[[---@not nil]] nil
         end
 
-        if self._characterDropdown ~= nil then
-            self._characterDropdown:Destroy()
-            self._characterDropdown = nil
+        if panel._characterDropdown ~= nil then
+            panel._characterDropdown:Destroy()
+            panel._characterDropdown =  --[[---@not nil]] nil
         end
 
-        self._characterRepository = nil
-        self._professionRepository = nil
-        self._group = nil
-        self._onChange = nil
+        panel._characterRepository =  --[[---@not nil]] nil
+        panel._professionRepository =  --[[---@not nil]] nil
+        panel._group =  --[[---@not nil]] nil
+        panel._onChange =  --[[---@not nil]] nil
 
-        self._populated = false
+        panel._populated = false
     end)
 
-    return self
+    return panel
 end
 
 ---@return AceGUIWidget

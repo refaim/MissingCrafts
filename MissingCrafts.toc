@@ -47,5 +47,7 @@ src\ui\window\PlacementPolicy.lua
 src\ui\window\OpenButton.lua
 src\ui\window\Window.lua
 src\ui\TooltipEnhancer.lua
+src\ui\DataStateManager.lua
+src\ui\UIManager.lua
 
 src\MissingCrafts.lua
