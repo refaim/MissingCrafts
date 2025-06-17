@@ -1,5 +1,14 @@
 ## Interface: 11200
 ## Title: MissingCrafts
+## Notes: Shows the missing crafts for your crafting professions and how to obtain them.
+## Notes-deDE: Zeigt fehlende Rezepte für Ihre Handwerksberufe und wie Sie diese erhalten.
+## Notes-esES: Muestra las recetas que faltan para tus profesiones de artesanía y cómo obtenerlas.
+## Notes-frFR: Affiche les recettes manquantes pour vos métiers d'artisanat et comment les obtenir.
+## Notes-koKR: 제작 전문 기술에서 빠진 조합법과 획득 방법을 보여줍니다.
+## Notes-ptBR: Mostra as receitas que faltam para suas profissões de criação e como obtê-las.
+## Notes-ruRU: Показывает недостающие рецепты для ваших ремесленных профессий и как их получить.
+## Notes-zhCN: 显示您制作专业技能中缺少的配方以及如何获得它们。
+## Notes-zhTW: 顯示您製作專業技能中缺少的配方以及如何獲得它們。
 ## Author: Refaim
 ## Version: 1.0
 ## SavedVariables: MissingCraftsDatabase
