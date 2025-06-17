@@ -36,6 +36,7 @@ MissingCrafts is a completely new addon built from scratch, offering significant
 
 ### Disadvantages
 - **No Built-in Database**: Does not contain a built-in database with specific trainers, vendors, quests, or mobs. For detailed information, refer to [classicdb.ch](https://classicdb.ch), [classic.wowhead.com](https://classic.wowhead.com), or [database.turtle-wow.org](https://database.turtle-wow.org)
+- **Limited Filtering Options**: No faction or specialization filtering for crafts (planned for future updates)
 
 ## Screenshots
 
