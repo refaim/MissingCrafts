@@ -22,7 +22,7 @@ A World of Warcraft addon for Vanilla WoW (1.12.1) and Turtle WoW that helps pla
 - [**AdvancedTradeSkillWindow2**](https://github.com/Shellyoung/AdvancedTradeSkillWindow2)
 - [**Artisan**](https://github.com/Otari98/Artisan)
 
-## Comparison with [MissingTradeSkillsList](https://github.com/refaim/MissingTradeSkillsList):
+## Comparison with [MissingTradeSkillsList](https://github.com/refaim/MissingTradeSkillsList)
 
 MissingCrafts is a completely new addon built from scratch, offering significant improvements over MissingTradeSkillsList.
 
