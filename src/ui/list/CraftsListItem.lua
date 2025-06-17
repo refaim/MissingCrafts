@@ -65,6 +65,9 @@ function CraftsListItem:Create(width, height, locale, framePool)
 end
 
 function CraftsListItem:Destroy()
+    if GameTooltip:IsOwned(self._button) then
+        GameTooltip:Hide()
+    end
     self._framePool:Release(self._button)
     erase(self)
 end
