@@ -34,6 +34,9 @@ MissingCrafts is a completely new addon built from scratch, offering significant
 - **No Dependencies**: Works independently without requiring additional addon dependencies
 - **Universal UI Support**: Compatible with all major profession UI addons out of the box
 
+### Disadvantages
+- **No Built-in Database**: Does not contain a built-in database with specific trainers, vendors, quests, or mobs. For detailed information, refer to [classicdb.ch](https://classicdb.ch), [classic.wowhead.com](https://classic.wowhead.com), or [database.turtle-wow.org](https://database.turtle-wow.org)
+
 ## Screenshots
 
 #### MissingCrafts window attached to the Tailoring profession frame, showing missing recipes with skill level requirements and source information
@@ -42,14 +45,14 @@ MissingCrafts is a completely new addon built from scratch, offering significant
 #### Integration with the Enchanting profession frame, displaying missing enchant recipes sorted by skill level
 ![Enchanting Frame Integration](screenshots/TurtleWoW_WithEnchantingFrame.jpg)
 
+#### Detailed recipe information in the main window showing skill requirements and acquisition sources
+![Craft Source Tooltip](screenshots/CraftSourceTooltip.jpg)
+
 #### Dropdown menu allowing you to filter missing recipes by profession, supporting all crafting professions including Turtle WoW's Jewelcrafting
 ![Profession Dropdown](screenshots/ProfessionDropdown.jpg)
 
 #### Enhanced item tooltip showing recipe learning status - which characters can learn it and their current profession level
 ![Recipe Tooltip](screenshots/RecipeTooltip.jpg)
-
-#### Detailed recipe information in the main window showing skill requirements and acquisition sources
-![Craft Source Tooltip](screenshots/CraftSourceTooltip.jpg)
 
 ## Acknowledgments
 - Inspired by [MissingTradeSkillsList](https://github.com/refaim/MissingTradeSkillsList)
