@@ -25,9 +25,9 @@ function Dropdown:Create(relativeWidth, onChange, AceGUI)
 end
 
 function Dropdown:Destroy()
-    self._widget = nil
-    self._notifyAboutValueChange = nil
-    self._selectedValue = nil
+    self._widget = --[[---@not nil]] nil
+    self._notifyAboutValueChange = --[[---@not nil]] nil
+    self._selectedValue = --[[---@not nil]] nil
 end
 
 function Dropdown:_OnValueChanged()

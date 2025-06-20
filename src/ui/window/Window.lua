@@ -43,16 +43,18 @@ function Window:Create(addonInfo, close, filtersPanel, craftsList, professionFra
     end)
 
     local filtersPanelAceWidget = filtersPanel:GetAceWidget()
+    local filtersPanelVanillaFrame = filtersPanel:GetVanillaFrame()
+
+    local craftsListAceWidget = craftsList:GetAceWidget()
+    local craftsListVanillaFrame = craftsList:GetVanillaFrame()
+
     filtersPanelAceWidget:SetFullWidth(true)
     frame:AddChild(filtersPanelAceWidget)
 
-    local craftsListWidget = craftsList:GetAceWidget()
-    craftsListWidget:SetFullWidth(true)
-    craftsListWidget:SetHeight(frameStatus.height - 30 - 45)
-    frame:AddChild(craftsListWidget)
+    craftsListAceWidget:SetFullWidth(true)
+    craftsListAceWidget:SetHeight(frameStatus.height - 45 - filtersPanelVanillaFrame:GetHeight())
+    frame:AddChild(craftsListAceWidget)
 
-    local filtersPanelVanillaFrame = filtersPanel:GetVanillaFrame()
-    local craftsListVanillaFrame = craftsList:GetVanillaFrame()
     craftsListVanillaFrame:ClearAllPoints()
     craftsListVanillaFrame:SetPoint("TOPLEFT", filtersPanelVanillaFrame, "BOTTOMLEFT", 5, -5)
 

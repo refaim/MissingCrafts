@@ -6,6 +6,7 @@ setfenv(1, MissingCrafts)
 ---@field _group AceGUISimpleGroup
 ---@field _professionDropdown Dropdown
 ---@field _characterDropdown Dropdown
+---@field _searchField SearchField
 ---@field _onChange fun()
 ---@field _populated boolean
 FiltersPanel = {}
@@ -13,6 +14,7 @@ FiltersPanel = {}
 ---@shape Filters
 ---@field localizedProfessionName string
 ---@field character string
+---@field searchQuery string
 
 ---@param characterRepository CharacterRepository
 ---@param professionRepository ProfessionRepository
@@ -34,30 +36,38 @@ function FiltersPanel:Create(characterRepository, professionRepository, AceGUI)
 
     local professionDropdown = Dropdown:Create(0.5, onChange, AceGUI)
     local characterDropdown = Dropdown:Create(0.5, onChange, AceGUI)
+    local searchField = SearchField:Create(1.0, onChange, AceGUI)
 
     local group = AceGUI:Create("SimpleGroup")
     group:SetLayout("Flow")
     group:AddChildren(professionDropdown:GetAceWidget(), characterDropdown:GetAceWidget())
+    group:AddChild(searchField:GetAceWidget())
 
     panel._professionDropdown = professionDropdown
     panel._characterDropdown = characterDropdown
+    panel._searchField = searchField
     panel._group = group
 
     group:SetCallback("OnRelease", function()
         if panel._professionDropdown ~= nil then
             panel._professionDropdown:Destroy()
-            panel._professionDropdown =  --[[---@not nil]] nil
+            panel._professionDropdown = --[[---@not nil]] nil
         end
 
         if panel._characterDropdown ~= nil then
             panel._characterDropdown:Destroy()
-            panel._characterDropdown =  --[[---@not nil]] nil
+            panel._characterDropdown = --[[---@not nil]] nil
         end
 
-        panel._characterRepository =  --[[---@not nil]] nil
-        panel._professionRepository =  --[[---@not nil]] nil
-        panel._group =  --[[---@not nil]] nil
-        panel._onChange =  --[[---@not nil]] nil
+        if panel._searchField ~= nil then
+            panel._searchField:Destroy()
+            panel._searchField = --[[---@not nil]] nil
+        end
+
+        panel._characterRepository = --[[---@not nil]] nil
+        panel._professionRepository = --[[---@not nil]] nil
+        panel._group = --[[---@not nil]] nil
+        panel._onChange = --[[---@not nil]] nil
 
         panel._populated = false
     end)
@@ -87,6 +97,7 @@ function FiltersPanel:GetFilters()
     return {
         localizedProfessionName = self._professionDropdown:GetSelectedValue(),
         character = self._characterDropdown:GetSelectedValue(),
+        searchQuery = self._searchField:GetText(),
     }
 end
 

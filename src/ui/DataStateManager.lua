@@ -6,6 +6,7 @@ setfenv(1, MissingCrafts)
 ---@field _updateCrafts fun(crafts: Craft[]): void
 ---@field _selectedCharacter string|nil
 ---@field _selectedProfession string|nil
+---@field _searchQuery string
 DataStateManager = {}
 
 ---@param craftRepository CraftRepository
@@ -23,12 +24,14 @@ function DataStateManager:OnWindowOpened(profession)
     local player, _ = UnitName("player")
     self._selectedCharacter = player
     self._selectedProfession = profession
+    self._searchQuery = ""
     self:UpdateFilters()
 end
 
 function DataStateManager:OnWindowClosed()
     self._selectedCharacter = nil
     self._selectedProfession = nil
+    self._searchQuery = ""
 end
 
 ---@param newProfession string
@@ -48,6 +51,7 @@ end
 function DataStateManager:OnFiltersChanged(filters)
     self._selectedCharacter = filters.character
     self._selectedProfession = filters.localizedProfessionName
+    self._searchQuery = filters.searchQuery
     self:UpdateCrafts()
 end
 
@@ -55,11 +59,13 @@ function DataStateManager:UpdateFilters()
     self._updateFilters({
         localizedProfessionName = --[[---@not nil]] self._selectedProfession,
         character = --[[---@not nil]] self._selectedCharacter,
+        searchQuery = self._searchQuery,
     })
 end
 
 function DataStateManager:UpdateCrafts()
     local character = --[[---@not nil]] self._selectedCharacter
     local profession = --[[---@not nil]] self._selectedProfession
-    self._updateCrafts(self._craftRepository:FindMissing(character, profession))
+    local searchQuery = --[[---@not nil]] self._searchQuery
+    self._updateCrafts(self._craftRepository:FindMissing(character, profession, searchQuery))
 end
