@@ -14,6 +14,14 @@ A World of Warcraft addon for Vanilla WoW (1.12.1) and Turtle WoW that helps pla
 - **Turtle WoW Support**: Full support for all Turtle WoW custom recipes including the complete Jewelcrafting profession with English, Portuguese, Spanish, and Chinese language support
 - **Multi-Language Support**: Available in English, German, French, Spanish, Portuguese, Russian, Korean, Chinese (Simplified), and Chinese (Traditional)
 
+## How to Use
+
+1. Open any crafting profession window
+2. Click the recipe button in the upper right corner of the profession frame
+3. The MissingCrafts window will open, showing all recipes you haven't learned yet
+4. Use the dropdown filters to narrow down recipes by profession or character
+5. Hover over recipes to see their source information
+
 ## Supported Profession Windows
 
 - Default WoW profession windows
