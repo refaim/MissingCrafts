@@ -11,7 +11,7 @@
 local LibStub = getglobal("LibStub")
 assert(LibStub ~= nil)
 
-local untyped_lib, _ = LibStub:NewLibrary("LibCraftingProfessions-1.0", 14)
+local untyped_lib, _ = LibStub:NewLibrary("LibCraftingProfessions-1.0", 15)
 if not untyped_lib then
     return
 end
@@ -189,9 +189,9 @@ function lib:RegisterEvent(event, handler)
     tinsert(lib.event_to_handlers[event], --[[---@type function]] handler)
 end
 
----@shape _LcpTradeSkillFilterOption
+---@shape _LcpFilterOption
 ---@field name string
----@field type "inv_slot" | "subclass"
+---@field type string
 
 ---@shape _LcpProfessionAdapter
 ---@field GetProfessionInfo fun():string|nil, string|nil, number|nil, number|nil
@@ -200,17 +200,18 @@ end
 ---@field GetSkillItemLink fun(index:number):string|nil
 ---@field ExpandHeader fun(index:number):void
 ---@field CollapseHeader fun(index:number):void
----@field DisableFilters fun():void
+---@field DisableFilters fun():_LcpFilterOption[]
+---@field EnableFilters fun(options:_LcpFilterOption[]):void
 
 ---@param adapter _LcpProfessionAdapter
 ---@return LcpKnownSkill[]|nil
 local function scan_skills(adapter)
-    local profession, cur_rank, max_rank = adapter.GetProfessionInfo()
-    if not ready(profession) or not ready(cur_rank) or not ready(max_rank) then
+    local localized_profession, english_profession, cur_rank, max_rank = adapter.GetProfessionInfo()
+    if not ready(localized_profession) or not ready(english_profession) or not ready(cur_rank) or not ready(max_rank) then
         return nil
     end
 
-    adapter:DisableFilters()
+    local disabled_filters = adapter.DisableFilters()
 
     local num_of_skills_before_expansion = adapter.GetNumSkills()
     if not ready(num_of_skills_before_expansion) then
@@ -265,6 +266,8 @@ local function scan_skills(adapter)
             adapter.CollapseHeader(i)
         end
     end
+
+    adapter.EnableFilters(disabled_filters)
 
     return skills
 end
@@ -413,7 +416,8 @@ local craft_adapter = {
     GetSkillItemLink = GetCraftItemLink,
     ExpandHeader = ExpandCraftSkillLine,
     CollapseHeader = CollapseCraftSkillLine,
-    DisableFilters = function() end,
+    DisableFilters = function() return {} end,
+    EnableFilters = function(options) end,
 }
 
 local function try_send_craft_frame_show_event()
@@ -452,13 +456,13 @@ end
 ---@field SetOptionState fun(index:number, enable:wowboolean, exclusive:wowboolean): void
 
 ---@param adapter _LcpSkillFilterAdapter
----@return _LcpTradeSkillFilterOption[]
+---@return _LcpFilterOption[]
 local function disable_trade_skill_filters(adapter)
     if adapter.GetOptionState(0) == 1 then
         return {}
     end
 
-    ---@type _LcpTradeSkillFilterOption[]
+    ---@type _LcpFilterOption[]
     local selected_options = {}
     for i, option in ipairs({adapter.GetOptions()}) do
         if adapter.GetOptionState(i) == 1 then
@@ -469,6 +473,24 @@ local function disable_trade_skill_filters(adapter)
     adapter.SetOptionState(0, 1, 1)
 
     return selected_options
+end
+
+---@param adapter _LcpSkillFilterAdapter
+---@param options _LcpFilterOption[]
+local function enable_trade_skill_filters(adapter, options)
+    ---@type table<string, boolean>
+    local options_set = {}
+    for _, option in ipairs(options) do
+        if option.type == adapter.GetType() then
+            options_set[option.name] = true
+        end
+    end
+
+    for i, option in ipairs({adapter.GetOptions()}) do
+        if options_set[option] then
+            adapter.SetOptionState(i, 1, 1)
+        end
+    end
 end
 
 local function get_trade_skill_frame()
@@ -506,8 +528,17 @@ local trade_skill_adapter = {
     ExpandHeader = ExpandTradeSkillSubClass,
     CollapseHeader = CollapseTradeSkillSubClass,
     DisableFilters = function()
+        local result = {}
         for _, adapter in ipairs({inv_slot_filter_adapter, subclass_filter_adapter}) do
-            disable_trade_skill_filters(adapter)
+            for _, option in ipairs(disable_trade_skill_filters(adapter)) do
+                tinsert(result, option)
+            end
+        end
+        return result
+    end,
+    EnableFilters = function(options)
+        for _, adapter in ipairs({inv_slot_filter_adapter, subclass_filter_adapter}) do
+            enable_trade_skill_filters(adapter, options)
         end
     end,
 }
