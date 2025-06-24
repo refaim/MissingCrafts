@@ -28,6 +28,7 @@ lib\LibCrafts-1.0\LibCrafts-1.0.xml
 lib\LibItemTooltip-1.0\LibItemTooltip-1.0.xml
 
 src\Environment.lua
+src\Compatibility.lua
 
 src\db\Database.lua
 src\db\Character.lua

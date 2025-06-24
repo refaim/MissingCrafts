@@ -27,6 +27,7 @@ CraftSource = {
 ---@field localizedName string
 ---@field skillLevel number
 ---@field isAvailable boolean
+---@field spellId number
 ---@field recipeId number|nil
 ---@field resultId number|nil
 ---@field sources CraftSource[]
@@ -94,6 +95,14 @@ local function parseSources(craft, LibCrafts)
     return craftSources
 end
 
+---@param itemId number
+local function cacheItemInfo(itemId)
+    if GetItemInfo(itemId) ~= nil then
+        return
+    end
+    GameTooltip:SetHyperlink(format("item:%d:0:0:0", itemId))
+end
+
 ---@param craft LcCraft
 ---@param professionRank number
 ---@param LibCrafts LibCrafts
@@ -112,11 +121,18 @@ local function create(craft, professionRank, LibCrafts)
         resultId = (--[[---@not nil]] craft.result).id
     end
 
+    if recipeId ~= nil then
+        cacheItemInfo(--[[---@not nil]] recipeId)
+    elseif resultId ~= nil then
+        cacheItemInfo(--[[---@not nil]] resultId)
+    end
+
     return {
         localizedProfessionName = craft.localized_profession_name,
         localizedName = craft.localized_spell_name,
         skillLevel = craft.skill_level,
         isAvailable = craft.skill_level <= professionRank,
+        spellId = craft.spell_id,
         recipeId = recipeId,
         resultId = resultId,
         sources = parseSources(craft, LibCrafts)

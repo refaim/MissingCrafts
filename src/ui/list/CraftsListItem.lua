@@ -117,31 +117,43 @@ end
 ---@param tooltip GameTooltip
 ---@return boolean
 function CraftsListItem:_DrawTooltip(tooltip)
-    if self._craft == nil then
+    local craft = self._craft
+
+    if craft == nil then
         return false
     end
 
-    local strings = {}
-    for _, source in ipairs(self._craft.sources) do
-        local name = SOURCE_TO_TEXT[source]
-        if name ~= nil then
-            tinsert(strings, name)
-        end
-    end
+    tooltip:SetHyperlink(GetSpellLink(craft.spellId))
 
-    if getn(strings) == 0 then
-        tinsert(strings, SOURCE_TO_TEXT[CraftSource.Unknown])
-    end
+    --if craft.localizedProfessionName == "Enchanting" then
+    --else
+    --    local itemId = craft.recipeId or craft.resultId
+    --    if itemId ~= nil then
+    --        tooltip:SetHyperlink("item:" .. tostring(itemId) .. ":0:0:0")
+    --    end
+    --end
 
-    table.sort(strings)
-
-    local count = getn(strings)
-    local text = ""
-    for i, s in ipairs(strings) do
-        text = text .. s .. (i < count and ", " or "")
-    end
-
-    tooltip:AddLine(format("%s: %s", self._locale.craft_tooltip_source, text))
+    --local strings = {}
+    --for _, source in ipairs(self._craft.sources) do
+    --    local name = SOURCE_TO_TEXT[source]
+    --    if name ~= nil then
+    --        tinsert(strings, name)
+    --    end
+    --end
+    --
+    --if getn(strings) == 0 then
+    --    tinsert(strings, SOURCE_TO_TEXT[CraftSource.Unknown])
+    --end
+    --
+    --table.sort(strings)
+    --
+    --local count = getn(strings)
+    --local text = ""
+    --for i, s in ipairs(strings) do
+    --    text = text .. s .. (i < count and ", " or "")
+    --end
+    --
+    --tooltip:AddLine(format("%s: %s", self._locale.craft_tooltip_source, text))
 
     return true
 end
