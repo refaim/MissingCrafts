@@ -1,3 +1,6 @@
+### v1.2.1 (2025/07/18)
+- Update color scheme to use softer, more readable colors
+
 ### v1.2 (2025/06/23)
 - Fix broken TradeSkillFrame filters
 
