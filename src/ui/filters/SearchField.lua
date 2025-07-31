@@ -27,11 +27,6 @@ function SearchField:Create(relativeWidth, onChange, AceGUI)
     return object
 end
 
-function SearchField:Destroy()
-    self._widget = --[[---@not nil]] nil
-    self._text = --[[---@not nil]] nil
-end
-
 ---@return AceGUIWidget
 function SearchField:GetAceWidget()
     return self._widget

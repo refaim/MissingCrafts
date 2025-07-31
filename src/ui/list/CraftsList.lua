@@ -29,19 +29,6 @@ function CraftsList:Create(locale, vanillaFramePool, AceGUI)
     list._scrollFrame = scrollFrame
     list._buttonsGroup = buttonsGroup
     list._items = {}
-
-    scrollFrame:SetCallback("OnRelease", function()
-        list._locale =  --[[---@not nil]] nil
-        list._framePool =  --[[---@not nil]] nil
-        list._scrollFrame =  --[[---@not nil]] nil
-        list._buttonsGroup =  --[[---@not nil]] nil
-        for _, item in ipairs(list._items) do
-            item:Destroy()
-        end
-        erase(list._items)
-        list._items =  --[[---@not nil]] nil
-    end)
-
     return list
 end
 

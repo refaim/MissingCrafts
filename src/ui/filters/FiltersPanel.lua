@@ -48,30 +48,6 @@ function FiltersPanel:Create(characterRepository, professionRepository, AceGUI)
     panel._searchField = searchField
     panel._group = group
 
-    group:SetCallback("OnRelease", function()
-        if panel._professionDropdown ~= nil then
-            panel._professionDropdown:Destroy()
-            panel._professionDropdown = --[[---@not nil]] nil
-        end
-
-        if panel._characterDropdown ~= nil then
-            panel._characterDropdown:Destroy()
-            panel._characterDropdown = --[[---@not nil]] nil
-        end
-
-        if panel._searchField ~= nil then
-            panel._searchField:Destroy()
-            panel._searchField = --[[---@not nil]] nil
-        end
-
-        panel._characterRepository = --[[---@not nil]] nil
-        panel._professionRepository = --[[---@not nil]] nil
-        panel._group = --[[---@not nil]] nil
-        panel._onChange = --[[---@not nil]] nil
-
-        panel._populated = false
-    end)
-
     return panel
 end
 

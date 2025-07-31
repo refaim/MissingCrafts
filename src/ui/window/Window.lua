@@ -5,17 +5,18 @@ setfenv(1, MissingCrafts)
 ---@field _professionFrame ProfessionFrame
 ---@field _closeButton Button
 ---@field _placementPolicy PlacementPolicy
+---@field _onClose function
 Window = {}
 
 ---@param addonInfo AddonInfo
----@param close fun():void
+---@param onClose fun():void
 ---@param filtersPanel FiltersPanel
 ---@param craftsList CraftsList
 ---@param professionFrame ProfessionFrame
 ---@param placementPolicy PlacementPolicy
 ---@param AceGUI LibAceGUI
 ---@return self
-function Window:Create(addonInfo, close, filtersPanel, craftsList, professionFrame, placementPolicy, AceGUI)
+function Window:Create(addonInfo, onClose, filtersPanel, craftsList, professionFrame, placementPolicy, AceGUI)
     local window = --[[---@type self]] {}
     setmetatable(window, {__index = Window})
 
@@ -39,7 +40,7 @@ function Window:Create(addonInfo, close, filtersPanel, craftsList, professionFra
     local closeButton = CreateFrame("Button", nil, frame.frame, "UIPanelCloseButton")
     closeButton:SetPoint("TOPRIGHT", frame.frame, "TOPRIGHT", -5, -5)
     closeButton:SetScript("OnClick", function()
-        close()
+        window:Hide()
     end)
 
     local filtersPanelAceWidget = filtersPanel:GetAceWidget()
@@ -62,23 +63,9 @@ function Window:Create(addonInfo, close, filtersPanel, craftsList, professionFra
     window._professionFrame = professionFrame
     window._closeButton = closeButton
     window._placementPolicy = placementPolicy
-
-    window:UpdateGeometry()
+    window._onClose = onClose
 
     return window
-end
-
-function Window:Release()
-    if self._frame ~= nil then
-        self._frame:Release()
-        self._frame =  --[[---@not nil]] nil
-    end
-    if self._closeButton ~= nil then
-        clearFrame(self._closeButton)
-        self._closeButton = --[[---@not nil]] nil
-    end
-    self._professionFrame = --[[---@not nil]] nil
-    self._placementPolicy = --[[---@not nil]] nil
 end
 
 function Window:UpdateGeometry()
@@ -86,4 +73,16 @@ function Window:UpdateGeometry()
     self._frame:SetStatusTable(frameStatus)
     self._frame:ApplyStatus()
     self._frame:Show()
+end
+
+---@param professionFrame ProfessionFrame
+function Window:Show(professionFrame)
+    self._professionFrame = professionFrame
+    self._frame:Show()
+    self:UpdateGeometry()
+end
+
+function Window:Hide()
+    self._frame:Hide()
+    self._onClose()
 end

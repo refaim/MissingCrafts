@@ -24,12 +24,6 @@ function Dropdown:Create(relativeWidth, onChange, AceGUI)
     return object
 end
 
-function Dropdown:Destroy()
-    self._widget = --[[---@not nil]] nil
-    self._notifyAboutValueChange = --[[---@not nil]] nil
-    self._selectedValue = --[[---@not nil]] nil
-end
-
 function Dropdown:_OnValueChanged()
     local newValue = self._widget:GetValue()
     if newValue == nil then

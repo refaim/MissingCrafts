@@ -8,7 +8,8 @@ setfenv(1, MissingCrafts)
 
 ---@shape WindowState
 ---@field widget Window
----@field frameId string
+---@field opened boolean
+---@field frameId string|nil
 
 ---@class UIManager
 ---@field _addonInfo AddonInfo
@@ -94,31 +95,33 @@ function UIManager:OnProfessionFrameClosed(frame, frameType)
     local frameId = getFrameId(frame)
     self:DestroyButton(frameId)
     if self:IsWindowAttachedTo(frameId) then
-        self:DestroyWindow()
+        self:CloseWindow()
     else
         self:UpdateGeometry()
     end
 end
 
----@param profession string
-function UIManager:OnWindowOpened(profession)
+---@param frame ProfessionFrame
+function UIManager:OnWindowOpened(frame)
+    self._windowState.opened = true
+    self._windowState.frameId = frame.id
+    self._dataStateManager:OnWindowOpened(frame.profession)
     self:CheckButtons()
-    self._dataStateManager:OnWindowOpened(profession)
 end
 
 function UIManager:OnWindowClosed()
+    self._windowState.opened = false
+    self._windowState.frameId = nil
     self._dataStateManager:OnWindowClosed()
-    self:DestroyWindow()
     self:CheckButtons()
 end
 
 ---@param frame ProfessionFrame
 function UIManager:OnButtonClicked(frame)
     if self:IsWindowAttachedTo(frame.id) then
-        self:DestroyWindow()
-        self:CheckButtons()
+        self:CloseWindow()
     else
-        self:CreateWindow(frame)
+        self:OpenWindow(frame)
     end
 end
 
@@ -150,64 +153,60 @@ function UIManager:DestroyButton(frameId)
 end
 
 function UIManager:CheckButtons()
-    local activeId = self._windowState ~= nil and self._windowState.frameId or nil
+    local activeId
+    if self._windowState ~= nil and self._windowState.opened then
+        activeId = self._windowState.frameId
+    end
     for frameId, button in pairs(self._buttonsByFrameId) do
         button:SetChecked(frameId == activeId)
     end
 end
 
 ---@param frame ProfessionFrame
-function UIManager:CreateWindow(frame)
+function UIManager:OpenWindow(frame)
     if self:IsWindowAttachedTo(frame.id) then
         return
     end
 
-    self:DestroyWindow()
+    if self._windowState == nil then
+        local onClose = function()
+            self:OnWindowClosed()
+        end
 
-    local close = function()
-        self:OnWindowClosed()
+        local filtersPanel = FiltersPanel:Create(self._repos.characterRepository, self._repos.professionRepository, self._libs.AceGUI)
+        local craftsList = CraftsList:Create(self._locale, self._vanillaFramePool, self._libs.AceGUI)
+        local window = Window:Create(self._addonInfo, onClose, filtersPanel, craftsList, frame, self._placementPolicy, self._libs.AceGUI)
+
+        filtersPanel:OnChange(function(filters)
+            self._dataStateManager:OnFiltersChanged(filters)
+        end)
+
+        self._windowState = {
+            widget = window,
+            frameId = frame.id,
+            opened = true
+        }
+        self._filtersPanel = filtersPanel
+        self._craftsList = craftsList
     end
 
-    local filtersPanel = FiltersPanel:Create(self._repos.characterRepository, self._repos.professionRepository, self._libs.AceGUI)
-    local craftsList = CraftsList:Create(self._locale, self._vanillaFramePool, self._libs.AceGUI)
-    local window = Window:Create(self._addonInfo, close, filtersPanel, craftsList, frame, self._placementPolicy, self._libs.AceGUI)
-
-    filtersPanel:OnChange(function(filters)
-        self._dataStateManager:OnFiltersChanged(filters)
-    end)
-
-    self._windowState = {
-        widget = window,
-        frameId = frame.id,
-    }
-    self._filtersPanel = filtersPanel
-    self._craftsList = craftsList
-
-    self:OnWindowOpened(frame.profession)
+    self._windowState.widget:Show(frame)
+    self:OnWindowOpened(frame)
 end
 
-function UIManager:DestroyWindow()
-    if self._windowState == nil then
-        return
-    end
-
-    self._windowState.widget:Release()
-    erase(self._windowState)
-    self._windowState = --[[---@not nil]] nil
-
-    -- These widgets are released by the window during the AceGUI release process
-    self._filtersPanel = --[[---@not nil]] nil
-    self._craftsList =  --[[---@not nil]] nil
+function UIManager:CloseWindow()
+    self._windowState.widget:Hide()
+    self:OnWindowClosed()
 end
 
 ---@param frameId string
 ---@return boolean
 function UIManager:IsWindowAttachedTo(frameId)
-    return self._windowState ~= nil and self._windowState.frameId == frameId
+    return self._windowState ~= nil and self._windowState.opened and self._windowState.frameId == frameId
 end
 
 function UIManager:UpdateGeometry()
-    if self._windowState ~= nil then
+    if self._windowState ~= nil and self._windowState.opened then
         self._windowState.widget:UpdateGeometry()
     end
 end
