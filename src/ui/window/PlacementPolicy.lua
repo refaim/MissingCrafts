@@ -20,6 +20,24 @@ PlacementPolicy = {}
 
 local FrameType = LibCraftingProfessionsConstants.FrameType
 
+---@return boolean
+local function pfUI()
+    return IsAddOnLoaded("pfUI") == 1
+end
+
+---@param frameType LcpProfessionFrameType
+---@return boolean
+local function frameTypeSupportedByPfUI(frameType)
+    return frameType == FrameType.VanillaCraftFrame or
+           frameType == FrameType.VanillaTradeSkillFrame or
+           frameType == FrameType.TurtleTradeSkillFrame
+end
+
+---@return boolean
+local function MTSL()
+    return getglobal("MTSLUI_TOGGLE_BUTTON") ~= nil
+end
+
 ---@param frameType LcpProfessionFrameType
 ---@return Anchor
 function PlacementPolicy:GetOpenButtonAnchor(frameType)
@@ -30,7 +48,13 @@ function PlacementPolicy:GetOpenButtonAnchor(frameType)
         selfCoords = {x = 0, y = 0},
     }
 
-    if frameType == FrameType.AdvancedTradeSkillWindow then
+    if pfUI() and frameTypeSupportedByPfUI(frameType) then
+        if MTSL() then
+            anchor.selfCoords = {x = -15, y = -70}
+        else
+            anchor.selfCoords = {x = -30, y = -1}
+        end
+    elseif frameType == FrameType.AdvancedTradeSkillWindow then
         anchor.selfCoords = {x = -54, y = -91}
     elseif frameType == FrameType.AdvancedTradeSkillWindow2 then
         anchor.selfCoords = {x = -48, y = -77}
@@ -39,8 +63,7 @@ function PlacementPolicy:GetOpenButtonAnchor(frameType)
     elseif frameType == FrameType.TurtleTradeSkillFrame then
         anchor.selfCoords = {x = -96, y = -61}
     elseif frameType == FrameType.VanillaTradeSkillFrame then
-        if getglobal("MTSLUI_TOGGLE_BUTTON") ~= nil then
-            -- Don't interfere with MissingTradeSkillsList button
+        if MTSL() then
             anchor.selfCoords = {x = -93, y = 20}
         else
             anchor.selfCoords = {x = -38, y = 20}
@@ -60,7 +83,10 @@ function PlacementPolicy:GetMainWindowGeometry(professionFrame, frameType)
 
     ---@type Geometry
     local status = {width = 0, height = 0, top = 0, left = 0}
-    if frameType == FrameType.AdvancedTradeSkillWindow then
+
+    if pfUI() and frameTypeSupportedByPfUI(frameType) then
+        status = {width = 384, height = 450, top = topRight.y + 5, left = topRight.x}
+    elseif frameType == FrameType.AdvancedTradeSkillWindow then
         status = {width = 384, height = 430, top = topRight.y - 10, left = topRight.x - 40}
     elseif frameType == FrameType.AdvancedTradeSkillWindow2 then
         status = {width = 384, height = 494, top = topRight.y - 10, left = topRight.x - 5}

@@ -1,3 +1,6 @@
+### v1.3 (2025/08/01)
+- Support pfUI
+
 ### v1.2.2 (2025/08/01)
 - Fix random Ace3 layout-related crashes
 
