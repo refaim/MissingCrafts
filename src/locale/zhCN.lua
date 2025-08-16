@@ -19,3 +19,5 @@ L.craft_source_trainer = "训练师"
 L.craft_source_unknown = "未知"
 L.craft_source_vendor = "商人"
 L.craft_source_world_object = "物体"
+
+L.craft_item_character_level = "等级"

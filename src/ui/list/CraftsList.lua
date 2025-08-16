@@ -49,6 +49,9 @@ local function compareCrafts(a, b)
     if a.skillLevel ~= b.skillLevel then
         return a.skillLevel < b.skillLevel
     end
+    if a.characterLevel ~= b.characterLevel then
+        return a.characterLevel < b.characterLevel
+    end
     return a.localizedName < b.localizedName
 end
 

@@ -19,3 +19,5 @@ L.craft_source_trainer = "Тренер"
 L.craft_source_unknown = "Неизвестно"
 L.craft_source_vendor = "Продавец"
 L.craft_source_world_object = "Объект"
+
+L.craft_item_character_level = "Уровень"

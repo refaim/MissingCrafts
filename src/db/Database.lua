@@ -13,6 +13,7 @@ Database = {}
 ---@field english_faction string
 ---@field localized_faction string
 ---@field name string
+---@field level number
 ---@field professionsByLocalizedName table<string, DatabaseProfession>
 
 ---@shape DatabaseSavedVariable
@@ -31,6 +32,7 @@ function Database:Create(AceDB)
                         ["english_faction"] = "",
                         ["localized_faction"] = "",
                         ["name"] = "",
+                        ["level"] = 1,
                         ["professionsByLocalizedName"] = {}
                     }
                 },
@@ -109,5 +111,6 @@ function Database:_SavePlayer()
     player.english_faction = english_faction
     player.localized_faction = localized_faction
     player.name = name
+    player.level = UnitLevel("player")
     return player
 end

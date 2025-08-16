@@ -7,6 +7,7 @@ setfenv(1, MissingCrafts)
 
 ---@class Character
 ---@field name string
+---@field level number
 ---@field professionLocalizedNameToProfession table<string, CharacterProfession>
 Character = {}
 
@@ -35,6 +36,10 @@ function Character:Create(dbCharacter)
     object.name = dbCharacter.name
     object.professionLocalizedNameToProfession = nameToProfession
     return object
+end
+
+function Character:GetLevel()
+    return self.level
 end
 
 ---@param localizedName string

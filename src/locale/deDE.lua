@@ -19,3 +19,5 @@ L.craft_source_trainer = "Lehrer"
 L.craft_source_unknown = "Unbekannt"
 L.craft_source_vendor = "H\195\164ndler"
 L.craft_source_world_object = "Objekt"
+
+L.craft_item_character_level = "Stufe"

@@ -16,6 +16,7 @@ setfenv(1, MissingCrafts)
 ---@field craft_source_unknown string
 ---@field craft_source_vendor string
 ---@field craft_source_world_object string
+---@field craft_item_character_level string
 
 ---@param code LocaleCode
 ---@param is_default boolean

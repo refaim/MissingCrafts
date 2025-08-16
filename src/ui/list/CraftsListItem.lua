@@ -97,8 +97,15 @@ end
 
 ---@param craft Craft
 function CraftsListItem:PopulateInterface(craft)
+    local levelText
+    if craft.skillLevel == 1 and craft.characterLevel > 1 then
+        levelText = format("[%s %d]", self._locale.craft_item_character_level, craft.characterLevel)
+    else
+        levelText = format("[%d]", craft.skillLevel)
+    end
+
+    local text = format("%s %s", levelText, craft.localizedName)
     local color = craft.isAvailable and {r = 0.7, g = 0.9, b = 1.0} or {r = 1.0, g = 0.8, b = 0.9}
-    local text = format("[%d] %s", craft.skillLevel, craft.localizedName)
     self._button:SetText(text)
     self._button:SetTextColor(color.r, color.g, color.b)
     self._fontString:SetText(text)

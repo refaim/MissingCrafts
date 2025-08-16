@@ -19,3 +19,5 @@ L.craft_source_trainer = "Instructeur"
 L.craft_source_unknown = "Inconnu"
 L.craft_source_vendor = "Marchand"
 L.craft_source_world_object = "Objet"
+
+L.craft_item_character_level = "Niveau"

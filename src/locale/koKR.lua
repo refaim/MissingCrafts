@@ -19,3 +19,5 @@ L.craft_source_trainer = "훈련사"
 L.craft_source_unknown = "알 수 없음"
 L.craft_source_vendor = "상인"
 L.craft_source_world_object = "오브젝트"
+
+L.craft_item_character_level = "레벨"

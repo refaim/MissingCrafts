@@ -11,7 +11,7 @@ A World of Warcraft addon for Vanilla WoW (1.12.1) and Turtle WoW that helps pla
 - **Recipe Source Information**: Displays how to obtain each missing recipe (Vendor, Quest, Drop, etc.)
 - **Multiple Profession Frame Support**: Works seamlessly with default WoW frames and popular profession addons
 - **All Vanilla Crafting Professions**: Supports all vanilla crafting professions
-- **Turtle WoW Support**: Full support for all Turtle WoW custom recipes including the complete Jewelcrafting profession with English, Portuguese, Spanish, and Chinese language support
+- **Turtle WoW Support**: Full support for all Turtle WoW custom recipes including the complete Jewelcrafting and Disguise professions with English, Portuguese, Spanish, and Chinese language support
 - **Multi-Language Support**: Available in English, German, French, Spanish, Portuguese, Russian, Korean, Chinese (Simplified), and Chinese (Traditional)
 
 ## How to Use
@@ -38,7 +38,7 @@ MissingCrafts is a completely new addon built from scratch, offering significant
 - **Active Development**: Actively maintained and developed, while MissingTradeSkillsList development is frozen due to maintenance complexity
 - **Lightweight & Stable**: Built from the ground up with clean architecture that is much lighter and significantly less buggy
 - **Enhanced Localization**: Better language support designed specifically for Vanilla WoW with more comprehensive translations
-- **Turtle WoW Integration**: Full support for all Turtle WoW custom recipes including the complete Jewelcrafting profession with English, Portuguese, Spanish, and Chinese language support
+- **Turtle WoW Integration**: Full support for all Turtle WoW custom recipes including the complete Jewelcrafting and Disguise professions with English, Portuguese, Spanish, and Chinese language support
 - **No Dependencies**: Works independently without requiring additional addon dependencies
 - **Universal UI Support**: Compatible with all major profession UI addons out of the box
 

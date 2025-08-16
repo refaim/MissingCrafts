@@ -26,6 +26,7 @@ CraftSource = {
 ---@field localizedProfessionName string
 ---@field localizedName string
 ---@field skillLevel number
+---@field characterLevel number
 ---@field isAvailable boolean
 ---@field recipeId number|nil
 ---@field resultId number|nil
@@ -96,9 +97,10 @@ end
 
 ---@param craft LcCraft
 ---@param professionRank number
+---@param charLevel number
 ---@param LibCrafts LibCrafts
 ---@return Craft
-local function create(craft, professionRank, LibCrafts)
+local function create(craft, professionRank, charLevel, LibCrafts)
     ---@type number|nil
     local recipeId
     for _, recipe in ipairs(craft.recipes) do
@@ -116,7 +118,8 @@ local function create(craft, professionRank, LibCrafts)
         localizedProfessionName = craft.localized_profession_name,
         localizedName = craft.localized_spell_name,
         skillLevel = craft.skill_level,
-        isAvailable = craft.skill_level <= professionRank,
+        characterLevel = craft.character_level,
+        isAvailable = craft.skill_level <= professionRank and craft.character_level <= charLevel,
         recipeId = recipeId,
         resultId = resultId,
         sources = parseSources(craft, LibCrafts)
@@ -128,9 +131,11 @@ end
 ---@param searchQuery string
 ---@return Craft[]
 function CraftRepository:FindMissing(characterName, localizedProfessionName, searchQuery)
+    local characterLevel = 1
     local professionRank = 0
     local character = self._characterRepository:Find(characterName)
     if character ~= nil then
+        characterLevel = (--[[---@not nil]] character):GetLevel()
         professionRank = (--[[---@not nil]] character):GetProfessionRank(localizedProfessionName)
     end
 
@@ -155,7 +160,7 @@ function CraftRepository:FindMissing(characterName, localizedProfessionName, sea
                 match = true
             end
             if match then
-                tinsert(crafts, create(craft, professionRank, self._libCrafts))
+                tinsert(crafts, create(craft, professionRank, characterLevel, self._libCrafts))
             end
         end
     end
@@ -172,11 +177,13 @@ function CraftRepository:FindByRecipeId(itemId)
     ---@type Craft[]
     local crafts = {}
     for _, craft in ipairs(self._libCrafts:GetCraftsByRecipeId(itemId)) do
+        local characterLevel = 1
         local professionRank = 0
         if character ~= nil then
+            characterLevel = (--[[---@not nil]] character):GetLevel()
             professionRank = (--[[---@not nil]] character):GetProfessionRank(craft.localized_profession_name)
         end
-        tinsert(crafts, create(craft, professionRank, self._libCrafts))
+        tinsert(crafts, create(craft, professionRank, characterLevel, self._libCrafts))
     end
 
     return crafts
