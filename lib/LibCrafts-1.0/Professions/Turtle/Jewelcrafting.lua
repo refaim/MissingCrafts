@@ -1,13 +1,11 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Jewelcrafting", 11
+local name, version = "Professions-Jewelcrafting", 13
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Jewelcrafting")
 if not module then return end
 
 local Quality = lib.constants.qualities
 local SpellSource = lib.constants.spell_sources
 local RecipeSource = lib.constants.recipe_sources
-
-
 
 if lib.env.is_turtle_wow then
     module:NewCraft(29728, "Rough Gritted Paper", 1, {SpellSource.LearnedAutomatically})
@@ -47,7 +45,7 @@ if lib.env.is_turtle_wow then
         :AddReagent(818, 1) -- Tigerseye
         :Save()
 
-    module:NewCraft(41009, "Copper Staff", 45, {SpellSource.Trainer})
+    module:NewCraft(41009, "Copper Staff", 40, {SpellSource.Trainer})
         :SetResult(81092)
         :AddReagent(2840, 4) -- Copper Bar
         :AddReagent(55245, 1) -- Polishing Oil
@@ -126,7 +124,7 @@ if lib.env.is_turtle_wow then
         :AddReagent(2836, 2) -- Coarse Stone
         :Save()
 
-    module:NewCraft(41031, "Rough Gemstone Cluster", 35, {SpellSource.Trainer})
+    module:NewCraft(41031, "Rough Gemstone Cluster", 25, {SpellSource.Trainer})
         :SetResult(81032)
         :AddReagent(55150, 1) -- Rough Gritted Paper
         :AddReagent(2770, 1) -- Copper Ore
@@ -488,7 +486,7 @@ if lib.env.is_turtle_wow then
         :AddReagent(7912, 3) -- Solid Stone
         :Save()
 
-    module:NewCraft(41231, "Minor Trollblood Ring", 50, {})
+    module:NewCraft(41231, "Minor Trollblood Ring", 50, {SpellSource.Trainer})
         :SetResult(55164)
         :AddRecipe(50298, Quality.Uncommon, {RecipeSource.Drop})
         :AddReagent(55156, 1) -- Rough Copper Ring

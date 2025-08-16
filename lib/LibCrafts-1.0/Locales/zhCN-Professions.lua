@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, locale, version = "Locales-Professions", "zhCN", 3
+local name, locale, version = "Locales-Professions", "zhCN", 4
 local module = --[[---@type LcLocaleModule]] lib:RegisterLocaleModule(name, locale, version)
 if not module then return end
 
@@ -16,5 +16,6 @@ L["Poisons"] = "毒药"
 L["Tailoring"] = "裁缝"
 
 if lib.env.is_turtle_wow then
+    L["Disguise"] = "伪装术"
     L["Jewelcrafting"] = "珠宝加工"
 end

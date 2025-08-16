@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, locale, version = "Locales-Spells", "zhTW", 5
+local name, locale, version = "Locales-Spells", "zhTW", 6
 local module = --[[---@type LcLocaleModule]] lib:RegisterLocaleModule(name, locale, version)
 if not module then return end
 
@@ -1286,6 +1286,7 @@ if lib.env.is_turtle_wow then
     L["Bleakwood Hew"] = "冷木斧"
     L["Blood Talon"] = "血爪"
     L["Bloodfire Circlet"] = false
+    L["Bloodletter Razor"] = false
     L["Bloodstone Warblade"] = false
     L["Bloody Belt Buckle"] = false
     L["Blue Dragonscale Boots"] = false
@@ -1318,15 +1319,21 @@ if lib.env.is_turtle_wow then
     L["Corehound Gloves"] = false
     L["Corrosive Poison"] = "腐蝕毒藥"
     L["Corrosive Poison II"] = false
+    L["Cosmic Headdress"] = false
+    L["Cosmic Leggings"] = false
+    L["Cosmic Mantle"] = false
+    L["Cosmic Vest"] = false
     L["Crown of Elegance"] = false
     L["Crown of Molten Ascension"] = false
     L["Crown of the Illustrious Queen"] = false
     L["Crystal Earring"] = false
     L["Crystalfire Armlets"] = false
     L["Crystalweft Bracers"] = false
+    L["Dalaran Wizard Disguise"] = "達拉然巫師偽裝"
     L["Danonzo's Tel'Abim Delight"] = false
     L["Danonzo's Tel'Abim Medley"] = false
     L["Danonzo's Tel'Abim Surprise"] = false
+    L["Dark Iron Dwarf Disguise"] = "黑鐵矮人偽裝"
     L["Dark Iron Signet Ring"] = false
     L["Darkspear"] = "黑暗之矛"
     L["Dawnbright Cuffs"] = false
@@ -1336,6 +1343,7 @@ if lib.env.is_turtle_wow then
     L["Dazzling Moonstone Band"] = false
     L["Deep Sapphire Circlet"] = false
     L["Deepmist Choker"] = false
+    L["Defias Disguise"] = "迪菲亞盜賊偽裝"
     L["Delicate Mithril Amulet"] = false
     L["Dense Gemstone Cluster"] = false
     L["Dense Gritted Paper"] = false
@@ -1402,6 +1410,10 @@ if lib.env.is_turtle_wow then
     L["Encrusted Gemstone Ring"] = false
     L["Eternal Dreamstone Shard"] = false
     L["Ethereal Frostspark Crown"] = false
+    L["Ethereal Helmet"] = false
+    L["Ethereal Leggings"] = false
+    L["Ethereal Shoulder Pads"] = false
+    L["Ethereal Tunic"] = false
     L["Facetted Moonstone Brooch"] = false
     L["Fangclaw Relic"] = false
     L["Farraki Ceremony Totem"] = false
@@ -1479,6 +1491,7 @@ if lib.env.is_turtle_wow then
     L["Lavish Gemmed Necklace"] = false
     L["Le Fishe Au Chocolat"] = false
     L["Lesser Fortification Ring"] = false
+    L["Ley-Kissed Drape"] = false
     L["Lordaeron Breastplate"] = false
     L["Lucidity Potion"] = false
     L["Lynxstep Boots"] = false
@@ -1508,6 +1521,7 @@ if lib.env.is_turtle_wow then
     L["Ocean's Gaze"] = false
     L["Ocean's Wrath"] = false
     L["Ogre Bone Band"] = false
+    L["Onyxia Scale Breastplate"] = "奧妮克希亞鱗片胸甲"
     L["Opal Guided Bangles"] = false
     L["Opaline Illuminator"] = false
     L["Opalstone Circle"] = false
@@ -1517,11 +1531,17 @@ if lib.env.is_turtle_wow then
     L["Ornate Mithril Bracelets"] = false
     L["Ornate Mithril Crown"] = false
     L["Ornate Mithril Scepter"] = false
+    L["Otherworldly Breastplate"] = false
+    L["Otherworldly Coif"] = false
+    L["Otherworldly Leggings"] = false
+    L["Otherworldly Spaulders"] = false
     L["Pauldron of Deflection"] = false
     L["Pauldrons of the Timbermaw"] = false
+    L["Peasant Disguise"] = "農夫偽裝"
     L["Pendant of Arcane Radiance"] = false
     L["Pendant of Instability"] = false
     L["Pendant of Midnight"] = false
+    L["Peon Disguise"] = "苦工偽裝"
     L["Pillager's Amice"] = false
     L["Pillager's Grips"] = false
     L["Pillager's Hood"] = false
@@ -1552,6 +1572,10 @@ if lib.env.is_turtle_wow then
     L["Red Dragonscale Leggings"] = false
     L["Red Dragonscale Shoulders"] = false
     L["Refined Scale of Onyxia"] = "精製奧妮克希亞鱗片"
+    L["Reflective Breastplate"] = false
+    L["Reflective Helmet"] = false
+    L["Reflective Leggings"] = false
+    L["Reflective Pauldrons"] = false
     L["Regal Twilight Staff"] = false
     L["Repaired Electro-Lantern"] = false
     L["Resilient Arcane Gemstone"] = false
@@ -1610,6 +1634,7 @@ if lib.env.is_turtle_wow then
     L["Softglow Ring"] = false
     L["Solid Gemstone Cluster"] = false
     L["Solid Gritted Paper"] = false
+    L["South Seas Pirate Disguise"] = "南海海盜偽裝"
     L["Specter's Shade Ring"] = false
     L["Spellweaver Pendant"] = false
     L["Spellweaver Rod"] = false
@@ -1627,6 +1652,7 @@ if lib.env.is_turtle_wow then
     L["Steel Plate Pauldrons"] = false
     L["Stellar Gemguards"] = false
     L["Stellar Ruby Ring"] = false
+    L["Stonesplinter Trogg Disguise"] = "碎石穴居怪偽裝"
     L["Stormcloth Boots"] = "雷織長靴"
     L["Stormcloth Gloves"] = "雷織手套"
     L["Stormcloth Headband"] = "雷織頭帶"
@@ -1640,6 +1666,7 @@ if lib.env.is_turtle_wow then
     L["Stunning Imperial Gemstone"] = false
     L["Sturdy Copper Ring"] = false
     L["Sunburst Tiara"] = false
+    L["Syndicate Disguise"] = "辛迪加偽裝"
     L["Talisman of Hinderance"] = false
     L["Talisman of Stone"] = false
     L["Tempered Azerothian Gemstone"] = false
@@ -1666,6 +1693,7 @@ if lib.env.is_turtle_wow then
     L["Verdant Dreamer's Breastplate"] = false
     L["Vitriol Brooch"] = false
     L["Voidheart Charm"] = false
+    L["Volatile Concoction"] = false
     L["Windbinder Gloves"] = false
     L["Windwalker Boots"] = false
 end

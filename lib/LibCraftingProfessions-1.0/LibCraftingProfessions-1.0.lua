@@ -4,14 +4,14 @@
     Website: https://github.com/refaim/LibCraftingProfessions-1.0
     Description: A library designed to provide a universal interface for crafting professions.
     Dependencies: LibStub
-    Compatibility: World of Warcraft Vanilla (1.12.1), Turtle (1.17.2)
+    Compatibility: World of Warcraft Vanilla (1.12.1), Turtle (1.18.0)
 ]]
 
 ---@type LibStubDef
 local LibStub = getglobal("LibStub")
 assert(LibStub ~= nil)
 
-local untyped_lib, _ = LibStub:NewLibrary("LibCraftingProfessions-1.0", 15)
+local untyped_lib, _ = LibStub:NewLibrary("LibCraftingProfessions-1.0", 16)
 if not untyped_lib then
     return
 end
@@ -25,7 +25,7 @@ if lib.event_to_handlers == nil then
     lib.event_to_handlers = {}
 end
 
-local IS_TURTLE_WOW = getglobal("LFT") ~= nil
+local IS_TURTLE_WOW = getglobal("TURTLE_WOW_VERSION") ~= nil
 
 ---@shape LcpProfessionProps
 ---@field icon string

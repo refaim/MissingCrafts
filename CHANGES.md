@@ -1,3 +1,6 @@
+### v1.3.1 (2025/08/16)
+- Update LibCrafts and LibCraftingProfessions
+
 ### v1.3 (2025/08/01)
 - Support pfUI
 

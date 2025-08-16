@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Leatherworking", 2
+local name, version = "Professions-Leatherworking", 3
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Leatherworking")
 if not module then return end
 
@@ -1930,6 +1930,15 @@ if lib.env.is_turtle_wow then
         :AddReagent(15408, 8) -- Heavy Scorpid Scale
         :Save()
 
+    module:NewCraft(19106, "Onyxia Scale Breastplate", 300, {})
+        :SetResult(15141)
+        :AddRecipe(15780, Quality.Epic, {}) -- TODO add source
+        :AddReagent(8170, 40) -- Rugged Leather
+        :AddReagent(14341, 2) -- Rune Thread
+        :AddReagent(15410, 12) -- Scale of Onyxia
+        :AddReagent(15416, 60) -- Black Dragonscale
+        :Save()
+
     module:NewCraft(20853, "Corehound Boots", 300, {})
         :SetResult(16982)
         :AddRecipe(17022, Quality.Common, {RecipeSource.Vendor})
@@ -2307,5 +2316,41 @@ if lib.env.is_turtle_wow then
         :AddReagent(12810, 3) -- Enchanted Leather
         :AddReagent(14341, 2) -- Rune Thread
         :AddReagent(61673, 3) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(57609, "Ethereal Helmet", 300, {})
+        :SetResult(55522)
+        :AddRecipe(55539, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(12810, 8) -- Enchanted Leather
+        :AddReagent(14227, 1) -- Ironweb Spider Silk
+        :AddReagent(15407, 2) -- Cured Rugged Hide
+        :AddReagent(61673, 5) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(57611, "Ethereal Shoulder Pads", 300, {})
+        :SetResult(55523)
+        :AddRecipe(55540, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(12810, 7) -- Enchanted Leather
+        :AddReagent(14227, 2) -- Ironweb Spider Silk
+        :AddReagent(15407, 2) -- Cured Rugged Hide
+        :AddReagent(61673, 4) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(57613, "Ethereal Tunic", 300, {})
+        :SetResult(55524)
+        :AddRecipe(55541, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(12810, 12) -- Enchanted Leather
+        :AddReagent(14227, 1) -- Ironweb Spider Silk
+        :AddReagent(15407, 4) -- Cured Rugged Hide
+        :AddReagent(61673, 8) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(57615, "Ethereal Leggings", 300, {})
+        :SetResult(55525)
+        :AddRecipe(55542, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(12810, 13) -- Enchanted Leather
+        :AddReagent(14227, 2) -- Ironweb Spider Silk
+        :AddReagent(15407, 3) -- Cured Rugged Hide
+        :AddReagent(61673, 6) -- Arcane Essence
         :Save()
 end

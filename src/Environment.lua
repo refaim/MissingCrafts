@@ -20,7 +20,7 @@ MissingCrafts = setmetatable({_G = _G}, {__index = _G})
 setfenv(1, MissingCrafts)
 
 ADDON_NAME = "MissingCrafts"
-ADDON_VERSION = "1.3"
+ADDON_VERSION = "1.3.1"
 
 ---@param t table
 function erase(t)

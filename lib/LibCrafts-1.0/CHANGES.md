@@ -1,3 +1,9 @@
+### Revision 12 (2025/08/16)
+- Turtle: Fix Jewelcrafting database errors
+- Turtle: Add some missing 1.17.2 recipes
+- Turtle: Add some 1.18.0 recipe changes
+- Turtle: Support Disguise profession
+
 ### Revision 11 (2025/06/11)
 - Fix a lot of database errors
 

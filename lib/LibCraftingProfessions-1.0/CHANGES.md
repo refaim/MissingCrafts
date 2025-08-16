@@ -1,3 +1,6 @@
+### Revision 16 (2025/08/16)
+- Turtle: Support 1.18.0 patch
+
 ### Revision 15 (2025/06/13)
 - Fix broken TradeSkillFrame filters
 

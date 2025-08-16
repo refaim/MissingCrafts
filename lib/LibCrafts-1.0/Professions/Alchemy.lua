@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Alchemy", 3
+local name, version = "Professions-Alchemy", 4
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Alchemy")
 if not module then return end
 
@@ -902,6 +902,24 @@ if lib.env.is_turtle_wow then
         :AddReagent(13468, 4) -- Black Lotus
         :Save()
 
+    module:NewCraft(17635, "Flask of the Titans", 300, {})
+        :SetResult(13510)
+        :AddRecipe(13519, Quality.Uncommon, {RecipeSource.Drop})
+        :AddReagent(8925, 1) -- Crystal Vial
+        :AddReagent(13423, 10) -- Stonescale Oil
+        :AddReagent(13464, 30) -- Golden Sansam
+        :AddReagent(13468, 1) -- Black Lotus
+        :Save()
+
+    module:NewCraft(17636, "Flask of Distilled Wisdom", 300, {})
+        :SetResult(13511)
+        :AddRecipe(13520, Quality.Uncommon, {RecipeSource.Drop})
+        :AddReagent(8838, 30) -- Sungrass
+        :AddReagent(8925, 1) -- Crystal Vial
+        :AddReagent(13467, 10) -- Icecap
+        :AddReagent(13468, 1) -- Black Lotus
+        :Save()
+
     module:NewCraft(22430, "Refined Scale of Onyxia", 300, {SpellSource.Quest})
         :SetResult(17967)
         :AddReagent(15410, 1) -- Scale of Onyxia
@@ -914,6 +932,14 @@ if lib.env.is_turtle_wow then
         :AddReagent(13463, 3) -- Dreamfoil
         :AddReagent(13464, 3) -- Golden Sansam
         :AddReagent(18256, 1) -- Imbued Vial
+        :Save()
+
+    module:NewCraft(45061, "Volatile Concoction", 75, {})
+        :SetResult(51262)
+        :AddRecipe(51263, Quality.Uncommon, {}) -- TODO add source
+        :AddReagent(730, 1) -- Murloc Eye
+        :AddReagent(814, 1) -- Flask of Oil
+        :AddReagent(3371, 1) -- Empty Vial
         :Save()
 
     module:NewCraft(45989, "Elixir of Greater Nature Power", 300, {})

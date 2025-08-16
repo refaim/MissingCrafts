@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Tailoring", 2
+local name, version = "Professions-Tailoring", 3
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Tailoring")
 if not module then return end
 
@@ -2186,5 +2186,51 @@ if lib.env.is_turtle_wow then
         :AddReagent(7082, 6) -- Essence of Air
         :AddReagent(14048, 10) -- Bolt of Runecloth
         :AddReagent(14344, 2) -- Large Brilliant Shard
+        :Save()
+
+    module:NewCraft(57601, "Cosmic Headdress", 300, {})
+        :SetResult(55518)
+        :AddRecipe(55535, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(14048, 6) -- Bolt of Runecloth
+        :AddReagent(14227, 3) -- Ironweb Spider Silk
+        :AddReagent(14342, 2) -- Mooncloth
+        :AddReagent(61673, 5) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(57603, "Cosmic Mantle", 300, {})
+        :SetResult(55519)
+        :AddRecipe(55536, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(14048, 3) -- Bolt of Runecloth
+        :AddReagent(14227, 4) -- Ironweb Spider Silk
+        :AddReagent(14342, 2) -- Mooncloth
+        :AddReagent(61673, 4) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(57605, "Cosmic Vest", 300, {})
+        :SetResult(55520)
+        :AddRecipe(55537, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(14048, 8) -- Bolt of Runecloth
+        :AddReagent(14227, 2) -- Ironweb Spider Silk
+        :AddReagent(14342, 3) -- Mooncloth
+        :AddReagent(61673, 7) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(57607, "Cosmic Leggings", 300, {})
+        :SetResult(55521)
+        :AddRecipe(55538, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(14048, 6) -- Bolt of Runecloth
+        :AddReagent(14227, 2) -- Ironweb Spider Silk
+        :AddReagent(14342, 3) -- Mooncloth
+        :AddReagent(61673, 7) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(57633, "Ley-Kissed Drape", 300, {})
+        :SetResult(55534)
+        :AddRecipe(55551, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(13926, 1) -- Golden Pearl
+        :AddReagent(14048, 6) -- Bolt of Runecloth
+        :AddReagent(14227, 4) -- Ironweb Spider Silk
+        :AddReagent(14342, 2) -- Mooncloth
+        :AddReagent(61673, 4) -- Arcane Essence
         :Save()
 end

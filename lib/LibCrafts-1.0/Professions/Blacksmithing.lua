@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Blacksmithing", 2
+local name, version = "Professions-Blacksmithing", 3
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Blacksmithing")
 if not module then return end
 
@@ -2266,6 +2266,16 @@ if lib.env.is_turtle_wow then
         :AddReagent(12938, 1) -- Blood of Heroes
         :Save()
 
+    module:NewCraft(46658, "Bloodletter Razor", 250, {})
+        :SetResult(65005)
+        :AddRecipe(83535, Quality.Rare, {}) -- TODO add source
+        :AddReagent(3860, 24) -- Mithril Bar
+        :AddReagent(4304, 4) -- Thick Leather
+        :AddReagent(6037, 10) -- Truesilver Bar
+        :AddReagent(7910, 8) -- Star Ruby
+        :AddReagent(7966, 6) -- Solid Grinding Stone
+        :Save()
+
     module:NewCraft(46660, "Imperial Plate Gauntlets", 270, {})
         :SetResult(65007)
         :AddRecipe(83518, Quality.Uncommon, {RecipeSource.Quest})
@@ -2596,5 +2606,73 @@ if lib.env.is_turtle_wow then
         :AddReagent(8846, 6) -- Gromsblood
         :AddReagent(12359, 10) -- Thorium Bar
         :AddReagent(19933, 6) -- Glowing Scorpid Blood
+        :Save()
+
+    module:NewCraft(57617, "Otherworldly Coif", 300, {})
+        :SetResult(55526)
+        :AddRecipe(55543, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(12360, 1) -- Arcanite Bar
+        :AddReagent(12607, 1) -- Brilliant Chromatic Scale
+        :AddReagent(15407, 1) -- Cured Rugged Hide
+        :AddReagent(61673, 6) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(57619, "Otherworldly Spaulders", 300, {})
+        :SetResult(55527)
+        :AddRecipe(55544, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(12360, 1) -- Arcanite Bar
+        :AddReagent(12607, 3) -- Brilliant Chromatic Scale
+        :AddReagent(15407, 1) -- Cured Rugged Hide
+        :AddReagent(61673, 5) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(57621, "Otherworldly Breastplate", 300, {})
+        :SetResult(55528)
+        :AddRecipe(55545, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(12360, 1) -- Arcanite Bar
+        :AddReagent(12607, 2) -- Brilliant Chromatic Scale
+        :AddReagent(15407, 2) -- Cured Rugged Hide
+        :AddReagent(61673, 6) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(57623, "Otherworldly Leggings", 300, {})
+        :SetResult(55529)
+        :AddRecipe(55546, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(12360, 1) -- Arcanite Bar
+        :AddReagent(12607, 2) -- Brilliant Chromatic Scale
+        :AddReagent(15407, 2) -- Cured Rugged Hide
+        :AddReagent(61673, 7) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(57625, "Reflective Helmet", 300, {})
+        :SetResult(55530)
+        :AddRecipe(55547, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(12360, 2) -- Arcanite Bar
+        :AddReagent(12655, 7) -- Enchanted Thorium Bar
+        :AddReagent(61673, 6) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(57627, "Reflective Pauldrons", 300, {})
+        :SetResult(55531)
+        :AddRecipe(55548, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(12360, 2) -- Arcanite Bar
+        :AddReagent(12655, 9) -- Enchanted Thorium Bar
+        :AddReagent(61673, 7) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(57629, "Reflective Breastplate", 300, {})
+        :SetResult(55532)
+        :AddRecipe(55549, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(12360, 2) -- Arcanite Bar
+        :AddReagent(12655, 10) -- Enchanted Thorium Bar
+        :AddReagent(61673, 5) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(57631, "Reflective Leggings", 300, {})
+        :SetResult(55533)
+        :AddRecipe(55550, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(12360, 2) -- Arcanite Bar
+        :AddReagent(12655, 12) -- Enchanted Thorium Bar
+        :AddReagent(61673, 7) -- Arcane Essence
         :Save()
 end

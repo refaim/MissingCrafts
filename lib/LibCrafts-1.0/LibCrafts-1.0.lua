@@ -4,14 +4,14 @@
     Website: https://github.com/refaim/LibCrafts-1.0
     Description: A library designed to provide a database crafting spells, recipes, reagents etc.
     Dependencies: LibStub
-    Compatibility: Vanilla (1.12.1), Turtle (1.17.2)
+    Compatibility: Vanilla (1.12.1), Turtle (1.18.0)
 ]]
 
 ---@type LibStubDef
 local LibStub = getglobal("LibStub")
 assert(LibStub ~= nil)
 
-local untyped_lib, _ = LibStub:NewLibrary("LibCrafts-1.0", 11)
+local untyped_lib, _ = LibStub:NewLibrary("LibCrafts-1.0", 12)
 if not untyped_lib then return end
 
 ---@class LibCrafts
@@ -57,7 +57,7 @@ end
 
 lib.env = {
     is_debug = false,
-    is_turtle_wow = getglobal("LFT") ~= nil,
+    is_turtle_wow = getglobal("TURTLE_WOW_VERSION") ~= nil,
     is_super_wow_loaded = getglobal("SpellInfo") ~= nil,
 }
 
@@ -141,6 +141,7 @@ lib.constants = {
 ---@field spell_id number
 ---@field localized_spell_name string
 ---@field skill_level number
+---@field character_level number
 ---@field result LcItem|nil
 ---@field sources LcSpellSource[]
 ---@field recipes LcRecipe[]
@@ -347,6 +348,7 @@ function ProfessionModule:NewCraft(spell_id, spell_name, skill_level, sources)
     craft.spell_id = spell_id
     craft.localized_spell_name = translate_from_en_to_game_locale(spell_name, "Locales-Spells")
     craft.skill_level = skill_level
+    craft.character_level = 1
     craft.sources = sources
     craft.recipes = {}
     craft.reagent_id_to_count = {}
@@ -413,6 +415,16 @@ function Craft:AddReagent(id, count)
 
     self.reagent_id_to_count[id] = count
 
+    return self
+end
+
+---@param level number
+---@return self
+function Craft:SetMinCharacterLevel(level)
+    if lib.env.is_debug then
+        assert(type(level) == "number" and level > 0)
+    end
+    self.character_level = level
     return self
 end
 
