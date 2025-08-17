@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, locale, version = "Locales-Spells", "enUS", 6
+local name, locale, version = "Locales-Spells", "enUS", 7
 local module = --[[---@type LcLocaleModule]] lib:RegisterLocaleModule(name, locale, version)
 if not module then return end
 
@@ -1401,6 +1401,8 @@ if lib.env.is_turtle_wow then
     L["Enchant Gloves - Arcane Power"] = true
     L["Enchant Gloves - Major Strength"] = true
     L["Enchant Gloves - Nature Power"] = true
+    L["Enchant Weapon - Healing Power"] = true
+    L["Enchant Weapon - Spell Power"] = true
     L["Enchanted Armor Kit"] = true
     L["Enchanted Bracelets"] = true
     L["Enchanted Emerald Gemstone"] = true

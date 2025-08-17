@@ -1,3 +1,6 @@
+### Revision 17 (2025/08/17)
+- Turtle: Support latest localization updates
+
 ### Revision 16 (2025/08/16)
 - Turtle: Support 1.18.0 patch
 

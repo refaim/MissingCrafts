@@ -11,7 +11,7 @@
 local LibStub = getglobal("LibStub")
 assert(LibStub ~= nil)
 
-local untyped_lib, _ = LibStub:NewLibrary("LibCrafts-1.0", 12)
+local untyped_lib, _ = LibStub:NewLibrary("LibCrafts-1.0", 13)
 if not untyped_lib then return end
 
 ---@class LibCrafts
@@ -293,14 +293,11 @@ function lib:RegisterLocaleModule(name, locale, version)
         assert(type(version) == "number" and version > 0)
     end
 
-    local game_locale = GetLocale()
-    if game_locale == "xxYY" and lib.env.is_turtle_wow then
-        game_locale = "ptBR"
-    end
-
     if locale == "enGB" then
         locale = "enUS"
     end
+
+    local game_locale = GetLocale()
     if locale ~= game_locale or module_registered(name, version) then
         return nil
     end

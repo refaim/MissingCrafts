@@ -1,3 +1,6 @@
+### Revision 13 (2025/08/17)
+- Turtle: Support latest localization updates (including deDE game client)
+
 ### Revision 12 (2025/08/16)
 - Turtle: Fix Jewelcrafting database errors
 - Turtle: Add some missing 1.17.2 recipes

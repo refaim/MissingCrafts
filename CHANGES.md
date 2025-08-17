@@ -1,3 +1,6 @@
+### v1.3.2 (2025/08/17)
+- Update LibCrafts and LibCraftingProfessions (support latest Turtle localization changes including deDE game client)
+
 ### v1.3.1 (2025/08/16)
 - Update LibCrafts and LibCraftingProfessions
 
