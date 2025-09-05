@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Alchemy", 4
+local name, version = "Professions-Alchemy", 5
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Alchemy")
 if not module then return end
 
@@ -932,6 +932,30 @@ if lib.env.is_turtle_wow then
         :AddReagent(13463, 3) -- Dreamfoil
         :AddReagent(13464, 3) -- Golden Sansam
         :AddReagent(18256, 1) -- Imbued Vial
+        :Save()
+
+    module:NewCraft(36929, "Concoction of the Emerald Mongoose", 300, {})
+        :SetResult(47410)
+        :AddRecipe(47411, Quality.Rare, {RecipeSource.Quest})
+        :AddReagent(8153, 6) -- Wildvine
+        :AddReagent(13452, 1) -- Elixir of the Mongoose
+        :AddReagent(61224, 1) -- Dreamshard Elixir
+        :Save()
+
+    module:NewCraft(36932, "Concoction of the Arcane Giant", 300, {})
+        :SetResult(47412)
+        :AddRecipe(47413, Quality.Rare, {RecipeSource.Drop})
+        :AddReagent(8831, 6) -- Purple Lotus
+        :AddReagent(9206, 1) -- Elixir of Giants
+        :AddReagent(13454, 1) -- Greater Arcane Elixir
+        :Save()
+
+    module:NewCraft(36935, "Concoction of the Dreamwater", 300, {})
+        :SetResult(47414)
+        :AddRecipe(47415, Quality.Rare, {RecipeSource.Drop})
+        :AddReagent(8838, 6) -- Sungrass
+        :AddReagent(12820, 1) -- Winterfall Firewater
+        :AddReagent(61423, 1) -- Dreamtonic
         :Save()
 
     module:NewCraft(45061, "Volatile Concoction", 75, {})

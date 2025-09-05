@@ -1,3 +1,6 @@
+### v1.3.3 (2025/09/05)
+- Update LibCrafts and LibCraftingProfessions (support latest Turtle localization changes, add new alchemy recipes)
+
 ### v1.3.2 (2025/08/17)
 - Update LibCrafts and LibCraftingProfessions (support latest Turtle localization changes including deDE game client)
 

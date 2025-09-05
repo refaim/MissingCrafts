@@ -10,7 +10,7 @@
 ## Notes-zhCN: 显示您制作专业技能中缺少的配方以及如何获得它们。
 ## Notes-zhTW: 顯示您製作專業技能中缺少的配方以及如何獲得它們。
 ## Author: Refaim
-## Version: 1.3.2
+## Version: 1.3.3
 ## SavedVariables: MissingCraftsDatabase
 ## OptionalDeps: AdvancedTradeSkillWindow, AdvancedTradeSkillWindow2, Artisan
 

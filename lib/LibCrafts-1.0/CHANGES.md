@@ -1,3 +1,7 @@
+### Revision 13 (2025/09/05)
+- Turtle: Add new 1.18 alchemy concoction recipes
+- Turtle: Add localization updates from patch 1.18.7230
+
 ### Revision 13 (2025/08/17)
 - Turtle: Support latest localization updates (including deDE game client)
 

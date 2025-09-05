@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, locale, version = "Locales-Spells", "koKR", 6
+local name, locale, version = "Locales-Spells", "koKR", 7
 local module = --[[---@type LcLocaleModule]] lib:RegisterLocaleModule(name, locale, version)
 if not module then return end
 
@@ -1312,6 +1312,9 @@ if lib.env.is_turtle_wow then
     L["Cleaning Cloth"] = false
     L["Coarse Gemstone Cluster"] = false
     L["Coarse Gritted Paper"] = false
+    L["Concoction of the Arcane Giant"] = false
+    L["Concoction of the Dreamwater"] = false
+    L["Concoction of the Emerald Mongoose"] = false
     L["Copper Bangle"] = false
     L["Copper Belt Buckle"] = false
     L["Copper Knuckles"] = false

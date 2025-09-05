@@ -2,6 +2,8 @@
 
 A modern, lightweight embeddable database library for crafting professions in Vanilla WoW (1.12.1) and [Turtle WoW](https://turtle-wow.org). Designed as an replacement (not a drop-in) for [ReagentData](https://github.com/refaim/ReagentData), [TradeSkillsData](https://github.com/refaim/TradeSkillsData) and [TradeSkillsData-turtle](https://github.com/refaim/TradeSkillsData-turtle).
 
+**Notice to players:** This is **NOT a standalone addon** and provides no functionality on its own. **Do not install this library directly.** This is a developer resource meant to be embedded inside other addons. If you're looking for a crafting addon, this is not it. You might be looking for [MasterTradeSkills](https://github.com/refaim/MasterTradeSkills) or [MissingCrafts](https://github.com/refaim/MissingCrafts) instead.
+
 ## Features
 
 - Lightweight ID-based database architecture
@@ -39,3 +41,5 @@ If you have suggestions for improvements or have found a bug, please create an i
 ## License
 
 LibCrafts is distributed under the MIT License. For details, see the [LICENSE](LICENSE) file.
+
+

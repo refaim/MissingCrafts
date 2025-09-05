@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, locale, version = "Locales-Spells", "deDE", 7
+local name, locale, version = "Locales-Spells", "deDE", 8
 local module = --[[---@type LcLocaleModule]] lib:RegisterLocaleModule(name, locale, version)
 if not module then return end
 
@@ -1256,7 +1256,7 @@ L["Wound Poison IV"] = "Wundgift IV"
 
 if lib.env.is_turtle_wow then
     L["Agatestone Crown"] = "Achatstein-Krone"
-    L["Agitating Poison"] = "Reizendes Gift"
+    L["Agitating Poison"] = "Aufstachelndes Gift"
     L["Alchemist's Stone"] = "Alchimistenstein"
     L["Alluring Citrine Choker"] = "Verlockendes Citrinkropfband"
     L["Amber Orb"] = "Bernsteinorb"
@@ -1312,13 +1312,16 @@ if lib.env.is_turtle_wow then
     L["Cleaning Cloth"] = false
     L["Coarse Gemstone Cluster"] = "Grobe Edelsteingruppe"
     L["Coarse Gritted Paper"] = "Grobes Schleifpapier"
+    L["Concoction of the Arcane Giant"] = "Trank des Arkanen Giganten"
+    L["Concoction of the Dreamwater"] = "Trank des Traumwassers"
+    L["Concoction of the Emerald Mongoose"] = "Trank des Smaragd-Mungos"
     L["Copper Bangle"] = "Copper Bangle"
     L["Copper Belt Buckle"] = "Kupferner Gürtelverschluss"
     L["Copper Knuckles"] = "Kupferknöchel"
     L["Copper Staff"] = "Kupferstab"
     L["Corehound Gloves"] = "Kernhundhandschuhe"
-    L["Corrosive Poison"] = "Ätzgift"
-    L["Corrosive Poison II"] = "Ätzgift II"
+    L["Corrosive Poison"] = "Ätzendes Gift"
+    L["Corrosive Poison II"] = "Ätzendes Gift II"
     L["Cosmic Headdress"] = "Kosmischer Kopfschmuck"
     L["Cosmic Leggings"] = "Kosmische Gamaschen"
     L["Cosmic Mantle"] = "Kosmischer Mantel"
@@ -1491,7 +1494,6 @@ if lib.env.is_turtle_wow then
     L["Lavish Gemmed Necklace"] = "Prunkvoll geschmücktes Halsband"
     L["Le Fishe Au Chocolat"] = "Le Fishe Au Chocolat"
     L["Lesser Fortification Ring"] = "Ring der geringeren Befestigung"
-    L["Lesser Healing Potion"] = "Geringer HeiltRang"
     L["Ley-Kissed Drape"] = "Ley-geküsster Umhang"
     L["Lordaeron Breastplate"] = "Brustplatte von Lordaeron"
     L["Lucidity Potion"] = "Trank der Klarheit"
@@ -1506,9 +1508,6 @@ if lib.env.is_turtle_wow then
     L["Mastercrafted Diamond Bangles"] = "Meistergefertigte Diamantarmbänder"
     L["Mastercrafted Diamond Crown"] = "Meistergefertigte Diamantenkrone"
     L["Medallion of Flame"] = "Medaillon der Flamme"
-    L["Minor Healing Potion"] = "Schwacher HeiltRang"
-    L["Minor Mana Potion"] = "Schwacher ManatRang"
-    L["Minor Rejuvenation Potion"] = "Schwacher VerjüngungstRang"
     L["Minor Trollblood Ring"] = "Kleiner Trollblutring"
     L["Mistwood Tiara"] = "Nebelwald Tiara"
     L["Mithril Belt Buckle"] = "Mithril-Gürtelverschluss"
@@ -1670,7 +1669,6 @@ if lib.env.is_turtle_wow then
     L["Stunning Imperial Gemstone"] = "Atemberaubender imperialer Edelstein"
     L["Sturdy Copper Ring"] = "Robuster Kupferring"
     L["Sunburst Tiara"] = "Sonnenstrahlen-Tiara"
-    L["Swiftness Potion"] = "HurtigkeitstRang"
     L["Syndicate Disguise"] = "Syndikatsverkleidung"
     L["Talisman of Hinderance"] = "Talisman der Behinderung"
     L["Talisman of Stone"] = "Talisman des Steins"
