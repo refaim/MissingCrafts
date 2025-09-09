@@ -23,6 +23,7 @@ CraftSource = {
 }
 
 ---@shape Craft
+---@field spellId number
 ---@field localizedProfessionName string
 ---@field localizedName string
 ---@field skillLevel number
@@ -113,6 +114,7 @@ local function create(craft, professionRank, LibCrafts)
     end
 
     return {
+        spellId = craft.spell_id,
         localizedProfessionName = craft.localized_profession_name,
         localizedName = craft.localized_spell_name,
         skillLevel = craft.skill_level,

@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Leatherworking", 3
+local name, version = "Professions-Leatherworking", 4
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Leatherworking")
 if not module then return end
 
@@ -223,7 +223,7 @@ module:NewCraft(3771, "Barbaric Gloves", 150, {})
 
 module:NewCraft(3772, "Green Leather Armor", 155, {})
     :SetResult(4255)
-    :AddRecipe(7613, Quality.Uncommon, {RecipeSource.Vendor})
+    :AddRecipe(7613, Quality.Common, {RecipeSource.Vendor})
     :AddReagent(2321, 4) -- Fine Thread
     :AddReagent(2605, 2) -- Green Dye
     :AddReagent(4234, 9) -- Heavy Leather
@@ -350,7 +350,7 @@ module:NewCraft(6661, "Barbaric Harness", 190, {SpellSource.Trainer})
 
 module:NewCraft(6702, "Murloc Scale Belt", 90, {})
     :SetResult(5780)
-    :AddRecipe(5786, Quality.Uncommon, {RecipeSource.Drop, RecipeSource.Vendor})
+    :AddRecipe(5786, Quality.Common, {RecipeSource.Drop, RecipeSource.Vendor})
     :AddReagent(2318, 6) -- Light Leather
     :AddReagent(2321, 1) -- Fine Thread
     :AddReagent(5784, 8) -- Slimy Murloc Scale
@@ -358,7 +358,7 @@ module:NewCraft(6702, "Murloc Scale Belt", 90, {})
 
 module:NewCraft(6703, "Murloc Scale Breastplate", 95, {})
     :SetResult(5781)
-    :AddRecipe(5787, Quality.Uncommon, {RecipeSource.Drop, RecipeSource.Vendor})
+    :AddRecipe(5787, Quality.Common, {RecipeSource.Drop, RecipeSource.Vendor})
     :AddReagent(2318, 8) -- Light Leather
     :AddReagent(2321, 1) -- Fine Thread
     :AddReagent(4231, 1) -- Cured Light Hide
@@ -528,7 +528,7 @@ module:NewCraft(9070, "Black Whelp Cloak", 100, {})
 
 module:NewCraft(9072, "Red Whelp Gloves", 120, {})
     :SetResult(7284)
-    :AddRecipe(7290, Quality.Uncommon, {RecipeSource.Vendor})
+    :AddRecipe(7290, Quality.Common, {RecipeSource.Vendor})
     :AddReagent(2319, 4) -- Medium Leather
     :AddReagent(2321, 1) -- Fine Thread
     :AddReagent(7287, 6) -- Red Whelp Scale
@@ -699,7 +699,7 @@ module:NewCraft(10507, "Nightscape Headband", 205, {SpellSource.Trainer})
 
 module:NewCraft(10509, "Turtle Scale Gloves", 205, {})
     :SetResult(8187)
-    :AddRecipe(8385, Quality.Uncommon, {RecipeSource.Chest, RecipeSource.Drop, RecipeSource.Vendor})
+    :AddRecipe(8385, Quality.Common, {RecipeSource.Chest, RecipeSource.Drop, RecipeSource.Vendor})
     :AddReagent(4304, 6) -- Thick Leather
     :AddReagent(8167, 8) -- Turtle Scale
     :AddReagent(8343, 1) -- Heavy Silken Thread
@@ -1883,6 +1883,37 @@ module:NewCraft(28474, "Bramblewood Belt", 300, {})
     :Save()
 
 if lib.env.is_turtle_wow then
+    module:NewCraft(37, "Harness of the High Thane", 300, {})
+        :SetResult(55043)
+        :AddRecipe(16, Quality.Epic, {RecipeSource.Vendor})
+        :AddReagent(4480, 10) -- Thundering Charm
+        :AddReagent(5117, 15) -- Vibrant Plume
+        :AddReagent(7081, 20) -- Breath of Wind
+        :AddReagent(7082, 8) -- Essence of Air
+        :AddReagent(12810, 12) -- Enchanted Leather
+        :AddReagent(14341, 4) -- Rune Thread
+        :AddReagent(15407, 6) -- Cured Rugged Hide
+        :Save()
+
+    module:NewCraft(55, "Dragonmaw Armor Kit", 175, {})
+        :SetResult(65)
+        :AddRecipe(69, Quality.Rare, {RecipeSource.Drop})
+        :AddReagent(2321, 2) -- Fine Thread
+        :AddReagent(6371, 1) -- Fire Oil
+        :AddReagent(7287, 5) -- Red Whelp Scale
+        :Save()
+
+    module:NewCraft(70, "Dragonmaw Gloves", 170, {})
+        :SetResult(58112)
+        :AddRecipe(74, Quality.Rare, {RecipeSource.Drop})
+        :AddReagent(4234, 14) -- Heavy Leather
+        :AddReagent(4236, 2) -- Cured Heavy Hide
+        :AddReagent(4402, 2) -- Small Flame Sac
+        :AddReagent(5637, 2) -- Large Fang
+        :AddReagent(7287, 4) -- Red Whelp Scale
+        :AddReagent(55249, 2) -- Crystal Quartz
+        :Save()
+
     module:NewCraft(5244, "Kodo Hide Bag", 40, {})
         :SetResult(5081)
         :AddRecipe(5083, Quality.Uncommon, {RecipeSource.Quest, RecipeSource.Vendor})
@@ -1968,6 +1999,26 @@ if lib.env.is_turtle_wow then
         :AddReagent(12809, 8) -- Guardian Stone
         :AddReagent(14341, 8) -- Rune Thread
         :AddReagent(15407, 4) -- Cured Rugged Hide
+        :Save()
+
+    module:NewCraft(36909, "Essence Infused Leather Gloves", 300, {})
+        :SetResult(55050)
+        :AddRecipe(55049, Quality.Rare, {RecipeSource.Vendor})
+        :AddReagent(12810, 10) -- Enchanted Leather
+        :AddReagent(14341, 6) -- Rune Thread
+        :AddReagent(16203, 4) -- Greater Eternal Essence
+        :AddReagent(61673, 4) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(36911, "Prismatic Scale Barbute", 300, {})
+        :SetResult(55054)
+        :AddRecipe(55053, Quality.Rare, {RecipeSource.Vendor})
+        :AddReagent(8165, 20) -- Worn Dragonscale
+        :AddReagent(8170, 30) -- Rugged Leather
+        :AddReagent(15412, 5) -- Green Dragonscale
+        :AddReagent(15414, 5) -- Red Dragonscale
+        :AddReagent(15415, 5) -- Blue Dragonscale
+        :AddReagent(15416, 5) -- Black Dragonscale
         :Save()
 
     module:NewCraft(45069, "Lynxstep Boots", 75, {})

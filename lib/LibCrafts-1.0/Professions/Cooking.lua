@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Cooking", 3
+local name, version = "Professions-Cooking", 4
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Cooking")
 if not module then return end
 
@@ -637,5 +637,21 @@ if lib.env.is_turtle_wow then
         :AddReagent(3713, 1) -- Soothing Spices
         :AddReagent(13464, 2) -- Golden Sansam
         :AddReagent(60955, 1) -- Gargantuan Tel'Abim Banana
+        :Save()
+
+    module:NewCraft(58044, "Ambersap Glazed Boar Ribs", 175, {})
+        :SetResult(41674)
+        :AddRecipe(19670, Quality.Uncommon, {RecipeSource.Vendor})
+        :AddReagent(2677, 1) -- Boar Ribs
+        :AddReagent(2692, 1) -- Hot Spices
+        :AddReagent(41675, 1) -- Ambersap
+        :Save()
+
+    module:NewCraft(58046, "Crawford Apple Tarte", 175, {})
+        :SetResult(41673)
+        :AddRecipe(19671, Quality.Uncommon, {}) -- TODO add source
+        :AddReagent(1179, 1) -- Ice Cold Milk
+        :AddReagent(4539, 1) -- Goldenbark Apple
+        :AddReagent(41677, 1) -- Northwind Flour
         :Save()
 end

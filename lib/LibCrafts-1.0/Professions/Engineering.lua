@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Engineering", 3
+local name, version = "Professions-Engineering", 4
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Engineering")
 if not module then return end
 
@@ -546,7 +546,7 @@ module:NewCraft(12614, "Mithril Heavy-bore Rifle", 220, {})
 
 module:NewCraft(12615, "Spellpower Goggles Xtreme", 225, {})
     :SetResult(10502)
-    :AddRecipe(10605, Quality.Rare, {RecipeSource.Chest, RecipeSource.Drop})
+    :AddRecipe(10605, Quality.Uncommon, {RecipeSource.Chest, RecipeSource.Drop})
     :AddReagent(4304, 4) -- Thick Leather
     :AddReagent(7910, 2) -- Star Ruby
     :Save()
@@ -849,7 +849,7 @@ module:NewCraft(19793, "Lifelike Mechanical Toad", 265, {})
 
 module:NewCraft(19794, "Spellpower Goggles Xtreme Plus", 270, {})
     :SetResult(15999)
-    :AddRecipe(16045, Quality.Uncommon, {RecipeSource.Drop})
+    :AddRecipe(16045, Quality.Rare, {RecipeSource.Drop})
     :AddReagent(7910, 4) -- Star Ruby
     :AddReagent(10502, 1) -- Spellpower Goggles Xtreme
     :AddReagent(12810, 2) -- Enchanted Leather
@@ -1425,5 +1425,26 @@ if lib.env.is_turtle_wow then
         :AddReagent(2841, 2) -- Bronze Bar
         :AddReagent(4375, 2) -- Whirring Bronze Gizmo
         :AddReagent(10998, 1) -- Lesser Astral Essence
+        :Save()
+
+    module:NewCraft(52747, "Voltage-Neutralizing Nature Reflector", 290, {})
+        :SetResult(58304)
+        :AddRecipe(58400, Quality.Rare, {RecipeSource.Drop})
+        :AddReagent(11371, 8) -- Dark Iron Bar
+        :AddReagent(12364, 4) -- Huge Emerald
+        :AddReagent(12800, 2) -- Azerothian Diamond
+        :AddReagent(18631, 4) -- Truesilver Transformer
+        :AddReagent(61673, 3) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(52749, "Giga-Charged Arcane Reflector", 290, {})
+        :SetResult(58305)
+        :AddRecipe(58401, Quality.Rare, {RecipeSource.Drop})
+        :AddReagent(7076, 4) -- Essence of Earth
+        :AddReagent(7910, 4) -- Star Ruby
+        :AddReagent(11371, 8) -- Dark Iron Bar
+        :AddReagent(12363, 2) -- Arcane Crystal
+        :AddReagent(12803, 6) -- Living Essence
+        :AddReagent(18631, 4) -- Truesilver Transformer
         :Save()
 end

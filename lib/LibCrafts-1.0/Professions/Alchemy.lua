@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Alchemy", 5
+local name, version = "Professions-Alchemy", 6
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Alchemy")
 if not module then return end
 
@@ -37,7 +37,7 @@ module:NewCraft(2332, "Minor Rejuvenation Potion", 40, {SpellSource.Trainer})
 
 module:NewCraft(2333, "Elixir of Lesser Agility", 140, {})
     :SetResult(3390)
-    :AddRecipe(3396, Quality.Common, {RecipeSource.Chest, RecipeSource.Drop, RecipeSource.Fishing})
+    :AddRecipe(3396, Quality.Uncommon, {RecipeSource.Chest, RecipeSource.Drop, RecipeSource.Fishing})
     :AddReagent(2452, 1) -- Swiftthistle
     :AddReagent(3355, 1) -- Wild Steelbloom
     :AddReagent(3372, 1) -- Leaded Vial
@@ -103,7 +103,7 @@ module:NewCraft(3174, "Elixir of Poison Resistance", 120, {})
 
 module:NewCraft(3175, "Limited Invulnerability Potion", 250, {})
     :SetResult(3387)
-    :AddRecipe(3395, Quality.Common, {RecipeSource.Chest, RecipeSource.Drop})
+    :AddRecipe(3395, Quality.Uncommon, {RecipeSource.Chest, RecipeSource.Drop})
     :AddReagent(8839, 2) -- Blindweed
     :AddReagent(8845, 1) -- Ghost Mushroom
     :AddReagent(8925, 1) -- Crystal Vial
@@ -133,7 +133,7 @@ module:NewCraft(3188, "Elixir of Ogre's Strength", 150, {})
 
 module:NewCraft(3230, "Elixir of Minor Agility", 50, {})
     :SetResult(2457)
-    :AddRecipe(2553, Quality.Common, {RecipeSource.Chest, RecipeSource.Drop, RecipeSource.Fishing, RecipeSource.Pickpocket})
+    :AddRecipe(2553, Quality.Uncommon, {RecipeSource.Chest, RecipeSource.Drop, RecipeSource.Fishing, RecipeSource.Pickpocket})
     :AddReagent(765, 1) -- Silverleaf
     :AddReagent(2452, 1) -- Swiftthistle
     :AddReagent(3371, 1) -- Empty Vial
@@ -834,6 +834,14 @@ module:NewCraft(26277, "Elixir of Greater Firepower", 250, {})
     :Save()
 
 if lib.env.is_turtle_wow then
+    module:NewCraft(115, "Elixir of Rapid Growth", 200, {})
+        :SetResult(56113)
+        :AddRecipe(83, Quality.Rare, {RecipeSource.Drop})
+        :AddReagent(3372, 1) -- Leaded Vial
+        :AddReagent(4625, 1) -- Firebloom
+        :AddReagent(7068, 1) -- Elemental Fire
+        :Save()
+
     module:NewCraft(3449, "Shadow Oil", 165, {})
         :SetResult(3824)
         :AddRecipe(6068, Quality.Common, {RecipeSource.Vendor})
@@ -934,27 +942,41 @@ if lib.env.is_turtle_wow then
         :AddReagent(18256, 1) -- Imbued Vial
         :Save()
 
+    module:NewCraft(36901, "Elixir of Greater Frost Power", 300, {})
+        :SetResult(55046)
+        :AddRecipe(55045, Quality.Rare, {RecipeSource.Vendor})
+        :AddReagent(8925, 1) -- Crystal Vial
+        :AddReagent(13467, 3) -- Icecap
+        :Save()
+
+    module:NewCraft(36903, "Elixir of Greater Arcane Power", 300, {})
+        :SetResult(55048)
+        :AddRecipe(55047, Quality.Rare, {RecipeSource.Vendor})
+        :AddReagent(8831, 3) -- Purple Lotus
+        :AddReagent(8925, 1) -- Crystal Vial
+        :Save()
+
     module:NewCraft(36929, "Concoction of the Emerald Mongoose", 300, {})
         :SetResult(47410)
         :AddRecipe(47411, Quality.Rare, {RecipeSource.Quest})
-        :AddReagent(8153, 6) -- Wildvine
         :AddReagent(13452, 1) -- Elixir of the Mongoose
+        :AddReagent(18256, 1) -- Imbued Vial
         :AddReagent(61224, 1) -- Dreamshard Elixir
         :Save()
 
     module:NewCraft(36932, "Concoction of the Arcane Giant", 300, {})
         :SetResult(47412)
         :AddRecipe(47413, Quality.Rare, {RecipeSource.Drop})
-        :AddReagent(8831, 6) -- Purple Lotus
         :AddReagent(9206, 1) -- Elixir of Giants
         :AddReagent(13454, 1) -- Greater Arcane Elixir
+        :AddReagent(18256, 1) -- Imbued Vial
         :Save()
 
     module:NewCraft(36935, "Concoction of the Dreamwater", 300, {})
         :SetResult(47414)
         :AddRecipe(47415, Quality.Rare, {RecipeSource.Drop})
-        :AddReagent(8838, 6) -- Sungrass
         :AddReagent(12820, 1) -- Winterfall Firewater
+        :AddReagent(18256, 1) -- Imbued Vial
         :AddReagent(61423, 1) -- Dreamtonic
         :Save()
 

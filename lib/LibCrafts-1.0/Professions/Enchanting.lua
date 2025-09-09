@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Enchanting", 3
+local name, version = "Professions-Enchanting", 4
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Enchanting")
 if not module then return end
 
@@ -95,7 +95,7 @@ module:NewCraft(7788, "Enchant Weapon - Minor Striking", 90, {SpellSource.Traine
     :Save()
 
 module:NewCraft(7793, "Enchant 2H Weapon - Lesser Intellect", 100, {})
-    :AddRecipe(6349, Quality.Uncommon, {RecipeSource.Vendor})
+    :AddRecipe(6349, Quality.Common, {RecipeSource.Vendor})
     :AddReagent(10939, 3) -- Greater Magic Essence
     :Save()
 
@@ -906,6 +906,18 @@ module:NewCraft(27837, "Enchant 2H Weapon - Agility", 290, {})
     :Save()
 
 if lib.env.is_turtle_wow then
+    module:NewCraft(44, "Enchant Bracer - Agility", 185, {})
+        :AddRecipe(24, Quality.Rare, {RecipeSource.Drop})
+        :AddReagent(7067, 1) -- Elemental Earth
+        :AddReagent(11134, 1) -- Lesser Mystic Essence
+        :Save()
+
+    module:NewCraft(48, "Enchant Boots - Lesser Intellect", 170, {})
+        :AddRecipe(31, Quality.Uncommon, {RecipeSource.Drop})
+        :AddReagent(11083, 3) -- Soul Dust
+        :AddReagent(11137, 1) -- Vision Dust
+        :Save()
+
     module:NewCraft(13915, "Enchant Weapon - Demonslaying", 230, {})
         :AddRecipe(11208, Quality.Uncommon, {RecipeSource.Chest, RecipeSource.Drop, RecipeSource.Fishing})
         :AddReagent(9224, 1) -- Elixir of Demonslaying
@@ -955,6 +967,14 @@ if lib.env.is_turtle_wow then
         :AddReagent(7082, 2) -- Essence of Air
         :AddReagent(14344, 10) -- Large Brilliant Shard
         :AddReagent(20725, 2) -- Nexus Crystal
+        :Save()
+
+    module:NewCraft(56543, "Enchant Boots - Major Intellect", 300, {})
+        :AddRecipe(55044, Quality.Rare, {RecipeSource.Vendor})
+        :AddReagent(14344, 2) -- Large Brilliant Shard
+        :AddReagent(16203, 4) -- Greater Eternal Essence
+        :AddReagent(16204, 15) -- Illusion Dust
+        :AddReagent(20725, 1) -- Nexus Crystal
         :Save()
 
     module:NewCraft(57028, "Enchant Bracer - Spell Power", 300, {})

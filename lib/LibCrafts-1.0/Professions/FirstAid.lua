@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-FirstAid", 3
+local name, version = "Professions-FirstAid", 4
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "First Aid")
 if not module then return end
 
@@ -51,7 +51,7 @@ module:NewCraft(7935, "Strong Anti-Venom", 130, {})
 
 module:NewCraft(10840, "Mageweave Bandage", 210, {})
     :SetResult(8544)
-    :AddRecipe(16113, Quality.Uncommon, {RecipeSource.Vendor})
+    :AddRecipe(16113, Quality.Common, {RecipeSource.Vendor})
     :AddReagent(4338, 1) -- Mageweave Cloth
     :Save()
 

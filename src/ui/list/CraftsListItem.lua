@@ -121,6 +121,15 @@ function CraftsListItem:_DrawTooltip(tooltip)
         return false
     end
 
+    if self._craft.recipeId ~= nil then
+        tooltip:SetHyperlink(format("item:%d", self._craft.recipeId))
+    elseif self._craft.resultId ~= nil then
+        tooltip:SetHyperlink(format("item:%d", self._craft.resultId))
+    else
+        tooltip:SetHyperlink(GetSpellLink(self._craft.spellId))
+    end
+    tooltip:AddLine(" ")
+
     local strings = {}
     for _, source in ipairs(self._craft.sources) do
         local name = SOURCE_TO_TEXT[source]

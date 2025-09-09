@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Blacksmithing", 3
+local name, version = "Professions-Blacksmithing", 4
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Blacksmithing")
 if not module then return end
 
@@ -666,7 +666,7 @@ module:NewCraft(9935, "Steel Plate Helm", 215, {SpellSource.Trainer})
 
 module:NewCraft(9937, "Mithril Scale Bracers", 215, {})
     :SetResult(7924)
-    :AddRecipe(7995, Quality.Uncommon, {RecipeSource.Vendor})
+    :AddRecipe(7995, Quality.Common, {RecipeSource.Vendor})
     :AddReagent(3860, 8) -- Mithril Bar
     :AddReagent(3864, 2) -- Citrine
     :Save()
@@ -1102,7 +1102,7 @@ module:NewCraft(16649, "Imperial Plate Bracers", 270, {})
 
 module:NewCraft(16650, "Wildthorn Mail", 270, {})
     :SetResult(12624)
-    :AddRecipe(12691, Quality.Rare, {RecipeSource.Chest, RecipeSource.Drop})
+    :AddRecipe(12691, Quality.Uncommon, {RecipeSource.Chest, RecipeSource.Drop})
     :AddReagent(8153, 4) -- Wildvine
     :AddReagent(12359, 40) -- Thorium Bar
     :AddReagent(12364, 1) -- Huge Emerald
@@ -1924,6 +1924,67 @@ module:NewCraft(28463, "Ironvine Belt", 300, {})
     :Save()
 
 if lib.env.is_turtle_wow then
+    module:NewCraft(57, "Steel Belt Buckle", 200, {})
+        :SetResult(131)
+        :AddRecipe(70, Quality.Uncommon, {RecipeSource.Drop})
+        :AddReagent(3859, 8) -- Steel Bar
+        :AddReagent(7071, 1) -- Iron Belt Buckle
+        :AddReagent(7966, 1) -- Solid Grinding Stone
+        :Save()
+
+    module:NewCraft(69, "Gold Belt Buckle", 175, {})
+        :SetResult(66)
+        :AddRecipe(71, Quality.Uncommon, {RecipeSource.Drop})
+        :AddReagent(3486, 2) -- Heavy Grinding Stone
+        :AddReagent(3577, 8) -- Gold Bar
+        :AddReagent(7071, 1) -- Iron Belt Buckle
+        :Save()
+
+    module:NewCraft(74, "Dragonscale Belt Buckle", 235, {})
+        :SetResult(67)
+        :AddRecipe(88, Quality.Rare, {RecipeSource.Drop})
+        :AddReagent(7071, 1) -- Iron Belt Buckle
+        :AddReagent(7966, 1) -- Solid Grinding Stone
+        :AddReagent(8165, 14) -- Worn Dragonscale
+        :AddReagent(12359, 4) -- Thorium Bar
+        :Save()
+
+    module:NewCraft(85, "Dark Iron Belt Buckle", 275, {})
+        :SetResult(82)
+        :AddRecipe(104, Quality.Rare, {RecipeSource.Vendor})
+        :AddReagent(7071, 1) -- Iron Belt Buckle
+        :AddReagent(7078, 1) -- Essence of Fire
+        :AddReagent(11371, 2) -- Dark Iron Bar
+        :AddReagent(12644, 2) -- Dense Grinding Stone
+        :Save()
+
+    module:NewCraft(90, "Truesilver Belt Buckle", 225, {})
+        :SetResult(151)
+        :AddRecipe(113, Quality.Uncommon, {RecipeSource.Drop})
+        :AddReagent(6037, 8) -- Truesilver Bar
+        :AddReagent(7071, 1) -- Iron Belt Buckle
+        :AddReagent(7966, 2) -- Solid Grinding Stone
+        :Save()
+
+    module:NewCraft(95, "Enchanted Thorium Belt Buckle", 285, {})
+        :SetResult(87)
+        :AddRecipe(124, Quality.Rare, {RecipeSource.Drop})
+        :AddReagent(7071, 1) -- Iron Belt Buckle
+        :AddReagent(12644, 1) -- Dense Grinding Stone
+        :AddReagent(12655, 2) -- Enchanted Thorium Bar
+        :AddReagent(61673, 2) -- Arcane Essence
+        :Save()
+
+    module:NewCraft(102, "Obsidian Belt Buckle", 300, {})
+        :SetResult(103)
+        :AddRecipe(132, Quality.Rare, {RecipeSource.Drop})
+        :AddReagent(7071, 1) -- Iron Belt Buckle
+        :AddReagent(7076, 1) -- Essence of Earth
+        :AddReagent(7082, 1) -- Essence of Air
+        :AddReagent(12644, 2) -- Dense Grinding Stone
+        :AddReagent(22203, 2) -- Large Obsidian Shard
+        :Save()
+
     module:NewCraft(2671, "Rough Bronze Bracers", 100, {})
         :SetResult(2867)
         :AddRecipe(5577, Quality.Uncommon, {RecipeSource.Vendor})
@@ -2121,6 +2182,17 @@ if lib.env.is_turtle_wow then
         :AddReagent(11382, 2) -- Blood of the Mountain
         :AddReagent(12810, 2) -- Enchanted Leather
         :AddReagent(17011, 6) -- Lava Core
+        :Save()
+
+    module:NewCraft(36907, "Rune-Inscribed Plate Leggings", 300, {})
+        :SetResult(55058)
+        :AddRecipe(55057, Quality.Epic, {RecipeSource.Vendor})
+        :AddReagent(7080, 6) -- Essence of Water
+        :AddReagent(12360, 3) -- Arcanite Bar
+        :AddReagent(12655, 12) -- Enchanted Thorium Bar
+        :AddReagent(12799, 4) -- Large Opal
+        :AddReagent(13926, 4) -- Golden Pearl
+        :AddReagent(14341, 8) -- Rune Thread
         :Save()
 
     module:NewCraft(45063, "Blast Shield", 75, {})

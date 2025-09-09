@@ -11,7 +11,7 @@
 local LibStub = getglobal("LibStub")
 assert(LibStub ~= nil)
 
-local untyped_lib, _ = LibStub:NewLibrary("LibCrafts-1.0", 13)
+local untyped_lib, _ = LibStub:NewLibrary("LibCrafts-1.0", 14)
 if not untyped_lib then return end
 
 ---@class LibCrafts
@@ -136,6 +136,7 @@ lib.constants = {
 ---@field sources LcRecipeSource[]
 
 ---@class LcCraft
+---@field spell_id number
 ---@field en_profession_name string
 ---@field localized_profession_name string
 ---@field spell_id number
@@ -340,6 +341,7 @@ function ProfessionModule:NewCraft(spell_id, spell_name, skill_level, sources)
     setmetatable(object, {__index = Craft})
 
     local craft = --[[---@type LcCraft]] object
+    craft.spell_id = spell_id
     craft.en_profession_name = self.en_profession_name
     craft.localized_profession_name = self.localized_profession_name
     craft.spell_id = spell_id
@@ -373,7 +375,7 @@ function Craft:AddRecipe(id, quality, sources)
     if lib.env.is_debug then
         assert(type(id) == "number" and id > 0)
         assert(type(quality) == "number" and ITEM_QUALITY_SET[quality] ~= nil)
-        assert(type(sources) == "table" and getn(sources) > 0)
+        assert(type(sources) == "table")
         for _, source in ipairs(sources) do
             assert(type(source) == "number" and RECIPE_SOURCE_SET[source] ~= nil)
         end
@@ -440,7 +442,6 @@ end
 
 function Craft:Save()
     if lib.env.is_debug then
-        assert(next(self.sources) ~= nil or next(self.recipes) ~= nil)
         assert(next(self.reagent_id_to_count) ~= nil)
     end
 

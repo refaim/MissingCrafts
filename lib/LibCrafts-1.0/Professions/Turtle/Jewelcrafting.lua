@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Jewelcrafting", 13
+local name, version = "Professions-Jewelcrafting", 14
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Jewelcrafting")
 if not module then return end
 
@@ -8,6 +8,24 @@ local SpellSource = lib.constants.spell_sources
 local RecipeSource = lib.constants.recipe_sources
 
 if lib.env.is_turtle_wow then
+    module:NewCraft(93, "Refined Dwarven Necklace", 185, {})
+        :SetResult(156)
+        :AddRecipe(76, Quality.Rare, {RecipeSource.Drop})
+        :AddReagent(3860, 12) -- Mithril Bar
+        :AddReagent(55249, 3) -- Crystal Quartz
+        :AddReagent(6371, 3) -- Fire Oil
+        :AddReagent(3466, 2) -- Strong Flux
+        :AddReagent(55152, 2) -- Heavy Gritted Paper
+        :Save()
+
+    module:NewCraft(104, "Ancient Dwarven Gemstone", 185, {})
+        :SetResult(56112)
+        :AddRecipe(77, Quality.Rare, {RecipeSource.Drop})
+        :AddReagent(3860, 1) -- Mithril Bar
+        :AddReagent(55249, 1) -- Crystal Quartz
+        :AddReagent(55247, 1) -- Gemstone Oil
+        :Save()
+
     module:NewCraft(29728, "Rough Gritted Paper", 1, {SpellSource.LearnedAutomatically})
         :SetResult(55150)
         :AddReagent(2589, 1) -- Linen Cloth
@@ -22,6 +40,18 @@ if lib.env.is_turtle_wow then
     module:NewCraft(29732, "Copper Bangle", 1, {SpellSource.LearnedAutomatically})
         :SetResult(55157)
         :AddReagent(2840, 4) -- Copper Bar
+        :Save()
+
+    module:NewCraft(36905, "Grandstaff of the Shen'dralar Elder", 300, {})
+        :SetResult(55060)
+        :AddRecipe(55059, Quality.Epic, {RecipeSource.Vendor})
+        :AddReagent(55252, 1) -- Imperial Topaz
+        :AddReagent(12360, 2) -- Arcanite Bar
+        :AddReagent(12655, 16) -- Enchanted Thorium Bar
+        :AddReagent(20725, 4) -- Nexus Crystal
+        :AddReagent(11291, 20) -- Star Wood
+        :AddReagent(12800, 6) -- Azerothian Diamond
+        :AddReagent(55248, 4) -- Enchanted Gemstone Oil
         :Save()
 
     module:NewCraft(41001, "Bright Copper Ring", 15, {SpellSource.Trainer})

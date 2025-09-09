@@ -1,5 +1,5 @@
 local lib = LibCraftsGetLibrary()
-local name, version = "Professions-Tailoring", 3
+local name, version = "Professions-Tailoring", 4
 local module = --[[---@type LcProfessionModule]] lib:RegisterProfessionModule(name, version, "Tailoring")
 if not module then return end
 
@@ -1193,7 +1193,7 @@ module:NewCraft(18422, "Cloak of Fire", 275, {})
 
 module:NewCraft(18423, "Runecloth Boots", 280, {})
     :SetResult(13864)
-    :AddRecipe(14488, Quality.Uncommon, {RecipeSource.Vendor})
+    :AddRecipe(14488, Quality.Common, {RecipeSource.Vendor})
     :AddReagent(8170, 4) -- Rugged Leather
     :AddReagent(14048, 4) -- Bolt of Runecloth
     :AddReagent(14227, 2) -- Ironweb Spider Silk
@@ -1529,7 +1529,7 @@ module:NewCraft(22870, "Cloak of Warding", 300, {})
 
 module:NewCraft(22902, "Mooncloth Robe", 300, {})
     :SetResult(18486)
-    :AddRecipe(18487, Quality.Rare, {RecipeSource.Vendor})
+    :AddRecipe(18487, Quality.Common, {RecipeSource.Vendor})
     :AddReagent(13926, 2) -- Golden Pearl
     :AddReagent(14048, 6) -- Bolt of Runecloth
     :AddReagent(14341, 2) -- Rune Thread
@@ -1807,6 +1807,17 @@ module:NewCraft(28482, "Sylvan Shoulders", 300, {})
     :Save()
 
 if lib.env.is_turtle_wow then
+    module:NewCraft(83, "Stormreaver Gloves", 185, {})
+        :SetResult(58134)
+        :AddRecipe(75, Quality.Rare, {RecipeSource.Drop})
+        :AddReagent(3824, 3) -- Shadow Oil
+        :AddReagent(3864, 3) -- Citrine
+        :AddReagent(4291, 2) -- Silken Thread
+        :AddReagent(4305, 8) -- Bolt of Silk Cloth
+        :AddReagent(4342, 1) -- Purple Dye
+        :AddReagent(7068, 3) -- Elemental Fire
+        :Save()
+
     module:NewCraft(3872, "Rich Purple Silk Shirt", 185, {})
         :SetResult(4335)
         :AddRecipe(4354, Quality.Rare, {RecipeSource.Chest, RecipeSource.Drop})
@@ -1925,6 +1936,26 @@ if lib.env.is_turtle_wow then
         :AddReagent(4625, 2) -- Firebloom
         :AddReagent(14048, 4) -- Bolt of Runecloth
         :AddReagent(14341, 1) -- Rune Thread
+        :Save()
+
+    module:NewCraft(36913, "Astronomer Raiments", 300, {})
+        :SetResult(55052)
+        :AddRecipe(55051, Quality.Rare, {RecipeSource.Vendor})
+        :AddReagent(9210, 5) -- Ghost Dye
+        :AddReagent(12361, 2) -- Blue Sapphire
+        :AddReagent(14048, 12) -- Bolt of Runecloth
+        :AddReagent(55048, 5) -- Elixir of Greater Arcanepower
+        :Save()
+
+    module:NewCraft(36915, "Spellwoven Nobility Drape", 300, {})
+        :SetResult(55056)
+        :AddRecipe(55055, Quality.Epic, {RecipeSource.Vendor})
+        :AddReagent(9210, 10) -- Ghost Dye
+        :AddReagent(14048, 8) -- Bolt of Runecloth
+        :AddReagent(14341, 1) -- Rune Thread
+        :AddReagent(14342, 3) -- Mooncloth
+        :AddReagent(16204, 40) -- Illusion Dust
+        :AddReagent(20725, 1) -- Nexus Crystal
         :Save()
 
     module:NewCraft(45066, "Gloves of Manathirst", 75, {})

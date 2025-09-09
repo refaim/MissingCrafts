@@ -1,9 +1,15 @@
+### Revision 14 (2025/09/09)
+- Turtle: Add a lot of missing recipes
+- Fix a bunch of data errors
+- Add craft spell id to craft objects
+- Fix debug mode
+
 ### Revision 13 (2025/09/05)
 - Turtle: Add new 1.18 alchemy concoction recipes
 - Turtle: Add localization updates from patch 1.18.7230
 
 ### Revision 13 (2025/08/17)
-- Turtle: Support latest localization updates (including deDE game client)
+- Turtle: Support the latest localization updates (including deDE game client)
 
 ### Revision 12 (2025/08/16)
 - Turtle: Fix Jewelcrafting database errors
